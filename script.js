@@ -197,7 +197,7 @@ const musicBtn = document.getElementById('musicBtn');
 
 function toggleMusic() {
   if (!bgAudio) {
-    bgAudio = new Audio('Urike Urike.m4a');
+    bgAudio = new Audio('photos/Urike Urike.m4a');
     bgAudio.loop = true;
     bgAudio.volume = 0.3;
   }
