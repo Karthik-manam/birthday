@@ -5,46 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Birthday Surprise 🎀</title>
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Caveat:wght@600;700&family=Nunito:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Caveat:wght@600;700&family=Nunito:ital,wght@1,400;1,600&family=Dancing+Script:wght@600;700&family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
+<!-- Floating petals layer (always visible) -->
 <div id="petalsLayer" class="petals-layer"></div>
+
+<!-- Music Button -->
 <button id="musicBtn" onclick="toggleMusic()">🎵</button>
 
 <!-- ══ UNLOCK SCREEN ══ -->
 <div id="unlock" class="screen active">
   <div class="unlock-glow"></div>
-  <div class="unlock-sparkles" id="unlockSparkles"></div>
-  <div class="lock-container" id="lockContainer" onclick="unlockChest()">
-    <div class="chest" id="chest">
-      <div class="chest-glow-ring"></div>
-      <div class="chest-lid" id="chestLid">
-        <div class="chest-lock" id="chestLock">🔒</div>
+  <div class="lock-container" onclick="openLetter()">
+
+    <div class="envelope" id="envelope">
+      <div class="envelope-flap"></div>
+
+      <div class="envelope-body">
+        💌
       </div>
-      <div class="chest-body">
-        <span class="chest-shine"></span>
-        <div class="chest-rivet r1"></div><div class="chest-rivet r2"></div>
-        <div class="chest-rivet r3"></div><div class="chest-rivet r4"></div>
-        <div class="chest-rivet r5"></div>
-        <div class="chest-inner-glow"></div>
+
+      <div class="letter">
+        <p>Love letter kaadhu le😒😒 💖</p>
       </div>
     </div>
-    <p class="tap-hint" id="tapHint">✨ Lock medha tap chey ✨</p>
-  </div>
-</div>
 
-<!-- ══ ENVELOPE REVEAL ══ -->
-<div id="envelopeReveal" class="screen hidden" onclick="goToNameEntry()">
-  <div class="env-glow"></div>
-  <!-- sparkle ring behind card -->
-  <div class="env-sparkle-ring" id="envSparkleRing"></div>
-  <div class="env-content" id="envContent">
-    <!-- each child animates in via JS adding .env-pop class -->
-    <div class="env-emoji env-anim-item" id="envEmoji">💌</div>
-    <p class="env-telugu env-anim-item" id="envLine1"></p>
-    <p class="env-telugu-accent env-anim-item" id="envLine2"></p>
-    <p class="env-note env-anim-item" id="envLine3"></p>
+    <p class="tap-hint" id="tapHint">
+      💖 Tap to open your love letter 💖
+    </p>
+
   </div>
 </div>
 
@@ -53,24 +46,25 @@
   <div class="name-entry-glow"></div>
   <div class="name-box">
     <div class="name-kitty">🐱</div>
-    <h2 class="name-title">Enter your name</h2>
-    <p class="name-sub">Musukuni manchiga nenu satisfy ayyela name enter chey💖</p>
-    <input type="text" id="nameInput" class="name-input" placeholder="Your name..." maxlength="30" autocomplete="off"/>
-    <button onclick="submitName()" class="name-btn">Let's go! 🎀</button>
-    <button onclick="showHint()" class="hint-btn hidden" id="hintBtn">💡 Hint kavala?</button>
-    <p class="name-error hidden" id="nameError">musukuni sariga enter chey ledha muthi paguludhi 😤</p>
+    <h2 class="name-title typing-text" id="nameTitle"></h2>
+    <p class="name-sub typing-text" id="nameSub"></p>
+    <input type="text" id="nameInput" class="name-input hidden" placeholder="Your name..." maxlength="20" autocomplete="off" />
+    <button onclick="submitName()" class="name-btn hidden" id="nameBtn">Let's go! 🎀</button>
+    <p class="name-error hidden" id="nameError">Please enter your name 🥺</p>
   </div>
 </div>
 
 <!-- ══ COUNTDOWN ══ -->
 <div id="countdown" class="screen hidden">
   <div class="countdown-bg">
-    <span class="sparkle s1">✨</span><span class="sparkle s2">🌸</span>
-    <span class="sparkle s3">💖</span><span class="sparkle s4">⭐</span>
+    <span class="sparkle s1">✨</span>
+    <span class="sparkle s2">🌸</span>
+    <span class="sparkle s3">💖</span>
+    <span class="sparkle s4">⭐</span>
     <span class="sparkle s5">🌸</span>
   </div>
   <h1 id="countNumber">3</h1>
-  <p class="countdown-sub" id="countSub">Get ready...</p>
+  <p class="countdown-sub typing-text" id="countSub"></p>
 </div>
 
 <!-- ══ LOADING ══ -->
@@ -102,7 +96,7 @@
       <circle cx="72" cy="80" r="3" fill="#f4a0c8"/>
     </svg>
   </div>
-  <h2 id="loadingText">Aaagu Vasthadhii sugar ahh😒...</h2>
+  <h2 class="typing-text" id="loadingText"></h2>
   <div class="loading-dots"><span></span><span></span><span></span></div>
 </div>
 
@@ -110,7 +104,7 @@
 <div id="message" class="screen hidden">
   <div class="kitty-wrap" id="kittyWrap">
     <div class="char-bounce" id="easterEggKitty">
-      <svg viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg" width="130">
+      <svg viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg" width="140">
         <ellipse cx="60" cy="90" rx="35" ry="32" fill="#ffe0f0" stroke="#f4a0c8" stroke-width="2"/>
         <path d="M28 100 Q60 120 92 100" fill="#f080b8" opacity="0.5"/>
         <circle cx="60" cy="48" r="30" fill="#fff" stroke="#f4a0c8" stroke-width="2"/>
@@ -138,13 +132,10 @@
     <span class="heart-float2">💖</span>
     <div class="easter-egg-hint">Psst... tap me 5 times 🐾</div>
   </div>
-
-  <h2 class="msg-title-main">
-    kukkapilla putti 1year 1 month 27 days ayyina oka pandhi putti<br>21 years avvuthundhi eerojuki 😒
-  </h2>
-  <p class="msg-title-sub">Happy 21st birthday pandhi and Happy birthday kukkapilla 🎂💖</p>
-
-  <button onclick="startBirthdayFlow()">musukuni ikkada click chey 🐾</button>
+  <!-- CHANGED: font style - using Dancing Script + deep magenta color -->
+  <h2 class="message-main-title typing-text" id="messageTitle"></h2>
+  <p class="message-sub-text typing-text" id="messageSub"></p>
+  <button onclick="startBirthday()" class="hidden" id="messageBtn">🎀 Start the surprise</button>
 </div>
 
 <!-- ══ EASTER EGG MODAL ══ -->
@@ -152,148 +143,23 @@
   <div class="easter-inner">
     <div class="easter-emoji">🐾✨</div>
     <h3>Secret Message!</h3>
-    <p id="easterText"></p>
-    <button onclick="closeEasterEgg()">Aww, thanks! next time kalisinappudu marchipokunda iche sare naa😘💖</button>
+    <p class="typing-text" id="easterText"></p>
+    <button onclick="closeEasterEgg()" class="hidden" id="easterBtn">Aww, thanks! 💖</button>
   </div>
 </div>
 
-<!-- ══ HINT MODAL ══ -->
-<div id="hintModal" class="easter-modal hidden">
-  <div class="easter-inner">
-    <div class="easter-emoji">🤫</div>
-    <h3>Hint!</h3>
-    <p>hint uh ledhu thokka ledhu musukuni neeku pettina peru type chey 😏</p>
-    <button onclick="closeHintModal()">Okk try chestaa 💖</button>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     MULTI-STEP DIALOG OVERLAY
-══════════════════════════════════════════ -->
-<div id="dialogOverlay" class="dialog-overlay hidden">
-
-  <!-- STEP 1 -->
-  <div id="dlg1" class="dialog-box hidden">
-    <div class="dlg-emoji">🤩</div>
-    <p class="dlg-text">next em vundhoo chudalani vundhaa😒 chusthavaaa? 👀</p>
-    <div class="dlg-btns">
-      <button class="dlg-btn dlg-yes" onclick="dlg1Yes()">chustha 😇</button>
-      <button class="dlg-btn dlg-no"  onclick="dlg1No()">chudanu </button>
-    </div>
-  </div>
-
-  <!-- STEP 2a: after "chudalani vundhu" -->
-  <div id="dlg2a" class="dialog-box hidden">
-    <div class="dlg-emoji">🐾</div>
-    <p class="dlg-text">naaku kavalisindhi istha ante chupistha 😏</p>
-    <div class="dlg-btns">
-      <button class="dlg-btn dlg-yes" onclick="dlg2aIstha()">istha 🥰</button>
-      <button class="dlg-btn dlg-no"  id="ivvanuBtn" onclick="dlg2aIvvanu()">ivvanu 😤</button>
-    </div>
-    <p class="ivvanu-warn hidden" id="ivvanuWarn">icheyyochu ga please 🥹</p>
-  </div>
-
-  <!-- STEP 2b: after "chudanu" -->
-  <div id="dlg2b" class="dialog-box hidden">
-    <div class="dlg-emoji">🤨</div>
-    <p class="dlg-text">nijamga chudavaaa? 🧐</p>
-    <div class="dlg-btns">
-      <button class="dlg-btn dlg-no"  onclick="dlg2bChudanu()">chudanu 🙅</button>
-      <button class="dlg-btn dlg-yes" onclick="dlg2bChustha()">chustha 🥺</button>
-    </div>
-  </div>
-
-  <!-- STEP 3 HUG: after "istha" -->
-  <div id="dlg3hug" class="dialog-box hidden">
-    <div class="dlg-emoji">🤗</div>
-    <p class="dlg-text">awwww! 🥰</p>
-    <div class="dlg-gif-wrap">
-      <div class="panda-hug-scene">
-        <div class="panda panda-left">
-          <div class="panda-body"></div>
-          <div class="panda-head">
-            <div class="panda-ear ear-l"></div>
-            <div class="panda-ear ear-r"></div>
-            <div class="panda-eye-patch ep-l"></div>
-            <div class="panda-eye-patch ep-r"></div>
-            <div class="panda-eye eye-l"></div>
-            <div class="panda-eye eye-r"></div>
-            <div class="panda-nose"></div>
-            <div class="panda-smile"></div>
-          </div>
-          <div class="panda-arm arm-hug-r"></div>
-        </div>
-        <div class="hug-hearts">
-          <span class="hh h1">💖</span>
-          <span class="hh h2">💗</span>
-          <span class="hh h3">💕</span>
-          <span class="hh h4">💝</span>
-          <span class="hh h5">💖</span>
-        </div>
-        <div class="panda panda-right">
-          <div class="panda-body"></div>
-          <div class="panda-head">
-            <div class="panda-ear ear-l"></div>
-            <div class="panda-ear ear-r"></div>
-            <div class="panda-eye-patch ep-l"></div>
-            <div class="panda-eye-patch ep-r"></div>
-            <div class="panda-eye eye-l"></div>
-            <div class="panda-eye eye-r"></div>
-            <div class="panda-nose"></div>
-            <div class="panda-smile"></div>
-          </div>
-          <div class="panda-arm arm-hug-l"></div>
-        </div>
-      </div>
-    </div>
-    <p class="dlg-sub">continuing in a moment... 🌸</p>
-  </div>
-
-  <!-- STEP 3 CRY: after final "chudanu" -->
-  <div id="dlg3cry" class="dialog-box hidden" onclick="dlg3cryTap(event)">
-    <div class="dlg-emoji">😭</div>
-    <p class="dlg-text">😭💔</p>
-    <div class="dlg-gif-wrap">
-      <div class="panda-cry-scene">
-        <div class="panda panda-solo">
-          <div class="panda-body"></div>
-          <div class="panda-head">
-            <div class="panda-ear ear-l"></div>
-            <div class="panda-ear ear-r"></div>
-            <div class="panda-eye-patch ep-l"></div>
-            <div class="panda-eye-patch ep-r"></div>
-            <div class="panda-eye eye-l cry-eye"></div>
-            <div class="panda-eye eye-r cry-eye"></div>
-            <div class="panda-nose"></div>
-            <div class="panda-frown"></div>
-          </div>
-          <div class="cry-drop cd1">💧</div>
-          <div class="cry-drop cd2">💧</div>
-          <div class="cry-drop cd3">💧</div>
-        </div>
-      </div>
-    </div>
-    <p class="dlg-sub tap-hint-cry" id="cryTapHint">( tap anywhere to continue 😒 )</p>
-    <div id="cryTapPrompt" class="cry-tap-prompt hidden">
-      <p>musukuni chustha button paina click chey 😒</p>
-      <button class="dlg-btn dlg-yes" onclick="dlg3cryChustha(event)">chustha 🥺</button>
-    </div>
-  </div>
-
-</div><!-- /dialogOverlay -->
-
-<!-- ══ CANDLE SCREEN ══ -->
+<!-- ══ CANDLE BLOW SCREEN ══ -->
 <div id="candleScreen" class="screen hidden">
-  <h2 class="cake-title">blow cheyadam kudhradhu kani musukuni dhani medha click chey 🕯️</h2>
-  <div class="candle-stage">
+  <h2 class="cake-title typing-text" id="candleTitle"></h2>
+  <div class="candle-stage" id="candleStage">
     <div class="candle-row" id="candleRow"></div>
   </div>
-  <p id="candleHint">🌬️ Blow out all <span id="candleCount">3</span> candles!</p>
+  <p class="typing-text" id="candleHint"></p>
 </div>
 
 <!-- ══ CAKE CUTTING ══ -->
 <div id="cake" class="screen hidden">
-  <h2 class="cake-title">elago maaku direct ga cut cheyyinche aadhrustam ledhu kani ikkade cut cheyse 🎂</h2>
+  <h2 class="cake-title typing-text" id="cakeTitle"></h2>
   <div id="cakeZone" class="cake-zone">
     <div id="knifeWrap"><div id="knife">🔪</div></div>
     <div class="swipe-arrow" id="swipeArrow">
@@ -320,22 +186,22 @@
         <rect x="78" y="44" width="8" height="22" rx="3" fill="#a78bfa"/>
         <rect x="95" y="40" width="8" height="26" rx="3" fill="#f080b8"/>
         <rect x="112" y="44" width="8" height="22" rx="3" fill="#34d399"/>
-        <ellipse cx="82" cy="42" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
-        <ellipse cx="82" cy="41" rx="2" ry="3" fill="#f97316"/>
-        <ellipse cx="99" cy="38" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
-        <ellipse cx="99" cy="37" rx="2" ry="3" fill="#f97316"/>
-        <ellipse cx="116" cy="42" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
-        <ellipse cx="116" cy="41" rx="2" ry="3" fill="#f97316"/>
+        <ellipse id="flame1" cx="82" cy="42" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
+        <ellipse id="flame1b" cx="82" cy="41" rx="2" ry="3" fill="#f97316"/>
+        <ellipse id="flame2" cx="99" cy="38" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
+        <ellipse id="flame2b" cx="99" cy="37" rx="2" ry="3" fill="#f97316"/>
+        <ellipse id="flame3" cx="116" cy="42" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
+        <ellipse id="flame3b" cx="116" cy="41" rx="2" ry="3" fill="#f97316"/>
         <circle cx="60" cy="142" r="3" fill="#e040a0"/>
         <circle cx="145" cy="140" r="3" fill="#f080b8"/>
         <circle cx="80" cy="108" r="2.5" fill="#a78bfa"/>
         <circle cx="135" cy="104" r="2.5" fill="#34d399"/>
         <line id="cutLine1" x1="100" y1="62" x2="100" y2="169" stroke="rgba(220,50,130,0)" stroke-width="3" stroke-dasharray="6,4"/>
-        <text x="100" y="155" text-anchor="middle" font-family="Baloo 2" font-weight="800" font-size="13" fill="#fff">Happy 21st!</text>
+        <text x="100" y="155" text-anchor="middle" font-family="Baloo 2" font-weight="800" font-size="13" fill="#fff">Happy 20th!</text>
       </svg>
     </div>
   </div>
-  <p id="slashHint">✦ Ahh knife pattukuni drag chey 😒 cake cut cheyyadam kuda raadhu malli mamalni antaru ✦</p>
+  <p class="typing-text" id="slashHint"></p>
   <div class="cut-dots">
     <span class="cut-dot" id="dot1"></span>
     <span class="cut-dot" id="dot2"></span>
@@ -346,14 +212,15 @@
 <div id="birthday" class="screen hidden">
   <canvas id="confettiCanvas"></canvas>
   <div id="bdayInner">
-    <h1>Happy Birthday,<br><span id="bdayName" class="bday-name-glow">kukkapilla garuuuuu😘😘</span>! 💙</h1>
+    <h1 class="typing-text" id="bdayTitle"></h1>
     <div class="cute-char">
       <svg viewBox="0 0 140 160" xmlns="http://www.w3.org/2000/svg" width="180">
         <polygon points="70,5 45,55 95,55" fill="#f080b8"/>
         <polygon points="70,5 45,55 70,55" fill="#e040a0"/>
         <line x1="45" y1="55" x2="95" y2="55" stroke="#fde047" stroke-width="3"/>
         <circle cx="70" cy="5" r="4" fill="#fde047"/>
-        <text x="30" y="35" font-size="14">⭐</text><text x="100" y="30" font-size="12">✨</text>
+        <text x="30" y="35" font-size="14">⭐</text>
+        <text x="100" y="30" font-size="12">✨</text>
         <ellipse cx="70" cy="120" rx="38" ry="34" fill="#ffe0f0" stroke="#f4a0c8" stroke-width="2"/>
         <circle cx="70" cy="75" r="32" fill="#fff" stroke="#f4a0c8" stroke-width="2"/>
         <ellipse cx="46" cy="52" rx="10" ry="12" fill="#fff" stroke="#f4a0c8" stroke-width="2"/>
@@ -375,57 +242,32 @@
         <ellipse cx="87" cy="84" rx="8" ry="5" fill="#f9c0d8" opacity="0.7"/>
         <ellipse cx="28" cy="108" rx="8" ry="15" fill="#ffe0f0" stroke="#f4a0c8" stroke-width="1.5" transform="rotate(-50 28 108)"/>
         <ellipse cx="112" cy="108" rx="8" ry="15" fill="#ffe0f0" stroke="#f4a0c8" stroke-width="1.5" transform="rotate(50 112 108)"/>
-        <text x="10" y="95" font-size="16">🎉</text><text x="115" y="95" font-size="16">🎊</text>
+        <text x="10" y="95" font-size="16">🎉</text>
+        <text x="115" y="95" font-size="16">🎊</text>
       </svg>
     </div>
-    <button onclick="goGallery()">Next →</button>
-  </div>
-</div>
-
-<!-- ══ PHOTO QUOTE SCREEN (shown before gallery) ══ -->
-<div id="photoQuote" class="screen hidden">
-  <div class="env-glow"></div>
-  <div class="pq-content" id="pqContent">
-    <div class="pq-emoji" id="pqEmoji">📸</div>
-    <!-- Text is built word-by-word by JS into this element -->
-    <p class="pq-text" id="pqText"></p>
-    <!-- "tap" hint appears only after text finishes -->
-    <p class="pq-tap hidden" id="pqTap" onclick="showGalleryNow()">tap cheyyi chuddham 👉</p>
+    <button onclick="goGallery()" class="hidden" id="bdayBtn">Next →</button>
   </div>
 </div>
 
 <!-- ══ GALLERY ══ -->
 <div id="gallery" class="screen hidden">
-  <h2 class="gallery-title">Sweet Moments 🌸</h2>
+  <h2 class="gallery-title typing-text" id="galleryTitle"></h2>
   <div class="polaroid-stage" id="polaroidStage"></div>
   <div class="gallery-nav">
     <button class="nav-btn" onclick="galleryPrev()">‹</button>
     <span class="gallery-counter" id="galCounter">1 / 1</span>
     <button class="nav-btn" onclick="galleryNext()">›</button>
   </div>
-  <p class="long-press-hint">💡 Long press a photo for a secret message</p>
-  <!-- shuffle button — position tracked by JS -->
-  <div class="msg-btn-wrap" id="msgBtnWrap">
-    <button class="msg-btn" id="msgBtn" onclick="handleMsgBtnClick()">edho thelisindhi cheppa chusukooo chudali ani vunte ikkada click cheysi chadhuvukooo ledha nee istam😒 💌</button>
-  </div>
+  <p class="long-press-hint typing-text" id="longPressHint"></p>
+  <button class="msg-btn hidden" id="galleryMsgBtn" onclick="openMessage()">✉️ chudali ani vunte chudu</button>
 </div>
 
-<!-- "chupinchalaaaa" modal -->
-<div id="chupinchaModal" class="easter-modal hidden">
-  <div class="easter-inner">
-    <div class="easter-emoji">🥺✨</div>
-    <h3>chupinchalaaaa?</h3>
-    <div class="dlg-btns" style="margin-top:4px;">
-      <button class="dlg-btn dlg-no"  onclick="chupinchaNo()">avasaram ledhu 😤</button>
-      <button class="dlg-btn dlg-yes" onclick="chupinchaYes()">chupinchali 🥰</button>
-    </div>
-  </div>
-</div>
-
+<!-- Photo secret message popup -->
 <div id="photoMsg" class="photo-msg-popup hidden">
   <div class="photo-msg-inner">
-    <p id="photoMsgText"></p>
-    <button onclick="closePhotoMsg()">💖</button>
+    <p class="typing-text" id="photoMsgText"></p>
+    <button onclick="closePhotoMsg()" class="hidden" id="photoMsgBtn">💖</button>
   </div>
 </div>
 
@@ -438,17 +280,42 @@
     </div>
   </div>
   <div id="letterContent" class="letter-content hidden">
-    <h2 class="letter-title">A Special Message 💌</h2>
+    <h2 class="letter-title typing-text" id="letterTitleText"></h2>
     <div class="letter-box">
       <div class="letter-deco">🎀</div>
       <p id="letterTyped" class="letter-typed"></p>
       <div class="letter-deco" id="letterEndDeco" style="display:none">🌸</div>
     </div>
-    <button onclick="restartAll()" style="margin-top:18px;">🔁 Replay</button>
+    <button onclick="restartAll()" class="hidden" id="restartBtn" style="margin-top:18px;">🔁 Replay</button>
+  </div>
+</div>
+<!-- ══ NAME ENTRY ══ -->
+<div id="nameEntry" class="screen hidden">
+  <div class="name-entry-glow"></div>
+  <div class="name-box">
+    <div class="name-kitty">🐱</div>
+    <h2 class="name-title typing-text" id="nameTitle"></h2>
+    <p class="name-sub typing-text" id="nameSub"></p>
+    <input type="text" id="nameInput" class="name-input hidden" placeholder="Your name..." maxlength="20" autocomplete="off" />
+    <button onclick="submitName()" class="name-btn hidden" id="nameBtn">Let's go! 🎀</button>
+    <button onclick="showHint()" class="hint-btn hidden" id="hintBtn">hint kavalaaa.. 🤔</button>
+    <p class="name-error hidden" id="nameError">Please enter your name 🥺</p>
   </div>
 </div>
 
+<!-- ADD THIS MODAL AFTER NAME ENTRY -->
+<!-- Hint Modal -->
+<div id="hintModal" class="hint-modal hidden">
+  <div class="hint-inner">
+    <div class="hint-emoji">😤</div>
+    <p class="typing-text" id="hintText"></p>
+    <button onclick="closeHint()" class="hidden" id="hintCloseBtn">sare okay 💖</button>
+  </div>
+</div>
+
+<!-- Emoji burst overlay -->
 <div id="emojiBurst" class="emoji-burst hidden"></div>
+
 <script src="script.js"></script>
 </body>
 </html>
