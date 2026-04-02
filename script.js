@@ -920,19 +920,15 @@ const PHOTOS = [
   { src: 'photos/photo6.jpg', label: '🎀 Special Pic', msg: 'This pic made to fall for you every time. 🎀' },
   { src: 'photos/photo7.jpg', label: '🎀 Special Day', msg: 'Making memories together. 🎀' },
   { src: 'photos/photo8.jpg', label: '🎀 Special Day', msg: 'Making memories together. 🎀' },
-  { src: 'photos/photo9.jpg', label: '🎀 Special Day', msg: 'Making memories together. 🎀' },
+  { src: 'photos/photo9.jpg', label: '🎀 My Kukkapilla', msg: 'the day you have agreed. 🎀' },
   { src: 'photos/photo10.jpg', label: '🎀 Special Day', msg: 'Making memories together. 🎀' },
   { src: 'photos/photo11.jpg', label: '🎀 the one i wish', msg: 'the way you look at me🥹🥹. 🎀' },
-  { src: 'photos/photo12.jpg', label: '🎀 Special Day', msg: 'Making memories together. 🎀' },
-  { src: 'photos/photo13.jpg', label: '🎀 Special Day', msg: 'Making memories together. 🎀' },
   { src: 'photos/photo14.jpg', label: '🎀 the day i fall', msg: 'first time i got so excited by the way you called me. 🎀' },
-  { src: 'photos/photo15.jpg', label: '🎀 Special Day', msg: 'Making memories together. 🎀' },
-  { src: 'photos/photo16.jpg', label: '🎀 Special Day', msg: 'Making memories together. 🎀' },
-  { src: 'photos/photo17.jpg', label: '🎀 Special Day', msg: 'Making memories together. 🎀' },
   { src: 'photos/photo18.jpg', label: '🎀 Special Day', msg: 'Making memories together. 🎀' },
   { src: 'photos/photo19.jpg', label: '🎀 something special', msg: 'the day i felt naughty and loved. 🎀' },
   { src: 'photos/photo20.jpg', label: '🎀 Special Day', msg: 'Making memories together. 🎀' },
   { src: 'photos/photo21.jpg', label: '🎀 Special Day', msg: 'Making memories together. 🎀' },
+  { src: 'photos/photo23.jpg', label: '🎀 Special Day', msg: 'Making memories together. 🎀' },
 
 ];
 
@@ -1160,7 +1156,7 @@ function startLetterTypewriter() {
   const end = document.getElementById('letterEndDeco');
   const btnEl = document.getElementById('restartBtn');
 
-  const text = 'Firstly many more happy returns of the day kukkapilla🥺🫂❤️‍🩹😘. You are the one who made me special. Eppudu okalage vunde nannu koncham ayyina alochainchela cheysav. Neetho vunnappudu vunde feeling inka evarithonuu raledhu. Neetho gadipina moments and memories are still in my heart. Emo mundhu parichayam ayyithe inka enjoy cheysevalamoo ledha normal ga vundevalmooo thelidhu but at our peak manam kalisina kotha lo I felt very happy and loved the way you treated me.\n\nNuvvu naatho gadipina moments and mainly nee birthday roju nuvve call cheysi manchiga ready avvu manchi shirt veysukoo ani cheppi pilavadam — those moments I felt myself special 🫂🫂. Emo nee life lo naa character a role play cheysindhoo thelidhu but naa life lo pandhi pilla and kukkapilla chala pedha role play cheysay… entha pedha role ante emo maybe dhaniki minchi vere role vundadhu emo antha special ga.\n\nNinnu chala sarlu hurt cheysa but nuvvu prathisari thirigi edhokati cheysav… emo nenu em cheyyagalano thelidhu but thanks for that ✨. Anukuntu anukuntu ne last ki vachesam… neeku nenu first vunnantha special kakapovachu, everyone\'s priorities change, it\'s ok but parledhu.\n\nSame ninnu first lo chusinantha ledhu kani but ninnu chusina prathisari, neetho matladuthunna prathisari adhi peruguthune vundhi… reason thelidhu but em chestham. Every time anipisthadhi ila pakkane vunte bagundedhi ani… but it\'s your life, nee life lo neeku favs vundochu, so it\'s life and fate.\n\nBut I wish if time reversed… malli neetho Celesta 2k25 dhagara nunchi ela vunnamoo ala vundali ani vundhiii........\n\nAnyway, I will be always your __________ nuvve fill cheysesukooo… and I will be for you at every moment and anything. Emo inkem cheppaloo thelidhu but once again many more happy returns of the day to one and only one of me 🫂😘😘😘';
+  const text = 'Firstly many more happy returns of the day kukkapilla🫂❤️‍🩹😘. You are the one who made me special. Eppudu okalage vunde nannu koncham ayyina alochainchela cheysav. Neetho vunnappudu vunde feeling inka evarithonuu raledhu. Neetho gadipina moments and memories are still in my heart. Emo mundhu parichayam ayyithe inka enjoy cheysevalamoo ledha normal ga vundevalmooo thelidhu but at our peak manam kalisina kotha lo I felt very happy and loved the way you treated me.\n\nNuvvu naatho gadipina moments and mainly nee birthday roju nuvve call cheysi manchiga ready avvu manchi shirt veysukoo ani cheppi pilavadam — those moments I felt myself special 🫂🫂. Emo nee life lo naa character a role play cheysindhoo thelidhu but naa life lo pandhi pilla and kukkapilla chala pedha role play cheysay… entha pedha role ante emo maybe dhaniki minchi vere role vundadhu emo antha special ga.\n\nNinnu chala sarlu hurt cheysa but nuvvu prathisari thirigi edhokati cheysav… emo nenu em cheyyagalano thelidhu but thanks for that ✨. Anukuntu anukuntu ne last ki vachesam… neeku nenu first vunnantha special kakapovachu, everyone\'s priorities change, it\'s ok but parledhu.\n\nSame ninnu first lo chusinantha ledhu kani but ninnu chusina prathisari, neetho matladuthunna prathisari adhi peruguthune vundhi… reason thelidhu but em chestham. Every time anipisthadhi ila pakkane vunte bagundedhi ani… but it\'s your life, nee life lo neeku favs vundochu, so it\'s life and fate.\n\nBut I wish if time reversed… malli neetho Celesta 2k25 dhagara nunchi ela vunnamoo ala vundali ani vundhiii........\n\nAnyway, I will be always your __________ nuvve fill cheysesukooo… and I will be for you at every moment and anything. Emo inkem cheppaloo thelidhu but once again many more happy returns of the day to one and only one of me 🫂😘😘😘';
 
   el.textContent = '';
   end.style.display = 'none';
