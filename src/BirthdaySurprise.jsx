@@ -1,32 +1,57 @@
 /*
   ╔══════════════════════════════════════════════════════╗
-  ║   BIRTHDAY SURPRISE — React JSX (Enhanced v3)       ║
-  ║   All 15 enhancements + all bugs fixed              ║
+  ║   BIRTHDAY SURPRISE — React JSX (Fixed v4)          ║
+  ║   Fixes applied:                                    ║
+  ║   • Gallery button always visible (main fix)        ║
+  ║   • ownerLog moved to top (was ReferenceError)      ║
+  ║   • BIRTHDAY_DATE updated to 2026                   ║
+  ║   • CHIMES dead code cleaned up                     ║
+  ║   • Confetti RAF cancelation added                  ║
   ╚══════════════════════════════════════════════════════╝
-
-  PLACE FILES:
-  - Photos  → /public/photos/photo1.jpg … photo23.jpg
-  - Music   → /public/photos/Urike_Urike.m4a
-
-  ENHANCEMENTS INCLUDED:
-  1.  Animated background gradient (slow-shifting pink/purple/rose)
-  2.  Sparkle cursor — trailing hearts/stars follow the mouse
-  3.  Gallery: fade + slide transition (no flip)
-  4.  Glitter shimmer overlay on letter text as it types
-  5.  Screen-entry chime — unique soft bell per screen
-  6.  Music fades in softly instead of jumping to full volume
-  7.  Letter: pink scroll progress bar on the left side
-  8.  Confetti/emoji burst when correct name is entered
-  9.  Gallery: double-tap any photo → fullscreen lightbox
-  10. Cake: animated 👆 hand hint showing swipe direction
-  11. Letter 🎀 easter egg — tap bow 5x → secret message
-  12. Countdown timer on unlock screen (days until birthday)
-  13. End credits screen after letter with cinematic reveal
-  14. Gallery: caption types out letter-by-letter on active photo
-  15. Music volume fades in gradually (same as #6, combined)
 */
 
 import { useState, useEffect, useRef, useCallback } from "react";
+
+/* ─────────────────────────────────────
+   OWNER LOG  (moved to top — was causing ReferenceError in MessageScreen)
+───────────────────────────────────── */
+const ownerLog = {
+  add: (type, value) => {
+    try {
+      const log = JSON.parse(sessionStorage.getItem("ownerLog") || "[]");
+      log.push({ type, value, time: new Date().toLocaleTimeString() });
+      sessionStorage.setItem("ownerLog", JSON.stringify(log));
+    } catch(e) {}
+  },
+  addScreenTime: (screenId, ms) => {
+    try {
+      const secs = Math.round(ms/1000);
+      if(secs < 2) return;
+      const SCREEN_NAMES = {
+        unlock:    "💌 Envelope screen",
+        nameEntry: "🔐 Name entry screen",
+        countdown: "⏳ Countdown (3-2-1)",
+        loading:   "🐱 Loading screen",
+        message:   "🎂 Birthday message screen",
+        candles:   "🕯️ Candle blowing screen",
+        cake:      "🎂 Cake cutting screen",
+        birthday:  "🎉 Happy Birthday screen",
+        gallery:   "🖼️ Photo gallery",
+        letter:    "💌 Love letter screen",
+        credits:   "✨ Final credits screen",
+      };
+      const label = SCREEN_NAMES[screenId] || screenId;
+      const log = JSON.parse(sessionStorage.getItem("ownerLog") || "[]");
+      log.push({ type:"slide_time", value:`Spent ${secs}s on ${label}`, time: new Date().toLocaleTimeString() });
+      sessionStorage.setItem("ownerLog", JSON.stringify(log));
+    } catch(e) {}
+  },
+  get: () => {
+    try { return JSON.parse(sessionStorage.getItem("ownerLog") || "[]"); }
+    catch(e) { return []; }
+  },
+  clear: () => { try { sessionStorage.removeItem("ownerLog"); } catch(e) {} }
+};
 
 /* ─────────────────────────────────────
    CONSTANTS
@@ -34,7 +59,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 const CORRECT_NAME  = "kukkapilla";
 const SWIPE_MIN     = 80;
 const LONG_PRESS    = 600;
-const BIRTHDAY_DATE = new Date("2025-04-18"); // ← change to actual birthday
+const BIRTHDAY_DATE = new Date("2026-04-18"); // ← updated to 2026
 
 const PHOTOS = [
   { src:"photos/photo1.jpg",  label:"First photo 💖",          msg:"💖 First Photo is always special and means a lot 🫂" },
@@ -107,26 +132,18 @@ const playWrong  = ()=>{ playTone(300,"sawtooth",.15,.35); setTimeout(()=>playTo
 const playSlash  = ()=> playNoise(1800,.7,.25);
 const playCandlePop = ()=> playTone(900,"triangle",.12,.35);
 
-// Chimes removed — were causing glitchy/imperfect sounds
-const CHIMES = {};
-
 /* ─────────────────────────────────────
-   TYPING HOOK — flicker-free, StrictMode-safe
-   Each call gets its own cancel token.
-   The hook tracks the "active" token so only
-   the latest call ever writes to state.
+   TYPING HOOK
 ───────────────────────────────────── */
 const useTyping = () => {
-  const activeToken = useRef(0); // increments on each new type() call
-
+  const activeToken = useRef(0);
   const type = useCallback((setter, text, opts = {}, cb) => {
     const { charDelay = 38 } = opts;
-    const token = ++activeToken.current; // this call's unique id
+    const token = ++activeToken.current;
     setter("");
     let i = 0, acc = "";
-
     const step = () => {
-      if (activeToken.current !== token) return; // cancelled by newer call
+      if (activeToken.current !== token) return;
       if (i < text.length) {
         acc += text[i++];
         setter(acc);
@@ -137,7 +154,6 @@ const useTyping = () => {
     };
     setTimeout(step, 80);
   }, []);
-
   return type;
 };
 
@@ -163,7 +179,7 @@ const EmojiBurst = ({bursts}) => (
 );
 
 /* ─────────────────────────────────────
-   SPARKLE CURSOR  (Enhancement #2)
+   SPARKLE CURSOR
 ───────────────────────────────────── */
 const SparkleCursor = () => {
   const [sparks,setSparks]=useState([]);
@@ -319,7 +335,6 @@ const UnlockScreen = ({onOpen,onFirstTap}) => {
       {hearts.map(h=>(
         <span key={h.id} style={{position:"absolute",fontSize:"20px",left:`${h.left}vw`,top:"60vh",animation:"floatUp 2.5s ease-out forwards",pointerEvents:"none"}}>💖</span>
       ))}
-      {/* Enhancement #12: days countdown */}
       <div style={{position:"absolute",top:"16px",left:"50%",transform:"translateX(-50%)",background:"rgba(255,255,255,.55)",backdropFilter:"blur(6px)",borderRadius:"20px",padding:"6px 18px",fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(12px,3vw,15px)",color:"#c060a0",whiteSpace:"nowrap",boxShadow:"0 2px 12px rgba(220,80,140,.15)"}}>
         {days===0?"🎉 Today is her birthday!": `🎂 ${days} days until her birthday!`}
       </div>
@@ -346,17 +361,18 @@ const EnvelopeSVG = ({opened}) => (
 /* ════════════════════════════════════════
    SCREEN 2: NAME ENTRY
 ════════════════════════════════════════ */
-const NameEntryScreen = ({onSuccess,triggerBurst,ownerLog}) => {
+const NameEntryScreen = ({onSuccess,triggerBurst}) => {
   const [title,setTitle]=useState(""); const [sub,setSub]=useState("");
   const [showInput,setShowInput]=useState(false); const [showBtn,setShowBtn]=useState(false);
   const [showHintBtn,setShowHintBtn]=useState(false); const [inputVal,setInputVal]=useState("");
   const [error,setError]=useState(""); const [shake,setShake]=useState(false);
-  const [showHint,setShowHint]=useState(false); const [hintText,setHintText]=useState(""); const [showHintClose,setShowHintClose]=useState(false);
+  const [showHint,setShowHint]=useState(false); const [hintText,setHintText]=useState(""); const [showHintInput,setShowHintInput]=useState(false);
+  const [hintReply,setHintReply]=useState("");
   const attempts=useRef(0); const type=useTyping();
 
   useEffect(()=>{
-    const c1 = type(setTitle,"Enter your name",{charDelay:55},()=>{
-      const c2 = type(setSub,"nijam ga nuvvu chudali anukunte first attempt lo access chey 😒",{charDelay:38},()=>{
+    type(setTitle,"Enter your name",{charDelay:55},()=>{
+      type(setSub,"nijam ga nuvvu chudali anukunte first attempt lo access chey 😒",{charDelay:38},()=>{
         setTimeout(()=>{setShowInput(true);setTimeout(()=>setShowBtn(true),300);},400);
       });
     });
@@ -367,21 +383,29 @@ const NameEntryScreen = ({onSuccess,triggerBurst,ownerLog}) => {
     if(!val){setError("musukuni sariga enter chey ledha muthi paguludhi 😤");doShake();return;}
     if(val===CORRECT_NAME){
       setError(""); playPop();
-      ownerLog&&ownerLog.add("name_correct", `"${inputVal.trim()}" ✅ correct!`);
+      ownerLog.add("name_correct", `"${inputVal.trim()}" ✅`);
       triggerBurst(["🎉","💖","✨","🌸","🎊","⭐","🎀"],24);
       setTimeout(()=>onSuccess(),700); return;
     }
     attempts.current++;
     playWrong();
-    ownerLog&&ownerLog.add("name_wrong", `"${inputVal.trim()}" (attempt ${attempts.current})`);
+    ownerLog.add("name_wrong", `"${inputVal.trim()}" (attempt ${attempts.current})`);
     if(attempts.current>=2){setError("Hint kavali ana ledhu");setTimeout(()=>setShowHintBtn(true),400);}
     else setError("musukuni sariga enter chey ledha muthi paguludhi 😤");
     doShake(); setInputVal("");
   };
   const doShake=()=>{setShake(true);setTimeout(()=>setShake(false),400);};
   const openHint=()=>{
-    setShowHint(true);setHintText("");setShowHintClose(false);playPop();
-    type(setHintText,"hint uhh ledhu thokka ledhu musukuni alochinchukuni enter chey 😤",{charDelay:38},()=>setTimeout(()=>setShowHintClose(true),400));
+    setShowHint(true);setHintText("");setShowHintInput(false);setHintReply("");playPop();
+    ownerLog.add("hint_opened","Clicked 'hint kavalaaa' button");
+    type(setHintText,"hint uhh ledhu thokka ledhu musukuni alochinchukuni enter chey 😤",{charDelay:38},()=>setTimeout(()=>setShowHintInput(true),400));
+  };
+  const closeHint=()=>{
+    const reply=hintReply.trim();
+    if(!reply){playWrong();return;}
+    ownerLog.add("hint_reply",`"${reply}"`);
+    playPop();
+    setShowHint(false);setHintReply("");
   };
 
   return (
@@ -397,10 +421,24 @@ const NameEntryScreen = ({onSuccess,triggerBurst,ownerLog}) => {
         {showHintBtn&&<Btn onClick={openHint} variant="purple" style={{width:"100%",justifyContent:"center",marginTop:"8px"}}>hint kavalaaa.. 🤔</Btn>}
       </div>
       {showHint&&(
-        <Modal onBackdropClick={()=>setShowHint(false)}>
+        <Modal onBackdropClick={()=>{}}>
           <div style={{fontSize:"44px"}}>😤</div>
           <p style={{fontFamily:"'Caveat',cursive",fontWeight:700,color:"#c070a0",textAlign:"center",lineHeight:1.6,fontSize:"clamp(15px,3.8vw,20px)",margin:0}}>{hintText}</p>
-          {showHintClose&&<Btn onClick={()=>setShowHint(false)}>sare okay 💖</Btn>}
+          {showHintInput&&(
+            <>
+              <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(12px,3vw,15px)",color:"#d06090",margin:"4px 0 0",textAlign:"center"}}>
+                evaina cheppuko, close avvadam ki ✍️
+              </p>
+              <input
+                value={hintReply} onChange={e=>setHintReply(e.target.value)}
+                onKeyDown={e=>e.key==="Enter"&&closeHint()}
+                placeholder="type anything to close..."
+                autoFocus
+                style={{width:"100%",border:"2px solid #f4a0c8",borderRadius:"14px",padding:"10px 14px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,19px)",fontWeight:700,color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",boxSizing:"border-box"}}
+              />
+              <Btn onClick={closeHint} style={{width:"100%",justifyContent:"center"}}>okay 💖</Btn>
+            </>
+          )}
         </Modal>
       )}
     </Screen>
@@ -459,13 +497,14 @@ const LoadingScreen = ({onDone}) => {
    SCREEN 5: MESSAGE
 ════════════════════════════════════════ */
 const MessageScreen = ({onNext}) => {
-  const [title,setTitle]=useState(""); const [sub,setSub]=useState(""); const [showBtn,setShowBtn]=useState(false);
+  const [title,setTitle]=useState(""); const [sub,setSub]=useState(""); const [showInput,setShowInput]=useState(false);
   const [showEaster,setShowEaster]=useState(false); const [easterText,setEasterText]=useState(""); const [easterBtn,setEasterBtn]=useState(false);
+  const [msgVal,setMsgVal]=useState(""); const [msgError,setMsgError]=useState(false);
   const tapCount=useRef(0); const tapTimer=useRef(null); const type=useTyping();
 
   useEffect(()=>{
     type(setTitle,"kukkapilla putti 1year 1 month 27 days ayyina oka pandhi putti 21 years avvuthundhi eerojuki 😒",{charDelay:36},()=>{
-      type(setSub,"Happy 21st birthday pandhi and Happy birthday kukkapilla 🫂🫂🎂💖",{charDelay:38},()=>setTimeout(()=>setShowBtn(true),500));
+      type(setSub,"Happy 21st birthday pandhi and Happy birthday kukkapilla 🫂🫂🎂💖",{charDelay:38},()=>setTimeout(()=>setShowInput(true),500));
     });
   },[]);
 
@@ -475,6 +514,14 @@ const MessageScreen = ({onNext}) => {
     if(tapCount.current>=5){tapCount.current=0;setEasterText("");setEasterBtn(false);setShowEaster(true);playPop();
       ownerLog.add("easter_egg","Kitty tapped 5× — saw secret message!");
       type(setEasterText,EASTER_MSGS[Math.floor(Math.random()*EASTER_MSGS.length)],{charDelay:38},()=>setTimeout(()=>setEasterBtn(true),400));}
+  };
+
+  const handleStart=()=>{
+    const val=msgVal.trim();
+    if(!val){setMsgError(true);playWrong();setTimeout(()=>setMsgError(false),600);return;}
+    ownerLog.add("message_reaction",`"${val}"`);
+    playPop();
+    setTimeout(()=>onNext(),300);
   };
 
   return (
@@ -488,8 +535,22 @@ const MessageScreen = ({onNext}) => {
         <div style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#e0a0c0",marginTop:"4px",opacity:.6,animation:"blink 3s ease-in-out infinite"}}>Psst... tap me 5 times 🐾</div>
       </div>
       <h2 style={{fontFamily:"'Dancing Script',cursive",fontWeight:700,fontSize:"clamp(16px,3.8vw,26px)",color:"#be0a6e",lineHeight:1.55,maxWidth:"560px",margin:"0 0 6px",padding:"0 14px",textAlign:"center",minHeight:"3em"}}>{title}</h2>
-      <p style={{fontFamily:"'Pacifico',cursive",fontSize:"clamp(13px,3vw,20px)",color:"#e8407a",margin:"0 0 18px",minHeight:"1.5em"}}>{sub}</p>
-      {showBtn&&<Btn onClick={onNext}>🎀 Start the surprise</Btn>}
+      <p style={{fontFamily:"'Pacifico',cursive",fontSize:"clamp(13px,3vw,20px)",color:"#e8407a",margin:"0 0 14px",minHeight:"1.5em"}}>{sub}</p>
+      {showInput&&(
+        <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"8px",width:"min(340px,88vw)"}}>
+          <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,16px)",color:"#c07090",margin:0}}>
+            ikkade em anipistundo cheppu, tarvata start avutadhi 🎀
+          </p>
+          <input
+            value={msgVal} onChange={e=>setMsgVal(e.target.value)}
+            onKeyDown={e=>e.key==="Enter"&&handleStart()}
+            placeholder="nee reaction type chey..."
+            maxLength={120} autoComplete="off"
+            style={{width:"100%",border:`2px solid ${msgError?"#e040a0":"#f4a0c8"}`,borderRadius:"16px",padding:"12px 16px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,20px)",fontWeight:700,color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",boxSizing:"border-box",animation:msgError?"shakeInput .4s ease":"none",transition:"border-color .2s"}}
+          />
+          <Btn onClick={handleStart} style={{width:"100%",justifyContent:"center"}}>🎀 Start the surprise</Btn>
+        </div>
+      )}
       {showEaster&&(
         <Modal onBackdropClick={()=>setShowEaster(false)}>
           <div style={{fontSize:"40px"}}>🐾✨</div>
@@ -543,7 +604,7 @@ const CandleScreen = ({onDone,triggerBurst}) => {
 };
 
 /* ════════════════════════════════════════
-   SCREEN 7: CAKE (animated swipe hint)
+   SCREEN 7: CAKE
 ════════════════════════════════════════ */
 const CakeScreen = ({onDone,triggerBurst}) => {
   const [title,setTitle]=useState(""); const [hint,setHint]=useState("");
@@ -576,19 +637,16 @@ const CakeScreen = ({onDone,triggerBurst}) => {
       <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(16px,4vw,28px)",textShadow:"0 0 8px rgba(255,100,160,.4)",textAlign:"center",padding:"0 12px",maxWidth:"80vw",minHeight:"3em"}}>{title}</h2>
       <div ref={zoneRef} onMouseDown={onStart} onMouseMove={onMove} onMouseUp={onEnd} onMouseLeave={onEnd} onTouchStart={onStart} onTouchMove={onMove} onTouchEnd={onEnd} onTouchCancel={onEnd}
         style={{position:"relative",width:"clamp(240px,72vw,340px)",height:"clamp(240px,66vw,360px)",touchAction:"none",cursor:"crosshair",userSelect:"none",WebkitUserSelect:"none"}}>
-        {/* Knife */}
         {knifePos
           ?<div style={{position:"absolute",left:knifePos.x,top:knifePos.y,transform:"translate(-50%,-50%) rotate(90deg) scale(1.15)",width:"clamp(60px,14vw,80px)",height:"clamp(60px,14vw,80px)",borderRadius:"50%",background:"radial-gradient(circle,#fff5fa 60%,#f9c0d8 100%)",boxShadow:"0 10px 32px rgba(220,80,140,.5)",display:"flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",zIndex:10,fontSize:"clamp(28px,7vw,40px)"}}>🔪</div>
           :<div style={{position:"absolute",left:"12%",top:"20%",width:"clamp(60px,14vw,80px)",height:"clamp(60px,14vw,80px)",borderRadius:"50%",background:"radial-gradient(circle,#fff5fa 60%,#f9c0d8 100%)",boxShadow:"0 6px 24px rgba(220,80,140,.3)",display:"flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",zIndex:10,animation:"knifeFloat 2s ease-in-out infinite",fontSize:"clamp(28px,7vw,40px)"}}>🔪</div>
         }
-        {/* Enhancement #10: animated hand swipe hint */}
         {cutCount===0&&!cutting&&(
           <div style={{position:"absolute",top:"28%",left:0,right:0,display:"flex",alignItems:"center",justifyContent:"center",gap:"4px",pointerEvents:"none",zIndex:5,opacity:.8}}>
             <span style={{fontSize:"26px",animation:"handSwipe 1.4s ease-in-out infinite"}}>👆</span>
             <span style={{display:"inline-block",width:"44px",height:"3px",background:"linear-gradient(90deg,#f080b8,transparent)",borderRadius:"2px",animation:"handSwipe 1.4s ease-in-out infinite",animationDelay:".1s"}}/>
           </div>
         )}
-        {/* Cake SVG */}
         <div style={{position:"absolute",bottom:0,left:"50%",transform:"translateX(-50%)",width:"88%",pointerEvents:"none"}}>
           <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" style={{width:"100%",height:"auto",filter:"drop-shadow(0 8px 20px rgba(220,80,140,.25))",display:"block",animation:"floatY 2.5s ease-in-out infinite"}}>
             <g style={{animation:splitAnim?"splitLeft .6s ease forwards":"none"}}>
@@ -631,12 +689,25 @@ const CakeScreen = ({onDone,triggerBurst}) => {
    SCREEN 8: BIRTHDAY
 ════════════════════════════════════════ */
 const BirthdayScreen = ({onNext}) => {
-  const [title,setTitle]=useState(""); const [showBtn,setShowBtn]=useState(false);
-  const canvasRef=useRef(null); const type=useTyping();
+  const [title,setTitle]=useState(""); const [showInput,setShowInput]=useState(false);
+  const [bdayVal,setBdayVal]=useState(""); const [bdayError,setBdayError]=useState(false);
+  const canvasRef=useRef(null); const rafRef=useRef(null); const enterTime=useRef(Date.now()); const type=useTyping();
   useEffect(()=>{
-    launchConfetti(canvasRef.current);
-    type(setTitle,"Happy Birthday, kukkapilla garuuuuu 😘😘! 💙",{charDelay:42},()=>setTimeout(()=>setShowBtn(true),600));
+    enterTime.current=Date.now();
+    rafRef.current = launchConfetti(canvasRef.current);
+    type(setTitle,"Happy Birthday, kukkapilla garuuuuu 😘😘! 💙",{charDelay:42},()=>setTimeout(()=>setShowInput(true),600));
+    return () => { if(rafRef.current) cancelAnimationFrame(rafRef.current); };
   },[]);
+
+  const handleNext=()=>{
+    const val=bdayVal.trim();
+    if(!val){setBdayError(true);playWrong();setTimeout(()=>setBdayError(false),600);return;}
+    const secs=Math.round((Date.now()-enterTime.current)/1000);
+    ownerLog.add("birthday_reaction",`"${val}" · spent ${secs}s on this page`);
+    playPop();
+    setTimeout(()=>onNext(),300);
+  };
+
   return (
     <Screen style={{position:"fixed",inset:0}}>
       <canvas ref={canvasRef} style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:0}}/>
@@ -645,59 +716,87 @@ const BirthdayScreen = ({onNext}) => {
         <div style={{animation:"floatY 2s ease-in-out infinite",filter:"drop-shadow(0 6px 14px rgba(220,80,140,.2))"}}>
           <BirthdayKittySVG/>
         </div>
-        {showBtn&&<Btn onClick={onNext}>Next →</Btn>}
+        {showInput&&(
+          <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"8px",width:"min(320px,88vw)"}}>
+            <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,17px)",color:"#e8407a",margin:0}}>
+              oka maata cheppu happy ga vundava? 💖
+            </p>
+            <input
+              value={bdayVal} onChange={e=>setBdayVal(e.target.value)}
+              onKeyDown={e=>e.key==="Enter"&&handleNext()}
+              placeholder="nee feeling cheppu..."
+              maxLength={120} autoComplete="off"
+              style={{width:"100%",border:`2px solid ${bdayError?"#e040a0":"#f4a0c8"}`,borderRadius:"16px",padding:"12px 16px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,20px)",fontWeight:700,color:"#d8368e",background:"rgba(255,255,255,.85)",outline:"none",textAlign:"center",boxSizing:"border-box",animation:bdayError?"shakeInput .4s ease":"none",transition:"border-color .2s"}}
+            />
+            <Btn onClick={handleNext} style={{width:"100%",justifyContent:"center"}}>Next →</Btn>
+          </div>
+        )}
       </div>
     </Screen>
   );
 };
 
+// Returns the RAF id so caller can cancel it
 function launchConfetti(canvas) {
-  if(!canvas) return;
+  if(!canvas) return null;
   const ctx=canvas.getContext("2d");
   canvas.width=window.innerWidth; canvas.height=window.innerHeight;
   const colors=["#ff78b8","#ff3080","#f7c0dc","#ffacdf","#ffd0e8","#e040a0","#fff","#ffa0cc","#a78bfa","#fde047"];
   const pieces=Array.from({length:180},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height-canvas.height,r:Math.random()*8+3,d:Math.random()*2.5+1.2,color:colors[Math.floor(Math.random()*colors.length)],tilt:Math.random()*Math.PI*2,ti:(Math.random()-.5)*.1}));
-  let frame=0;
-  const draw=()=>{ctx.clearRect(0,0,canvas.width,canvas.height);pieces.forEach(p=>{p.tilt+=p.ti;p.y+=p.d;if(p.y>canvas.height+20){p.y=-10;p.x=Math.random()*canvas.width;}ctx.beginPath();ctx.fillStyle=p.color;ctx.ellipse(p.x,p.y,p.r,p.r*.45,p.tilt,0,Math.PI*2);ctx.fill();});if(++frame<480)requestAnimationFrame(draw);else ctx.clearRect(0,0,canvas.width,canvas.height);};
-  draw();
+  let frame=0, rafId=null;
+  const draw=()=>{
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{p.tilt+=p.ti;p.y+=p.d;if(p.y>canvas.height+20){p.y=-10;p.x=Math.random()*canvas.width;}ctx.beginPath();ctx.fillStyle=p.color;ctx.ellipse(p.x,p.y,p.r,p.r*.45,p.tilt,0,Math.PI*2);ctx.fill();});
+    if(++frame<480) rafId=requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  };
+  rafId=requestAnimationFrame(draw);
+  return rafId;
 }
 
 /* ════════════════════════════════════════
-   SCREEN 9: GALLERY (fade+slide, lightbox, typed captions)
+   SCREEN 9: GALLERY — with per-photo feeling text boxes
 ════════════════════════════════════════ */
 const GalleryScreen = ({onNext}) => {
-  const [title,setTitle]=useState(""); const [hint,setHint]=useState(""); const [showBtn,setShowBtn]=useState(false);
+  const [title,setTitle]=useState("");
   const [galIndex,setGalIndex]=useState(0); const [isAnimating,setIsAnimating]=useState(false);
-  const [photoMsg,setPhotoMsg]=useState(null); const [photoMsgText,setPhotoMsgText]=useState(""); const [showPhotoBtn,setShowPhotoBtn]=useState(false);
-  const [lightbox,setLightbox]=useState(null); // Enhancement #9
-  const [caption,setCaption]=useState(""); // Enhancement #14
-  const autoRef=useRef(null); const touchStart=useRef(0); const pressTimer=useRef(null);
+  const [lightbox,setLightbox]=useState(null);
+  const [caption,setCaption]=useState("");
+
+  // Per-photo feelings: array of strings, one per photo
+  const [feelings,setFeelings]=useState(()=>Array(PHOTOS.length).fill(""));
+  // Which photos have been saved (submitted)
+  const [saved,setSaved]=useState(()=>Array(PHOTOS.length).fill(false));
+  // Draft value for current photo's input
+  const [draft,setDraft]=useState("");
+  // Shake animation on empty submit
+  const [inputShake,setInputShake]=useState(false);
+  // Whether user is actively typing (pauses auto-advance)
+  const [isTyping,setIsTyping]=useState(false);
+  const typingTimer=useRef(null);
+
+  const autoRef=useRef(null); const touchStart=useRef(0);
+  const inputRef=useRef(null);
   const type=useTyping();
 
   useEffect(()=>{
-    type(setTitle,"The moments that makes me one 🌸",{charDelay:42},()=>{
-      type(setHint,"long press cheysi chudu | double tap to fullscreen 💖",{charDelay:36},()=>{
-        setTimeout(()=>{setShowBtn(true);startAuto();},600);
-      });
-    });
+    type(setTitle,"The moments that makes me one 🌸",{charDelay:42},()=>startAuto());
     return()=>clearInterval(autoRef.current);
   },[]);
 
-  // Enhancement #14: type caption when photo changes
+  // Sync draft when photo changes — load saved feeling back into box
   useEffect(()=>{
+    setDraft(feelings[galIndex]);
     setCaption("");
     type(setCaption,PHOTOS[galIndex].label,{charDelay:35});
   },[galIndex]);
 
-  const startAuto=()=>{clearInterval(autoRef.current);autoRef.current=setInterval(()=>next(),3200);};
+  const startAuto=()=>{clearInterval(autoRef.current);autoRef.current=setInterval(()=>{if(!isTyping)next();},3200);};
+  const stopAuto=()=>clearInterval(autoRef.current);
+
   const next=()=>{if(isAnimating)return;setIsAnimating(true);setGalIndex(p=>(p+1)%PHOTOS.length);startAuto();setTimeout(()=>setIsAnimating(false),400);};
   const prev=()=>{if(isAnimating)return;setIsAnimating(true);setGalIndex(p=>(p-1+PHOTOS.length)%PHOTOS.length);startAuto();setTimeout(()=>setIsAnimating(false),400);};
 
-  const startPress=(msg)=>{pressTimer.current=setTimeout(()=>showMsg(msg),600);};
-  const endPress=()=>clearTimeout(pressTimer.current);
-  const showMsg=(msg)=>{if(!msg)return;setPhotoMsg(msg);setPhotoMsgText("");setShowPhotoBtn(false);playPop();type(setPhotoMsgText,msg,{charDelay:38},()=>setTimeout(()=>setShowPhotoBtn(true),400));};
-
-  // Enhancement #3: fade + slide (no flip)
   const cardStyle=(i)=>{
     const total=PHOTOS.length, diff=((i-galIndex)%total+total)%total;
     if(diff===0) return{transform:"translateX(0) scale(1)",opacity:1,zIndex:10,pointerEvents:"all",boxShadow:"0 16px 40px rgba(180,60,120,.28)"};
@@ -708,32 +807,91 @@ const GalleryScreen = ({onNext}) => {
     return{opacity:0,zIndex:0,pointerEvents:"none"};
   };
 
+  // Called when user types in the feeling box
+  const handleDraftChange=(val)=>{
+    setDraft(val);
+    setIsTyping(true);
+    stopAuto();
+    clearTimeout(typingTimer.current);
+    // Resume auto-advance 4s after they stop typing
+    typingTimer.current=setTimeout(()=>{setIsTyping(false);startAuto();},4000);
+  };
+
+  // Save feeling for current photo
+  const saveFeelingForCurrent=()=>{
+    const val=draft.trim();
+    if(!val){
+      setInputShake(true);playWrong();
+      setTimeout(()=>setInputShake(false),500);
+      return;
+    }
+    const newFeelings=[...feelings];newFeelings[galIndex]=val;setFeelings(newFeelings);
+    const newSaved=[...saved];newSaved[galIndex]=true;setSaved(newSaved);
+    ownerLog.add("photo_feeling",`Photo ${galIndex+1} "${PHOTOS[galIndex].label}": "${val}"`);
+    playPop();
+    // Briefly resume auto, then move to next unsaved photo if any
+    setTimeout(()=>{
+      const nextUnsaved=newSaved.findIndex((s,i)=>!s);
+      if(nextUnsaved!==-1 && nextUnsaved!==galIndex){
+        setIsAnimating(true);
+        setGalIndex(nextUnsaved);
+        setTimeout(()=>setIsAnimating(false),400);
+      }
+      startAuto();
+    },600);
+  };
+
+  const savedCount=saved.filter(Boolean).length;
+  // Allow proceeding once all photos have feelings saved
+  const canProceed=savedCount===PHOTOS.length;
+
+  const handleNext=()=>{
+    // Save current draft if not yet saved before proceeding
+    const val=draft.trim();
+    if(val && !saved[galIndex]){
+      const newFeelings=[...feelings];newFeelings[galIndex]=val;
+      const newSaved=[...saved];newSaved[galIndex]=true;
+      ownerLog.add("photo_feeling",`Photo ${galIndex+1} "${PHOTOS[galIndex].label}": "${val}"`);
+      setFeelings(newFeelings);setSaved(newSaved);
+    }
+    playPop();
+    onNext();
+  };
+
   return (
-    <Screen style={{gap:0, padding:"8px 16px", justifyContent:"center"}}>
+    <Screen style={{gap:0,padding:"6px 14px 12px",justifyContent:"center",display:"flex",flexDirection:"column",alignItems:"center"}}>
 
       {/* Title */}
-      <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(16px,4vw,28px)",margin:"0 0 6px",textShadow:"0 0 8px rgba(255,100,160,.4)",flexShrink:0,minHeight:"36px"}}>{title}</h2>
+      <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(15px,3.8vw,24px)",margin:"0 0 6px",textShadow:"0 0 8px rgba(255,100,160,.4)",flexShrink:0,minHeight:"28px"}}>{title}</h2>
 
-      {/* Polaroid stack — capped at 52vh so everything below always fits */}
-      <div style={{position:"relative",width:"min(260px, 72vw)",height:"min(300px, 52vh)",margin:"0 auto 8px",perspective:"900px",cursor:"pointer",flexShrink:0}}
+      {/* Polaroid stack — height tightened to 38vh to leave room for text box */}
+      <div
+        style={{position:"relative",width:"min(220px,62vw)",height:"min(255px,38vh)",margin:"0 auto 8px",perspective:"900px",cursor:"pointer",flexShrink:0}}
         onTouchStart={e=>{touchStart.current=e.touches[0].clientX;}}
         onTouchEnd={e=>{const dx=e.changedTouches[0].clientX-touchStart.current;if(Math.abs(dx)>40){dx<0?next():prev();}}}
       >
         {PHOTOS.map((photo,i)=>(
-          <div key={i} style={{position:"absolute",inset:0,background:"#fff",borderRadius:"6px",padding:"8px 8px 36px",boxShadow:"0 8px 28px rgba(180,60,120,.18)",transition:"transform .45s cubic-bezier(.34,1.5,.64,1),opacity .35s ease",willChange:"transform,opacity",...cardStyle(i)}}
-            onMouseDown={()=>startPress(photo.msg)} onMouseUp={endPress} onMouseLeave={endPress}
-            onTouchStart={()=>startPress(photo.msg)} onTouchEnd={endPress} onTouchCancel={endPress}
-            onClick={()=>{clearTimeout(pressTimer.current);next();}}
+          <div key={i} style={{
+            position:"absolute",inset:0,background:"#fff",borderRadius:"6px",padding:"6px 6px 28px",
+            boxShadow:"0 8px 28px rgba(180,60,120,.18)",
+            transition:"transform .45s cubic-bezier(.34,1.5,.64,1),opacity .35s ease",
+            willChange:"transform,opacity",...cardStyle(i),
+          }}
+            onClick={()=>{ if(i===galIndex){/* do nothing — let input handle */} else next(); }}
           >
-            <div style={{width:"100%",height:"calc(100% - 36px)",borderRadius:"3px",position:"relative",background:"#fff8fc",border:"1px solid #f9d0e8",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
+            {/* Saved checkmark badge */}
+            {saved[i]&&(
+              <div style={{position:"absolute",top:"4px",right:"4px",width:"20px",height:"20px",borderRadius:"50%",background:"linear-gradient(135deg,#4caf50,#2e7d32)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:20,fontSize:"11px",boxShadow:"0 2px 6px rgba(0,0,0,.2)"}}>✓</div>
+            )}
+            <div style={{width:"100%",height:"calc(100% - 28px)",borderRadius:"3px",position:"relative",background:"#fff8fc",border:"1px solid #f9d0e8",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
               <img src={photo.src} alt={photo.label}
                 style={{maxWidth:"100%",maxHeight:"100%",width:"auto",height:"auto",objectFit:"contain",display:"block",transition:"filter 1.5s",filter:i===galIndex?"saturate(1) brightness(1)":"saturate(.1) brightness(1.4)"}}
                 onError={e=>{e.target.style.display="none";}}
-                onDoubleClick={(e)=>{e.stopPropagation();setLightbox(photo.src);}}
+                onDoubleClick={(ev)=>{ev.stopPropagation();setLightbox(photo.src);}}
               />
               <div style={{position:"absolute",inset:0,background:"rgba(255,240,248,.6)",opacity:i===galIndex?0:1,transition:"opacity 1.2s",pointerEvents:"none"}}/>
             </div>
-            <div style={{textAlign:"center",fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,16px)",fontWeight:700,color:"#b05070",lineHeight:1,position:"absolute",bottom:"6px",left:0,right:0}}>
+            <div style={{textAlign:"center",fontFamily:"'Caveat',cursive",fontSize:"clamp(11px,2.5vw,13px)",fontWeight:700,color:"#b05070",lineHeight:1,position:"absolute",bottom:"4px",left:0,right:0}}>
               {i===galIndex ? caption : photo.label}
             </div>
           </div>
@@ -741,18 +899,68 @@ const GalleryScreen = ({onNext}) => {
       </div>
 
       {/* Navigation */}
-      <div style={{display:"flex",alignItems:"center",gap:"14px",marginBottom:"4px",flexShrink:0}}>
-        <button onClick={prev} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"34px",height:"34px",borderRadius:"50%",color:"#fff",fontSize:"20px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 4px 14px rgba(220,70,140,.3)",lineHeight:1}}>‹</button>
-        <span style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(14px,3vw,18px)",fontWeight:700,color:"#d8368e",minWidth:"48px",textAlign:"center"}}>{galIndex+1} / {PHOTOS.length}</span>
-        <button onClick={next} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"34px",height:"34px",borderRadius:"50%",color:"#fff",fontSize:"20px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 4px 14px rgba(220,70,140,.3)",lineHeight:1}}>›</button>
+      <div style={{display:"flex",alignItems:"center",gap:"10px",marginBottom:"6px",flexShrink:0}}>
+        <button onClick={prev} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"30px",height:"30px",borderRadius:"50%",color:"#fff",fontSize:"17px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 4px 14px rgba(220,70,140,.3)",lineHeight:1}}>‹</button>
+        {/* Progress dots */}
+        <div style={{display:"flex",gap:"4px",alignItems:"center"}}>
+          {PHOTOS.map((_,i)=>(
+            <div key={i} onClick={()=>{if(!isAnimating){setIsAnimating(true);setGalIndex(i);startAuto();setTimeout(()=>setIsAnimating(false),400);}}}
+              style={{width:i===galIndex?"18px":"7px",height:"7px",borderRadius:"4px",background:saved[i]?"#4caf50":i===galIndex?"#e040a0":"#f4a0c8",transition:"all .3s cubic-bezier(.34,1.5,.64,1)",cursor:"pointer",flexShrink:0}}
+            />
+          ))}
+        </div>
+        <button onClick={next} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"30px",height:"30px",borderRadius:"50%",color:"#fff",fontSize:"17px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 4px 14px rgba(220,70,140,.3)",lineHeight:1}}>›</button>
       </div>
 
-      {/* Hint */}
-      <p style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#d0a0b8",margin:"0 0 6px",opacity:.8,flexShrink:0,minHeight:"14px"}}>{hint}</p>
+      {/* ── Per-photo feeling text box ── */}
+      <div style={{width:"min(320px,90vw)",flexShrink:0,display:"flex",flexDirection:"column",gap:"6px"}}>
+        <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(12px,3vw,15px)",color:"#c07090",margin:0,textAlign:"center",lineHeight:1.3}}>
+          {saved[galIndex]
+            ? <span style={{color:"#4caf50",fontWeight:700}}>✓ saved! edit cheyyadam ki type cheyyi 💚</span>
+            : `photo ${galIndex+1} gurinchi nee feeling cheppu 💖`
+          }
+        </p>
+        <div style={{display:"flex",gap:"6px",alignItems:"center"}}>
+          <input
+            ref={inputRef}
+            key={galIndex} // remounts input on photo change — clears focus state
+            value={draft}
+            onChange={e=>handleDraftChange(e.target.value)}
+            onFocus={()=>{setIsTyping(true);stopAuto();}}
+            onBlur={()=>{clearTimeout(typingTimer.current);typingTimer.current=setTimeout(()=>{setIsTyping(false);startAuto();},3000);}}
+            onKeyDown={e=>{ if(e.key==="Enter"){e.preventDefault();saveFeelingForCurrent();} }}
+            placeholder={saved[galIndex]?"change cheyali ante type chey...":"ikkade type chey..."}
+            maxLength={140}
+            autoComplete="off"
+            style={{
+              flex:1,
+              border:`2px solid ${inputShake?"#e040a0":saved[galIndex]?"#4caf50":"#f4a0c8"}`,
+              borderRadius:"14px",padding:"9px 12px",
+              fontFamily:"'Caveat',cursive",
+              fontSize:"clamp(14px,3.5vw,18px)",fontWeight:700,
+              color:"#d8368e",background:"#fff5fa",outline:"none",
+              textAlign:"center",boxSizing:"border-box",
+              transition:"border-color .25s",
+              animation:inputShake?"shakeInput .4s ease":"none",
+            }}
+          />
+          {/* Save button — tick icon */}
+          <button onClick={saveFeelingForCurrent}
+            style={{flexShrink:0,width:"38px",height:"38px",borderRadius:"50%",border:"none",background:draft.trim()?"linear-gradient(135deg,#f080b8,#e040a0)":"#f4d0e4",cursor:draft.trim()?"pointer":"default",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"18px",boxShadow:draft.trim()?"0 4px 14px rgba(220,70,140,.3)":"none",transition:"all .2s"}}
+          >
+            {saved[galIndex]?"💾":"💖"}
+          </button>
+        </div>
+        {/* Progress counter */}
+        <p style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#d0a0b8",margin:0,textAlign:"center",opacity:.8}}>
+          {savedCount} / {PHOTOS.length} photos lo feeling cheppindi
+          {savedCount===PHOTOS.length?" 🎉 anni cheppindi!":" · double tap fullscreen"}
+        </p>
+      </div>
 
-      {/* Next page button — always visible */}
-      <Btn onClick={onNext} style={{flexShrink:0,opacity:showBtn?1:0,pointerEvents:showBtn?"all":"none",transition:"opacity .4s"}}>
-        ✉️ chudali ani vunte chudu
+      {/* ── Continue button ── */}
+      <Btn onClick={handleNext} style={{flexShrink:0,marginTop:"8px",opacity:canProceed?1:.5,cursor:canProceed?"pointer":"default"}}>
+        {canProceed?"✉️ chudali ani vunte chudu":"✉️ anni photos ki feeling cheppi proceed cheyyi"}
       </Btn>
 
       {/* Lightbox */}
@@ -762,27 +970,19 @@ const GalleryScreen = ({onNext}) => {
           <div onClick={()=>setLightbox(null)} style={{position:"absolute",top:"16px",right:"20px",color:"white",fontSize:"32px",cursor:"pointer",background:"rgba(255,255,255,.15)",width:"40px",height:"40px",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}}>✕</div>
         </div>
       )}
-
-      {/* Photo secret message */}
-      {photoMsg&&(
-        <Modal onBackdropClick={()=>setPhotoMsg(null)}>
-          <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(16px,4vw,22px)",fontWeight:700,color:"#c070a0",margin:0,textAlign:"center",lineHeight:1.5}}>{photoMsgText}</p>
-          {showPhotoBtn&&<Btn onClick={()=>setPhotoMsg(null)}>💖</Btn>}
-        </Modal>
-      )}
     </Screen>
   );
 };
 
 /* ════════════════════════════════════════
-   SCREEN 10: LETTER (shimmer, scroll bar, 🎀 easter egg)
+   SCREEN 10: LETTER
 ════════════════════════════════════════ */
 const LetterScreen = ({onNext}) => {
   const [sealBroken,setSealBroken]=useState(false);
   const [letterTitle,setLetterTitle]=useState(""); const [letterTyped,setLetterTyped]=useState("");
   const [showEnd,setShowEnd]=useState(false); const [showNextBtn,setShowNextBtn]=useState(false);
-  const [scrollPct,setScrollPct]=useState(0); // Enhancement #7
-  const [bowTaps,setBowTaps]=useState(0); // Enhancement #11
+  const [scrollPct,setScrollPct]=useState(0);
+  const [bowTaps,setBowTaps]=useState(0);
   const [bowEaster,setBowEaster]=useState(false); const [bowText,setBowText]=useState(""); const [bowBtn,setBowBtn]=useState(false);
   const pressTimer=useRef(null); const type=useTyping(); const boxRef=useRef(null);
 
@@ -793,18 +993,12 @@ const LetterScreen = ({onNext}) => {
     setTimeout(()=>{type(setLetterTitle,"A Special Message 💌",{charDelay:50},()=>startLetterType());},700);
   };
   const startLetterType=()=>{
-    // Generate full text instantly so user can read from the top
-    // while the text is still "appearing" in the background at fast speed.
-    // We do NOT auto-scroll — user reads from top naturally.
     setLetterTyped(""); setShowEnd(false);
-    // Reset scroll to top immediately
     if(boxRef.current) boxRef.current.scrollTop=0;
     let i=0, acc="";
     const iv=setInterval(()=>{
-      // Type 4 chars per tick for fast background generation
       for(let c=0;c<4&&i<LETTER_TEXT.length;c++){acc+=LETTER_TEXT[i++];}
       setLetterTyped(acc);
-      // NO auto-scroll — let user read from top at their own pace
       if(i>=LETTER_TEXT.length){
         clearInterval(iv);
         setShowEnd(true);
@@ -838,9 +1032,7 @@ const LetterScreen = ({onNext}) => {
       {sealBroken&&(
         <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:0,width:"100%",height:"100%",padding:"8px 0",animation:"fadeInUp .5s ease"}}>
           <h2 style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,fontStyle:"italic",fontSize:"clamp(18px,4vw,32px)",color:"#d8368e",margin:"0 0 4px",flexShrink:0}}>{letterTitle}</h2>
-          {/* Enhancement #11: tappable bow */}
           <div onClick={handleBowTap} style={{fontSize:"20px",margin:"2px 0 6px",flexShrink:0,cursor:"pointer",userSelect:"none",transition:"transform .15s"}} title="Tap 5x for a secret 🌸">🎀</div>
-          {/* Enhancement #7: scroll progress + Enhancement #4: shimmer */}
           <div style={{position:"relative",width:"94vw",maxWidth:"680px",flex:1,minHeight:0,display:"flex"}}>
             <div style={{position:"absolute",left:0,top:0,bottom:0,width:"4px",borderRadius:"4px",background:"#f9d0e4",zIndex:2,flexShrink:0}}>
               <div style={{width:"100%",height:`${scrollPct}%`,background:"linear-gradient(180deg,#f080b8,#e040a0)",borderRadius:"4px",transition:"height .1s"}}/>
@@ -848,7 +1040,6 @@ const LetterScreen = ({onNext}) => {
             <div ref={boxRef} onScroll={onScroll}
               className="letter-scroll"
               style={{background:"#fff",borderRadius:"16px",padding:"clamp(16px,4vw,28px) clamp(18px,5vw,36px)",width:"100%",flex:1,minHeight:0,overflowY:"auto",overflowX:"hidden",boxShadow:"0 4px 24px rgba(200,70,130,.15)",fontFamily:"'Caveat',cursive",fontStyle:"italic",fontSize:"clamp(17px,3.2vw,22px)",color:"#d1006f",lineHeight:2,textAlign:"center",border:"2px solid #f9d0e4",position:"relative",marginLeft:"8px"}}>
-              {/* Enhancement #4: glitter shimmer */}
               <div style={{position:"sticky",top:0,height:0,overflow:"visible",pointerEvents:"none",zIndex:1}}>
                 <div style={{height:"100vh",background:"linear-gradient(105deg,transparent 40%,rgba(255,200,230,.15) 50%,transparent 60%)",backgroundSize:"200% 100%",animation:"shimmer 3s linear infinite",marginTop:"-2px"}}/>
               </div>
@@ -859,7 +1050,6 @@ const LetterScreen = ({onNext}) => {
           {showNextBtn&&<Btn onClick={onNext} style={{marginTop:"10px",flexShrink:0}}>Continue ✨</Btn>}
         </div>
       )}
-      {/* Enhancement #11: bow easter egg modal */}
       {bowEaster&&(
         <Modal onBackdropClick={()=>setBowEaster(false)}>
           <div style={{fontSize:"40px"}}>🎀✨</div>
@@ -873,10 +1063,13 @@ const LetterScreen = ({onNext}) => {
 };
 
 /* ════════════════════════════════════════
-   SCREEN 11: END CREDITS  (Enhancement #13)
+   SCREEN 11: END CREDITS
 ════════════════════════════════════════ */
 const CreditsScreen = ({onRestart}) => {
   const [phase,setPhase]=useState(0);
+  const [feelingVal,setFeelingVal]=useState("");
+  const [feelingSaved,setFeelingsSaved]=useState(false);
+  const [feelingShake,setFeelingShake]=useState(false);
   const lines=[
     {text:"Made with 💖",            size:"clamp(28px,6vw,52px)", font:"'Great Vibes',cursive",   color:"#d1006f"},
     {text:"for the one and only",    size:"clamp(16px,3vw,24px)", font:"'Caveat',cursive",         color:"#c070a0"},
@@ -886,19 +1079,82 @@ const CreditsScreen = ({onRestart}) => {
   ];
   useEffect(()=>{
     const timers=lines.map((_,i)=>setTimeout(()=>setPhase(p=>Math.max(p,i+1)),600+i*1100));
-    const btnTimer=setTimeout(()=>setPhase(lines.length+1),600+lines.length*1100+600);
+    const btnTimer=setTimeout(()=>setPhase(lines.length+1),600+lines.length*1100+800);
     return()=>{timers.forEach(clearTimeout);clearTimeout(btnTimer);};
   },[]);
+
+  const saveFeeling=()=>{
+    const val=feelingVal.trim();
+    if(!val){setFeelingShake(true);playWrong();setTimeout(()=>setFeelingShake(false),500);return;}
+    ownerLog.add("credits_feeling",`"${val}"`);
+    playPop();
+    setFeelingsSaved(true);
+  };
+
   return (
-    <Screen style={{background:"radial-gradient(ellipse at 50% 40%,#fff0f8,#ffd0ec 60%,#ffb8e0 100%)"}}>
-      <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"20px",padding:"24px"}}>
+    <Screen style={{background:"radial-gradient(ellipse at 50% 40%,#fff0f8,#ffd0ec 60%,#ffb8e0 100%)",overflowY:"auto",justifyContent:"flex-start",paddingTop:"clamp(20px,5vh,40px)",paddingBottom:"24px"}}>
+      <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"18px",width:"100%",maxWidth:"440px",margin:"0 auto"}}>
+        {/* Cinematic lines */}
         {lines.map((l,i)=>(
           <div key={i} style={{opacity:phase>i?1:0,transform:phase>i?"translateY(0)":"translateY(24px)",transition:"opacity .9s ease,transform .9s ease",fontFamily:l.font,fontSize:l.size,color:l.color,textAlign:"center",textShadow:"0 2px 12px rgba(220,80,140,.2)"}}>
             {l.text}
           </div>
         ))}
-        <div style={{opacity:phase>lines.length?1:0,transition:"opacity .9s ease",marginTop:"12px",display:"flex",gap:"10px",flexWrap:"wrap",justifyContent:"center"}}>
-          <Btn onClick={onRestart}>🔁 Replay from start</Btn>
+
+        {/* ── Feeling text box — appears after all lines reveal ── */}
+        <div style={{
+          opacity:phase>lines.length?1:0,
+          transform:phase>lines.length?"translateY(0)":"translateY(30px)",
+          transition:"opacity 1s ease .3s,transform 1s ease .3s",
+          width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:"10px",
+          marginTop:"8px",padding:"0 8px",
+        }}>
+          {!feelingSaved ? (
+            <>
+              <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(14px,3.5vw,18px)",color:"#b05070",margin:0,textAlign:"center",lineHeight:1.4}}>
+                anni chusaka ippudu em anipistundhi? 🌸<br/>
+                <span style={{fontSize:"clamp(12px,2.8vw,14px)",opacity:.7}}>nee final feeling ikkade type cheyyi</span>
+              </p>
+              <textarea
+                value={feelingVal}
+                onChange={e=>setFeelingVal(e.target.value)}
+                placeholder="nee manasulo em vundho ikkade cheppu..."
+                maxLength={300}
+                rows={3}
+                style={{
+                  width:"100%",
+                  border:`2px solid ${feelingShake?"#e040a0":"#f4a0c8"}`,
+                  borderRadius:"16px",padding:"12px 14px",
+                  fontFamily:"'Caveat',cursive",
+                  fontSize:"clamp(15px,3.5vw,19px)",fontWeight:700,
+                  color:"#d8368e",background:"rgba(255,255,255,.85)",
+                  outline:"none",resize:"none",
+                  boxSizing:"border-box",lineHeight:1.5,
+                  animation:feelingShake?"shakeInput .4s ease":"none",
+                  transition:"border-color .25s",
+                  boxShadow:"0 4px 20px rgba(220,80,140,.15)",
+                }}
+              />
+              <Btn onClick={saveFeeling} style={{width:"100%",justifyContent:"center"}}>
+                💖 save & finish
+              </Btn>
+            </>
+          ) : (
+            <div style={{background:"rgba(255,255,255,.7)",backdropFilter:"blur(8px)",borderRadius:"18px",padding:"16px 20px",textAlign:"center",border:"2px solid #f4a0c8",boxShadow:"0 4px 20px rgba(220,80,140,.15)"}}>
+              <div style={{fontSize:"28px",marginBottom:"6px"}}>🌸</div>
+              <p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(14px,3.5vw,18px)",color:"#d8368e",margin:"0 0 4px"}}>
+                {feelingVal}
+              </p>
+              <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(12px,2.8vw,14px)",color:"#c07090",margin:0,opacity:.8}}>
+                saved 💖 thank you for telling me
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Replay button */}
+        <div style={{opacity:phase>lines.length?1:0,transition:"opacity .9s ease",display:"flex",gap:"10px",flexWrap:"wrap",justifyContent:"center",marginTop:"4px"}}>
+          <Btn onClick={onRestart} variant="purple">🔁 Replay from start</Btn>
         </div>
       </div>
     </Screen>
@@ -906,124 +1162,200 @@ const CreditsScreen = ({onRestart}) => {
 };
 
 /* ════════════════════════════════════════
-   MAIN APP
+   OWNER PANEL
 ════════════════════════════════════════ */
-
-// Owner log — persists in sessionStorage so you can check after she finishes
-// Global so any screen can call ownerLog.add() without prop drilling
-const ownerLog = {
-  add: (type, value) => {
-    try {
-      const log = JSON.parse(sessionStorage.getItem("ownerLog") || "[]");
-      log.push({ type, value, time: new Date().toLocaleTimeString() });
-      sessionStorage.setItem("ownerLog", JSON.stringify(log));
-    } catch(e) {}
-  },
-  get: () => {
-    try { return JSON.parse(sessionStorage.getItem("ownerLog") || "[]"); }
-    catch(e) { return []; }
-  },
-  clear: () => { try { sessionStorage.removeItem("ownerLog"); } catch(e) {} }
-};
-
 const OwnerPanel = ({onClose}) => {
   const [log, setLog] = useState(ownerLog.get());
-
-  // Live refresh every 2s so new entries appear even when panel is open
+  const [activeTab, setActiveTab] = useState("story"); // "story" | "feelings" | "timeline"
   useEffect(()=>{
     const iv = setInterval(()=>setLog(ownerLog.get()), 2000);
     return ()=>clearInterval(iv);
   },[]);
 
-  const iconFor = (type) => ({
-    name_correct:"✅", name_wrong:"❌", screen:"📍",
-    easter_egg:"🐾", kitty_tap:"🐱", candle:"🕯️",
-    cake_cut:"🔪", photo_press:"📸", bow_tap:"🎀",
-    hint_opened:"💡", music:"🎵"
-  }[type] || "🔹");
+  // ── Human-readable sentence builder ──
+  const toSentence = (entry) => {
+    const v = entry.value;
+    switch(entry.type) {
+      case "name_correct":    return { icon:"✅", color:"#4caf50", sentence:`She got the name right! Typed ${v}` };
+      case "name_wrong":      return { icon:"❌", color:"#ff6b6b", sentence:`Wrong name attempt — she typed ${v}` };
+      case "hint_opened":     return { icon:"💡", color:"#ffd93d", sentence:"She clicked the hint button 😏" };
+      case "hint_reply":      return { icon:"💬", color:"#f8a5c2", sentence:`After seeing the hint, she typed: ${v}` };
+      case "message_reaction":return { icon:"💌", color:"#ff9ff3", sentence:`Her reaction to the birthday message: ${v}` };
+      case "birthday_reaction":return { icon:"🎂", color:"#ffeaa7", sentence:`Her feeling on the Birthday screen: ${v}` };
+      case "credits_feeling": return { icon:"🌸", color:"#fd79a8", sentence:`Her final feeling at the end: ${v}` };
+      case "easter_egg":      return { icon:"🐾", color:"#a29bfe", sentence:`Found a secret! ${v}` };
+      case "slide_time":      return { icon:"⏱️", color:"#74b9ff", sentence:v };
+      case "photo_feeling":   return { icon:"📸", color:"#fab1e1", sentence:v };
+      case "bow_easter":      return { icon:"🎀", color:"#f8bbd9", sentence:"Tapped the bow 5 times — found the hidden note! 🎀" };
+      default:                return { icon:"🔹", color:"#aaa",    sentence:v };
+    }
+  };
 
-  const colorFor = (type) => ({
-    name_correct:"#4caf50", name_wrong:"#f44336",
-    screen:"#90caf9", easter_egg:"#ce93d8",
-    kitty_tap:"#ffb74d", candle:"#fff176",
-    cake_cut:"#ef9a9a", photo_press:"#f48fb1",
-    bow_tap:"#f8bbd9", hint_opened:"#ffe082",
-    music:"#80cbc4"
-  }[type] || "#ccc");
+  const SHOWN_TYPES = new Set([
+    "name_correct","name_wrong","hint_opened","hint_reply",
+    "message_reaction","birthday_reaction","credits_feeling","easter_egg",
+    "slide_time","photo_feeling","bow_easter",
+  ]);
+
+  const filtered = log.filter(e=>SHOWN_TYPES.has(e.type));
+
+  // feelings-only tab: all text she typed
+  const feelingsOnly = log.filter(e=>["hint_reply","message_reaction","birthday_reaction","credits_feeling","photo_feeling"].includes(e.type));
+
+  // timeline tab: slide times
+  const timelineOnly = log.filter(e=>e.type==="slide_time");
+
+  // stats
+  const nameAttempts = log.filter(e=>e.type==="name_wrong").length;
+  const gotItRight   = log.some(e=>e.type==="name_correct");
+  const photosDone   = log.filter(e=>e.type==="photo_feeling").length;
+  const secretsFound = log.filter(e=>e.type==="easter_egg").length;
+
+  const TAB_STYLE = (active) => ({
+    flex:1, padding:"6px 4px", border:"none", borderRadius:"8px",
+    fontFamily:"monospace", fontSize:"11px", fontWeight:700, cursor:"pointer",
+    background: active ? "#e040a0" : "#2a0a14", color: active ? "#fff" : "#888",
+    transition:"all .2s",
+  });
 
   return (
-    <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.9)",zIndex:99999,display:"flex",alignItems:"center",justifyContent:"center",padding:"16px"}}>
-      <div style={{background:"#120608",border:"2px solid #e040a0",borderRadius:"20px",padding:"20px",maxWidth:"460px",width:"98vw",maxHeight:"85vh",display:"flex",flexDirection:"column",gap:"10px"}}>
+    <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.93)",zIndex:99999,display:"flex",alignItems:"center",justifyContent:"center",padding:"14px"}}>
+      <div style={{background:"#120608",border:"2px solid #e040a0",borderRadius:"22px",padding:"18px",maxWidth:"490px",width:"98vw",maxHeight:"90vh",display:"flex",flexDirection:"column",gap:"10px"}}>
 
-        {/* Header */}
+        {/* ── Header ── */}
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexShrink:0}}>
           <div>
-            <div style={{color:"#f080b8",fontWeight:700,fontSize:"17px",fontFamily:"monospace"}}>🔐 Developer View</div>
-            <div style={{color:"#888",fontSize:"11px",fontFamily:"monospace"}}>Tap music 🎵 × 5 to open · auto-refreshes</div>
+            <div style={{color:"#f080b8",fontWeight:700,fontSize:"16px",fontFamily:"monospace"}}>🔐 Owner's View</div>
+            <div style={{color:"#555",fontSize:"10px",fontFamily:"monospace"}}>music 🎵 ×5 to open · refreshes every 2s</div>
           </div>
           <div style={{display:"flex",gap:"6px"}}>
-            <button onClick={()=>{ownerLog.clear();setLog([]);}} style={{background:"#c0392b",border:"none",color:"white",borderRadius:"8px",padding:"5px 10px",cursor:"pointer",fontSize:"12px",fontFamily:"monospace"}}>🗑 Clear</button>
-            <button onClick={onClose} style={{background:"#333",border:"none",color:"white",borderRadius:"8px",padding:"5px 10px",cursor:"pointer",fontSize:"12px",fontFamily:"monospace"}}>✕ Close</button>
+            <button onClick={()=>{ownerLog.clear();setLog([]);}} style={{background:"#c0392b",border:"none",color:"white",borderRadius:"8px",padding:"5px 9px",cursor:"pointer",fontSize:"11px",fontFamily:"monospace"}}>🗑 Clear</button>
+            <button onClick={onClose} style={{background:"#333",border:"none",color:"white",borderRadius:"8px",padding:"5px 9px",cursor:"pointer",fontSize:"11px",fontFamily:"monospace"}}>✕</button>
           </div>
         </div>
 
-        {/* Summary row */}
-        <div style={{display:"flex",gap:"8px",flexWrap:"wrap",flexShrink:0}}>
+        {/* ── Stats row ── */}
+        <div style={{display:"flex",gap:"5px",flexShrink:0}}>
           {[
-            {label:"Screens visited", val: log.filter(e=>e.type==="screen").length, color:"#90caf9"},
-            {label:"Name attempts",   val: log.filter(e=>e.type==="name_wrong").length, color:"#f44336"},
-            {label:"Got name right",  val: log.filter(e=>e.type==="name_correct").length?"Yes":"No", color:"#4caf50"},
-            {label:"Easter eggs",     val: log.filter(e=>e.type==="easter_egg").length, color:"#ce93d8"},
+            {label:"Name tries",  val:nameAttempts,                    color:"#ff6b6b"},
+            {label:"Name found",  val:gotItRight?"Yes ✅":"No ❌",      color:gotItRight?"#4caf50":"#ff6b6b"},
+            {label:"Photos done", val:`${photosDone}/${PHOTOS.length}`, color:"#fab1e1"},
+            {label:"Secrets",     val:secretsFound,                    color:"#a29bfe"},
           ].map((s,i)=>(
-            <div key={i} style={{background:"#1e0a10",border:`1px solid ${s.color}44`,borderRadius:"10px",padding:"6px 10px",flex:"1",minWidth:"90px"}}>
-              <div style={{color:s.color,fontSize:"16px",fontWeight:700,fontFamily:"monospace"}}>{s.val}</div>
-              <div style={{color:"#888",fontSize:"10px",fontFamily:"monospace"}}>{s.label}</div>
+            <div key={i} style={{background:"#1e0a10",border:`1px solid ${s.color}44`,borderRadius:"10px",padding:"6px 8px",flex:"1",textAlign:"center"}}>
+              <div style={{color:s.color,fontSize:"14px",fontWeight:800,fontFamily:"monospace"}}>{s.val}</div>
+              <div style={{color:"#555",fontSize:"9px",fontFamily:"monospace",marginTop:"1px"}}>{s.label}</div>
             </div>
           ))}
         </div>
 
-        {/* Log */}
-        <div style={{overflowY:"auto",flex:1,display:"flex",flexDirection:"column",gap:"4px"}}>
-          {log.length===0
-            ? <p style={{color:"#555",textAlign:"center",fontFamily:"monospace",marginTop:"20px"}}>No activity yet. She hasn't started!</p>
-            : [...log].reverse().map((entry,i)=>(
-              <div key={i} style={{background:"#1a0a12",borderRadius:"8px",padding:"7px 10px",display:"flex",gap:"8px",alignItems:"flex-start",border:`1px solid ${colorFor(entry.type)}22`}}>
-                <span style={{fontSize:"16px",flexShrink:0}}>{iconFor(entry.type)}</span>
-                <div style={{flex:1,minWidth:0}}>
-                  <div style={{color:colorFor(entry.type),fontSize:"11px",fontFamily:"monospace",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.05em"}}>{entry.type.replace(/_/g," ")}</div>
-                  <div style={{color:"#eee",fontSize:"13px",fontFamily:"monospace",wordBreak:"break-all"}}>{entry.value}</div>
-                </div>
-                <span style={{color:"#555",fontSize:"10px",fontFamily:"monospace",flexShrink:0}}>{entry.time}</span>
-              </div>
-            ))
-          }
+        {/* ── Tabs ── */}
+        <div style={{display:"flex",gap:"4px",flexShrink:0}}>
+          <button style={TAB_STYLE(activeTab==="story")}   onClick={()=>setActiveTab("story")}>📖 Story</button>
+          <button style={TAB_STYLE(activeTab==="feelings")} onClick={()=>setActiveTab("feelings")}>💬 Her words</button>
+          <button style={TAB_STYLE(activeTab==="timeline")} onClick={()=>setActiveTab("timeline")}>⏱ Time spent</button>
         </div>
+
+        {/* ── Story tab: all meaningful events in order ── */}
+        {activeTab==="story" && (
+          <div style={{overflowY:"auto",flex:1,display:"flex",flexDirection:"column",gap:"6px"}}>
+            {filtered.length===0
+              ? <p style={{color:"#444",textAlign:"center",fontFamily:"monospace",marginTop:"24px",fontSize:"13px"}}>Nothing yet — she hasn't started!</p>
+              : [...filtered].reverse().map((entry,i)=>{
+                  const {icon,color,sentence} = toSentence(entry);
+                  return (
+                    <div key={i} style={{background:"#1a0a12",borderRadius:"10px",padding:"9px 11px",display:"flex",gap:"9px",alignItems:"flex-start",border:`1px solid ${color}28`}}>
+                      <span style={{fontSize:"17px",flexShrink:0,marginTop:"1px"}}>{icon}</span>
+                      <div style={{flex:1,minWidth:0}}>
+                        <div style={{color:"#f0d0e0",fontSize:"15px",fontFamily:"'Caveat',cursive",fontWeight:700,wordBreak:"break-word",lineHeight:1.35}}>{sentence}</div>
+                      </div>
+                      <span style={{color:"#3a1a22",fontSize:"10px",fontFamily:"monospace",flexShrink:0,marginTop:"3px",color:"#664455"}}>{entry.time}</span>
+                    </div>
+                  );
+                })
+            }
+          </div>
+        )}
+
+        {/* ── Her words tab: only typed text ── */}
+        {activeTab==="feelings" && (
+          <div style={{overflowY:"auto",flex:1,display:"flex",flexDirection:"column",gap:"6px"}}>
+            {feelingsOnly.length===0
+              ? <p style={{color:"#444",textAlign:"center",fontFamily:"monospace",marginTop:"24px",fontSize:"13px"}}>She hasn't typed anything yet 😊</p>
+              : feelingsOnly.map((entry,i)=>{
+                  const {icon,color,sentence} = toSentence(entry);
+                  return (
+                    <div key={i} style={{background:"#1e0814",borderRadius:"12px",padding:"10px 13px",border:`1px solid ${color}44`}}>
+                      <div style={{display:"flex",gap:"6px",alignItems:"center",marginBottom:"5px"}}>
+                        <span style={{fontSize:"14px"}}>{icon}</span>
+                        <span style={{color:color,fontSize:"10px",fontFamily:"monospace",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.06em"}}>
+                          {entry.type==="photo_feeling"?"Photo":""}
+                          {entry.type==="hint_reply"?"Hint reply":""}
+                          {entry.type==="message_reaction"?"Birthday message reaction":""}
+                          {entry.type==="birthday_reaction"?"Happy Birthday screen":""}
+                          {entry.type==="credits_feeling"?"Final feeling":""}
+                        </span>
+                        <span style={{color:"#444",fontSize:"9px",fontFamily:"monospace",marginLeft:"auto"}}>{entry.time}</span>
+                      </div>
+                      <div style={{color:"#ffd0e8",fontSize:"17px",fontFamily:"'Caveat',cursive",fontWeight:700,lineHeight:1.4,wordBreak:"break-word"}}>{entry.value}</div>
+                    </div>
+                  );
+                })
+            }
+          </div>
+        )}
+
+        {/* ── Timeline tab ── */}
+        {activeTab==="timeline" && (
+          <div style={{overflowY:"auto",flex:1,display:"flex",flexDirection:"column",gap:"5px"}}>
+            {timelineOnly.length===0
+              ? <p style={{color:"#444",textAlign:"center",fontFamily:"monospace",marginTop:"24px",fontSize:"13px"}}>No timing data yet</p>
+              : timelineOnly.map((entry,i)=>(
+                  <div key={i} style={{background:"#12101a",borderRadius:"8px",padding:"7px 11px",display:"flex",gap:"8px",alignItems:"center",border:"1px solid #74b9ff22"}}>
+                    <span style={{fontSize:"14px"}}>⏱️</span>
+                    <span style={{color:"#a0c8ff",fontSize:"13px",fontFamily:"'Caveat',cursive",fontWeight:700,flex:1}}>{entry.value}</span>
+                    <span style={{color:"#334",fontSize:"9px",fontFamily:"monospace",color:"#445566"}}>{entry.time}</span>
+                  </div>
+                ))
+            }
+          </div>
+        )}
 
       </div>
     </div>
   );
 };
 
+/* ════════════════════════════════════════
+   MAIN APP
+════════════════════════════════════════ */
 export default function BirthdaySurprise() {
   const [screen,setScreen]=useState("unlock");
   const [bursts,setBursts]=useState([]);
   const [musicOn,setMusicOn]=useState(false);
   const [showOwner,setShowOwner]=useState(false);
   const audioRef=useRef(null);
-  const musicTapRef=useRef({count:0,timer:null}); // secret: tap music btn 5x fast
+  const musicTapRef=useRef({count:0,timer:null});
 
   const triggerBurst=useCallback((emojis=["🎉","💖","✨","🌸","🎊","⭐"],count=16)=>{
     const nb=Array.from({length:count},(_,i)=>({id:Date.now()+i,emoji:emojis[Math.floor(Math.random()*emojis.length)],x:(10+Math.random()*80)+"vw",y:(20+Math.random()*60)+"vh",size:(18+Math.random()*22)+"px",delay:(Math.random()*.4)+"s"}));
     setBursts(nb); setTimeout(()=>setBursts([]),1400);
   },[]);
 
+  const screenEnterTime=useRef(Date.now());
+  const screenNameRef=useRef("unlock");
+
   const go=useCallback((s)=>{
+    // log time spent on the screen we're leaving
+    const elapsed=Date.now()-screenEnterTime.current;
+    ownerLog.addScreenTime(screenNameRef.current, elapsed);
+    // move to new screen
+    screenEnterTime.current=Date.now();
+    screenNameRef.current=s;
     setScreen(s);
-    ownerLog.add("screen", s);
-    if(CHIMES[s]) setTimeout(()=>CHIMES[s](),300);
+    ownerLog.add("screen_visit", s);
   },[]);
 
-  // Enhancement #6 + #15: music fade-in
   const startMusic=useCallback(()=>{
     if(audioRef.current){audioRef.current.play().catch(()=>{});setMusicOn(true);return;}
     const a=new Audio("photos/Urike_Urike.m4a");
@@ -1034,14 +1366,13 @@ export default function BirthdaySurprise() {
     const fade=setInterval(()=>{v=Math.min(v+0.015,0.3);a.volume=v;if(v>=0.3)clearInterval(fade);},150);
   },[]);
 
-  // Secret owner panel: tap music button 5x within 2 seconds
   const handleMusicBtn=()=>{
     const t=musicTapRef.current;
     t.count++;
     clearTimeout(t.timer);
     if(t.count>=5){
       t.count=0;
-      setShowOwner(true); // show owner panel
+      setShowOwner(true);
       return;
     }
     t.timer=setTimeout(()=>{ t.count=0; },2000);
@@ -1063,12 +1394,9 @@ export default function BirthdaySurprise() {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Caveat:wght@600;700&family=Nunito:ital,wght@1,400;1,600&family=Dancing+Script:wght@600;700&family=Pacifico&family=Great+Vibes&display=swap');
-        :root{--pink:#f080b8;--deep:#e040a0;--light:#fde8f0;--pale:#fff5fa;--accent:#a78bfa;--shadow:rgba(220,70,140,.35);}
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
         html,body,#root{height:100%;width:100%;overflow:hidden;}
         body{font-family:'Baloo 2',cursive;text-align:center;}
-
-        /* Enhancement #1: animated gradient background */
         body{background:linear-gradient(135deg,#ffe0f4,#ffc8e8,#ffd8f0,#ffb8e0,#ffe4f8);background-size:400% 400%;animation:gradientShift 12s ease infinite;}
 
         @keyframes gradientShift  {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
@@ -1090,14 +1418,10 @@ export default function BirthdaySurprise() {
         @keyframes pop            {0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
         @keyframes envFloat       {0%,100%{transform:translateY(0) rotate(-.5deg);}50%{transform:translateY(-14px) rotate(.5deg);}}
         @keyframes floatUp        {0%{transform:translateY(0);opacity:1;}100%{transform:translateY(-120px);opacity:0;}}
-        /* Enhancement #2 */
         @keyframes sparkleTrail   {0%{transform:translate(-50%,-50%) scale(1);opacity:1;}100%{transform:translate(-50%,-50%) scale(0) translateY(-20px);opacity:0;}}
-        /* Enhancement #10 */
         @keyframes handSwipe      {0%,100%{transform:translateX(-10px);opacity:.5;}50%{transform:translateX(16px);opacity:1;}}
-        /* Enhancement #4 */
         @keyframes shimmer        {0%{background-position:200% center;}100%{background-position:-200% center;}}
 
-        /* Pink scrollbar for letter box */
         .letter-scroll::-webkit-scrollbar { width: 6px; }
         .letter-scroll::-webkit-scrollbar-track { background: #f9d0e4; border-radius: 4px; }
         .letter-scroll::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#f080b8,#e040a0); border-radius: 4px; }
@@ -1106,9 +1430,9 @@ export default function BirthdaySurprise() {
 
       <Petals/>
       <EmojiBurst bursts={bursts}/>
-      <SparkleCursor/>{/* Enhancement #2 */}
+      <SparkleCursor/>
 
-      {/* Music Button — tap 5x fast to open owner view */}
+      {/* Music Button */}
       <button onClick={handleMusicBtn} style={{position:"fixed",top:"12px",right:"12px",zIndex:9999,width:"42px",height:"42px",borderRadius:"50%",background:"linear-gradient(135deg,#f4a0c8,#e040a0)",border:"none",cursor:"pointer",fontSize:"17px",display:"flex",alignItems:"center",justifyContent:"center",boxShadow:"0 2px 16px rgba(220,70,140,.35)",padding:0,transition:"transform .2s"}}>
         {musicOn?"🔇":"🎵"}
       </button>
@@ -1116,7 +1440,7 @@ export default function BirthdaySurprise() {
       {showOwner&&<OwnerPanel onClose={()=>setShowOwner(false)}/>}
 
       {screen==="unlock"    && <UnlockScreen    onOpen={()=>go("nameEntry")} onFirstTap={startMusic}/>}
-      {screen==="nameEntry" && <NameEntryScreen  onSuccess={()=>go("countdown")} triggerBurst={triggerBurst} ownerLog={ownerLog}/>}
+      {screen==="nameEntry" && <NameEntryScreen  onSuccess={()=>go("countdown")} triggerBurst={triggerBurst}/>}
       {screen==="countdown" && <CountdownScreen  onDone={()=>go("loading")}/>}
       {screen==="loading"   && <LoadingScreen    onDone={()=>go("message")}/>}
       {screen==="message"   && <MessageScreen    onNext={()=>go("candles")}/>}
