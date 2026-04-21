@@ -17,6 +17,7 @@ const ownerLog = {
       if(secs < 2) return;
       const SCREEN_NAMES = {
         unlock:    "💌 Envelope screen",
+        anteIsthe: "💬 Ante isthe screen",
         nameEntry: "🔐 Name entry screen",
         countdown: "⏳ Countdown (3-2-1)",
         loading:   "🐱 Loading screen",
@@ -72,13 +73,13 @@ const PHOTOS = [
 const ROTATIONS   = [2,-3,1.5,-2,3,-1,2.5,-3.5,0.5,-2.5];
 const EASTER_MSGS = ["For the one who make me feel special 😘","For the one i got excited 😒","For you ❤️"];
 
-const LETTER_TEXT = `Firstly many more happy returns of the day kukkapilla 🫂❤️‍🩹😘. You are the one who made me special. Eppudu okalage vunde nannu koncham ayyina alochainchela cheysav. Neetho vunnappudu vunde feeling inka evarithonuu raledhu. Neetho gadipina moments and memories are still in my heart. Emo mundhu parichayam ayyithe inka enjoy cheysevalamoo ledha normal ga vundevalmooo thelidhu but at our peak manam kalisina kotha lo I felt very happy and loved the way you treated me.
+const LETTER_TEXT = `Firstly many more happy returns of the day kukkapilla 🫂❤️‍🩹😘. You are the one who made me special. Eppudu okalage vunde nannu koncham ayyina alochainchela cheysav. Neetho vunnappudu vunde feeling inka evarithonuu raledhu. Neetho gadipina moments and memories are still in my heart. Emo mundhu parichayam ayyithe inka enjoy cheysevalamoo ledha normal ga vundevalamoo thelidhu but at our peak manam kalisina kotha lo I felt very happy and loved the way you treated me.
 
 Nuvvu naatho gadipina moments and mainly nee birthday roju nuvve call cheysi manchiga ready avvu manchi shirt veysukoo ani cheppi pilavadam — those moments I felt myself special 🫂🫂. Emo nee life lo naa character a role play cheysindhoo thelidhu but naa life lo pandhi pilla and kukkapilla chala pedha role play cheysay… entha pedha role ante emo maybe dhaniki minchi vere role vundadhu emo antha special ga.
 
 Ninnu chala sarlu hurt cheysa but nuvvu prathisari thirigi edhokati cheysav… emo nenu em cheyyagalano thelidhu but thanks for that ✨. Anukuntu anukuntu ne last ki vachesam… neeku nenu first vunnantha special kakapovachu, everyone's priorities change, it's ok but parledhu.
 
-Same ninnu first lo chusinantha ledhu kani but ninnu chusina prathisari, neetho matladuthunna prathisari adhi peruguthune vundhi… reason thelidhu but em chestham. Every time anipisthadhi ila pakkane vunte bagundedhi ani… but it's your life, nee life lo neeku favs vundochu, so it's life and fate.
+Same ninnu first lo chusaintha ledhu kani but ninnu chusina prathisari, neetho matladuthunna prathisari adhi peruguthune vundhi… reason thelidhu but em chestham. Every time anipisthadhi ila pakkane vunte bagundedhi ani… but it's your life, nee life lo neeku favs vundochu, so it's life and fate.
 
 But I wish if time reversed… malli neetho Celesta 2k25 dhagara nunchi ela vunnamoo ala vundali ani vundhiii........
 
@@ -167,7 +168,7 @@ const EmojiBurst = ({bursts}) => (
 );
 
 /* ─────────────────────────────────────
-   SPARKLE CURSOR — flowers → hearts
+   SPARKLE CURSOR
 ───────────────────────────────────── */
 const SparkleCursor = () => {
   const [sparks,setSparks]=useState([]);
@@ -193,7 +194,7 @@ const SparkleCursor = () => {
 };
 
 /* ─────────────────────────────────────
-   PETALS — all flowers → hearts
+   PETALS
 ───────────────────────────────────── */
 const PETAL_DATA = Array.from({length:12},(_,i)=>({
   id:i, emoji:["💖","💕","💗","✨","💖","⭐","🌟","💕"][Math.floor(Math.random()*8)],
@@ -209,8 +210,7 @@ const Petals = () => (
 );
 
 /* ─────────────────────────────────────
-   ★ CUTE STICKER CHARACTER SVG
-   Matches the pink mouse sticker style in the reference image
+   STICKER CHARACTER SVG
 ───────────────────────────────────── */
 const StickerChar = ({mirror=false, hat=false, wink=false}) => (
   <svg
@@ -219,13 +219,10 @@ const StickerChar = ({mirror=false, hat=false, wink=false}) => (
     width={80}
     style={{display:"block", transform: mirror ? "scaleX(-1)" : "none"}}
   >
-    {/* ── Ears ── */}
     <circle cx="30" cy="26" r="19" fill="#f9a0c0"/>
     <circle cx="80" cy="26" r="19" fill="#f9a0c0"/>
     <circle cx="30" cy="26" r="11" fill="#ffc8dc"/>
     <circle cx="80" cy="26" r="11" fill="#ffc8dc"/>
-
-    {/* ── Party hat (cake mode) ── */}
     {hat && (
       <>
         <polygon points="55,2 38,42 72,42" fill="#f080b8"/>
@@ -236,21 +233,13 @@ const StickerChar = ({mirror=false, hat=false, wink=false}) => (
         <circle cx="60" cy="12" r="1.5" fill="#fde047"/>
       </>
     )}
-
-    {/* ── Body (rounded, like reference image) ── */}
     <ellipse cx="55" cy="97" rx="33" ry="26" fill="#fff5fa" stroke="#f4a0c8" strokeWidth="1.5"/>
-    {/* belly tint */}
     <ellipse cx="55" cy="100" rx="20" ry="16" fill="#ffdcec" opacity="0.5"/>
-
-    {/* ── Head ── */}
     <circle cx="55" cy="55" r="30" fill="#fff" stroke="#f4a0c8" strokeWidth="1.5"/>
-
-    {/* ── Eyes ── */}
     {wink ? (
       <>
         <circle cx="44" cy="51" r="5" fill="#333"/>
         <circle cx="46" cy="49" r="1.8" fill="#fff"/>
-        {/* wink */}
         <path d="M62 48 Q68 44 74 48" stroke="#333" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
       </>
     ) : (
@@ -261,18 +250,10 @@ const StickerChar = ({mirror=false, hat=false, wink=false}) => (
         <circle cx="68" cy="49" r="1.8" fill="#fff"/>
       </>
     )}
-
-    {/* ── Nose ── */}
     <ellipse cx="55" cy="61" rx="3" ry="2.2" fill="#f080a0"/>
-
-    {/* ── Smile ── */}
     <path d="M47 68 Q55 76 63 68" stroke="#e06090" strokeWidth="2.2" fill="none" strokeLinecap="round"/>
-
-    {/* ── Rosy cheeks ── */}
     <ellipse cx="38" cy="62" rx="8" ry="5" fill="#ffb0c8" opacity="0.55"/>
     <ellipse cx="72" cy="62" rx="8" ry="5" fill="#ffb0c8" opacity="0.55"/>
-
-    {/* ── Bow (candle mode) ── */}
     {!hat && (
       <>
         <path d="M72 28 Q78 22 84 28 Q78 34 72 28" fill="#f080b8"/>
@@ -280,25 +261,19 @@ const StickerChar = ({mirror=false, hat=false, wink=false}) => (
         <circle cx="84" cy="28" r="3.5" fill="#ff40a0"/>
       </>
     )}
-
-    {/* ── Arms (raised for celebration) ── */}
     <ellipse cx="19" cy="90" rx="9" ry="17" fill="#fff5fa" stroke="#f4a0c8" strokeWidth="1.5"
       transform="rotate(-45 19 90)"/>
     <ellipse cx="91" cy="90" rx="9" ry="17" fill="#fff5fa" stroke="#f4a0c8" strokeWidth="1.5"
       transform="rotate(45 91 90)"/>
-
-    {/* ── Tiny heart accessory (matching reference image small dot) ── */}
     <text x="92" y="52" fontSize="10" textAnchor="middle">💗</text>
   </svg>
 );
 
 /* ─────────────────────────────────────
-   ★ CELEBRATION STICKERS
-   Renders ON the same screen — characters slide in from sides
-   type: "candle" | "cake"
+   CELEBRATION STICKERS
 ───────────────────────────────────── */
 const CelebrationStickers = ({type, onDone}) => {
-  const [phase, setPhase] = useState(0); // 0=hidden, 1=in, 2=out
+  const [phase, setPhase] = useState(0);
 
   useEffect(()=>{
     const t1 = setTimeout(()=>setPhase(1), 60);
@@ -309,7 +284,6 @@ const CelebrationStickers = ({type, onDone}) => {
 
   const isCandle = type === "candle";
 
-  /* per-side slide transform */
   const slideStyle = (side) => {
     const isIn = phase === 1;
     const isOut = phase === 2;
@@ -333,7 +307,6 @@ const CelebrationStickers = ({type, onDone}) => {
     };
   };
 
-  /* top banner */
   const bannerStyle = {
     position:"fixed",
     top:"10%",
@@ -359,9 +332,7 @@ const CelebrationStickers = ({type, onDone}) => {
 
   return (
     <>
-      {/* ── Left sticker character ── */}
       <div style={slideStyle("left")}>
-        {/* reaction bubble above character */}
         <div style={{
           background:"white",
           borderRadius:"50%",
@@ -380,7 +351,6 @@ const CelebrationStickers = ({type, onDone}) => {
         <StickerChar mirror={false} hat={!isCandle} wink={false}/>
       </div>
 
-      {/* ── Right sticker character (mirrored) ── */}
       <div style={slideStyle("right")}>
         <div style={{
           background:"white",
@@ -400,7 +370,6 @@ const CelebrationStickers = ({type, onDone}) => {
         <StickerChar mirror={true} hat={!isCandle} wink={true}/>
       </div>
 
-      {/* ── Top celebration banner ── */}
       <div style={bannerStyle}>
         <div style={{
           fontFamily:"'Baloo 2',cursive",fontWeight:800,
@@ -566,6 +535,138 @@ const EnvelopeSVG = ({opened}) => (
 );
 
 /* ════════════════════════════════════════
+   SCREEN 1.5: ANTE ISTHE
+════════════════════════════════════════ */
+const AnteIshtheScreen = ({onNext}) => {
+  const [title, setTitle] = useState("");
+  const [showInput, setShowInput] = useState(false);
+  const [showBtn, setShowBtn] = useState(false);
+  const [inputVal, setInputVal] = useState("");
+  const [error, setError] = useState("");
+  const [shake, setShake] = useState(false);
+  const type = useTyping();
+
+  useEffect(() => {
+    type(setTitle, "ante isthe theysukuntavaaa.......", {charDelay: 55}, () => {
+      setTimeout(() => {
+        setShowInput(true);
+        setTimeout(() => setShowBtn(true), 300);
+      }, 400);
+    });
+  }, []);
+
+  const submit = () => {
+    const val = inputVal.trim();
+    if (!val) { setError("chepthee nee sommu em ayyina aarigipothadhaaaa 😤"); doShake(); return; }
+    ownerLog.add("ante_isthe_reply", `"${val}"`);
+    playPop();
+    setTimeout(() => onNext(), 300);
+  };
+  const doShake = () => { setShake(true); setTimeout(() => setShake(false), 400); };
+
+  return (
+    <Screen style={{background:"radial-gradient(ellipse at 50% 30%,#ffe0f4 0%,#ffc8e8 40%,#ffb0d8 100%)"}}>
+      <div style={{
+        background:"white",
+        borderRadius:"28px",
+        padding:"clamp(28px,6vw,48px) clamp(24px,6vw,52px)",
+        boxShadow:"0 8px 48px rgba(220,70,140,.22)",
+        display:"flex",
+        flexDirection:"column",
+        alignItems:"center",
+        gap:"16px",
+        maxWidth:"440px",
+        width:"88vw",
+        border:"2.5px solid #f9d0e4",
+        position:"relative",
+        zIndex:1,
+        animation:"popIn .5s cubic-bezier(.34,1.56,.64,1)"
+      }}>
+        {/* Decorative hearts */}
+        <div style={{position:"absolute",top:"-18px",left:"50%",transform:"translateX(-50%)",display:"flex",gap:"8px"}}>
+          {["💖","💕","💗"].map((e,i)=>(
+            <span key={i} style={{fontSize:"22px",animation:`hbeat ${1.2+i*0.2}s ease-in-out infinite`,animationDelay:`${i*0.15}s`}}>{e}</span>
+          ))}
+        </div>
+
+        <div style={{fontSize:"clamp(44px,12vw,68px)",animation:"floatY 2s ease-in-out infinite",marginTop:"8px"}}>💌</div>
+
+        <h2 style={{
+          fontFamily:"'Baloo 2',cursive",
+          fontWeight:800,
+          fontSize:"clamp(20px,5.5vw,34px)",
+          color:"#d8368e",
+          margin:0,
+          minHeight:"2em",
+          lineHeight:1.3,
+          textAlign:"center",
+          textShadow:"0 2px 12px rgba(220,80,140,.15)"
+        }}>{title}</h2>
+
+        <p style={{
+          fontFamily:"'Caveat',cursive",
+          fontSize:"clamp(13px,3vw,17px)",
+          color:"#c07090",
+          margin:0,
+          textAlign:"center",
+          lineHeight:1.55,
+          opacity:0.85
+        }}>
+          parleeee cheppuuu evaru chudaru 🙈
+        </p>
+
+        {showInput && (
+          <input
+            value={inputVal}
+            onChange={e => setInputVal(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && submit()}
+            placeholder="🙈"
+            maxLength={80}
+            autoFocus
+            autoComplete="off"
+            style={{
+              width:"100%",
+              border:"2px solid #f4a0c8",
+              borderRadius:"18px",
+              padding:"13px 18px",
+              fontFamily:"'Caveat',cursive",
+              fontSize:"clamp(16px,4vw,24px)",
+              fontWeight:700,
+              color:"#d8368e",
+              background:"#fff5fa",
+              outline:"none",
+              textAlign:"center",
+              animation:shake?"shakeInput .4s ease":"none",
+              boxSizing:"border-box",
+              transition:"border-color .2s, box-shadow .2s",
+              boxShadow:"0 2px 12px rgba(220,80,140,.1)"
+            }}
+            onFocus={e => { e.target.style.borderColor="#e040a0"; e.target.style.boxShadow="0 4px 18px rgba(220,80,140,.25)"; }}
+            onBlur={e => { e.target.style.borderColor="#f4a0c8"; e.target.style.boxShadow="0 2px 12px rgba(220,80,140,.1)"; }}
+          />
+        )}
+
+        {error && (
+          <p style={{
+            fontFamily:"'Caveat',cursive",
+            fontSize:"clamp(13px,3vw,16px)",
+            color:"#e040a0",
+            margin:0,
+            textAlign:"center"
+          }}>{error}</p>
+        )}
+
+        {showBtn && (
+          <Btn onClick={submit} style={{width:"100%",justifyContent:"center",fontSize:"clamp(15px,3vw,20px)",padding:"13px 28px"}}>
+            💗
+          </Btn>
+        )}
+      </div>
+    </Screen>
+  );
+};
+
+/* ════════════════════════════════════════
    SCREEN 2: NAME ENTRY
 ════════════════════════════════════════ */
 const NameEntryScreen = ({onSuccess,triggerBurst}) => {
@@ -652,7 +753,7 @@ const NameEntryScreen = ({onSuccess,triggerBurst}) => {
 };
 
 /* ════════════════════════════════════════
-   SCREEN 3: COUNTDOWN — flowers → hearts
+   SCREEN 3: COUNTDOWN
 ════════════════════════════════════════ */
 const CountdownScreen = ({onDone}) => {
   const [count,setCount]=useState(3); const [sub,setSub]=useState(""); const type=useTyping();
@@ -769,7 +870,7 @@ const MessageScreen = ({onNext}) => {
 };
 
 /* ════════════════════════════════════════
-   SCREEN 6: CANDLE BLOW ← CelebrationStickers on same screen
+   SCREEN 6: CANDLE BLOW
 ════════════════════════════════════════ */
 const CandleScreen = ({onDone,triggerBurst}) => {
   const [title,setTitle]=useState(""); const [hint,setHint]=useState("");
@@ -811,8 +912,6 @@ const CandleScreen = ({onDone,triggerBurst}) => {
         </div>
         <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,20px)",color:"#d06090",marginTop:"10px",minHeight:"1.5em"}}>{hint}</p>
       </Screen>
-
-      {/* Stickers appear ON TOP of the same screen, at the sides */}
       {showCelebration && (
         <CelebrationStickers type="candle" onDone={onDone}/>
       )}
@@ -821,7 +920,7 @@ const CandleScreen = ({onDone,triggerBurst}) => {
 };
 
 /* ════════════════════════════════════════
-   SCREEN 7: CAKE ← CelebrationStickers on same screen
+   SCREEN 7: CAKE
 ════════════════════════════════════════ */
 const CakeScreen = ({onDone,triggerBurst}) => {
   const [title,setTitle]=useState(""); const [hint,setHint]=useState("");
@@ -907,8 +1006,6 @@ const CakeScreen = ({onDone,triggerBurst}) => {
           {[0,1].map(i=><span key={i} style={{width:"14px",height:"14px",borderRadius:"50%",background:cutCount>i?"#e040a0":"#f9c0d8",border:`2px solid ${cutCount>i?"#e040a0":"#f4a0c8"}`,display:"block",transform:cutCount>i?"scale(1.25)":"scale(1)",transition:"all .3s",boxShadow:cutCount>i?"0 0 8px rgba(224,64,160,.5)":"none"}}/>)}
         </div>
       </Screen>
-
-      {/* Stickers appear ON TOP of the same screen, at the sides */}
       {showCelebration && (
         <CelebrationStickers type="cake" onDone={onDone}/>
       )}
@@ -984,7 +1081,7 @@ function launchConfetti(canvas) {
 }
 
 /* ════════════════════════════════════════
-   SCREEN 9: GALLERY
+   SCREEN 9: GALLERY  ← LARGER FRAME SIZE
 ════════════════════════════════════════ */
 const GalleryScreen = ({onNext}) => {
   const [title,setTitle]=useState("");
@@ -1067,14 +1164,16 @@ const GalleryScreen = ({onNext}) => {
   return (
     <Screen style={{gap:0,padding:"6px 14px 12px",justifyContent:"center",display:"flex",flexDirection:"column",alignItems:"center"}}>
       <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(15px,3.8vw,24px)",margin:"0 0 6px",textShadow:"0 0 8px rgba(255,100,160,.4)",flexShrink:0,minHeight:"28px"}}>{title}</h2>
+
+      {/* ── LARGER FRAME: ~doubled from original min(220px,62vw) / min(255px,38vh) ── */}
       <div
-        style={{position:"relative",width:"min(220px,62vw)",height:"min(255px,38vh)",margin:"0 auto 8px",perspective:"900px",cursor:"pointer",flexShrink:0}}
+        style={{position:"relative",width:"min(420px,88vw)",height:"min(490px,68vh)",margin:"0 auto 8px",perspective:"900px",cursor:"pointer",flexShrink:0}}
         onTouchStart={e=>{touchStart.current=e.touches[0].clientX;}}
         onTouchEnd={e=>{const dx=e.changedTouches[0].clientX-touchStart.current;if(Math.abs(dx)>40){dx<0?next():prev();}}}
       >
         {PHOTOS.map((photo,i)=>(
           <div key={i} style={{
-            position:"absolute",inset:0,background:"#fff",borderRadius:"6px",padding:"6px 6px 28px",
+            position:"absolute",inset:0,background:"#fff",borderRadius:"8px",padding:"8px 8px 36px",
             boxShadow:"0 8px 28px rgba(180,60,120,.18)",
             transition:"transform .45s cubic-bezier(.34,1.5,.64,1),opacity .35s ease",
             willChange:"transform,opacity",...cardStyle(i),
@@ -1082,9 +1181,9 @@ const GalleryScreen = ({onNext}) => {
             onClick={()=>{ if(i===galIndex){} else next(); }}
           >
             {saved[i]&&(
-              <div style={{position:"absolute",top:"4px",right:"4px",width:"20px",height:"20px",borderRadius:"50%",background:"linear-gradient(135deg,#4caf50,#2e7d32)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:20,fontSize:"11px",boxShadow:"0 2px 6px rgba(0,0,0,.2)"}}>✓</div>
+              <div style={{position:"absolute",top:"6px",right:"6px",width:"24px",height:"24px",borderRadius:"50%",background:"linear-gradient(135deg,#4caf50,#2e7d32)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:20,fontSize:"13px",boxShadow:"0 2px 6px rgba(0,0,0,.2)"}}>✓</div>
             )}
-            <div style={{width:"100%",height:"calc(100% - 28px)",borderRadius:"3px",position:"relative",background:"#fff8fc",border:"1px solid #f9d0e8",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
+            <div style={{width:"100%",height:"calc(100% - 36px)",borderRadius:"4px",position:"relative",background:"#fff8fc",border:"1px solid #f9d0e8",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
               <img src={photo.src} alt={photo.label}
                 style={{maxWidth:"100%",maxHeight:"100%",width:"auto",height:"auto",objectFit:"contain",display:"block",transition:"filter 1.5s",filter:i===galIndex?"saturate(1) brightness(1)":"saturate(.1) brightness(1.4)"}}
                 onError={e=>{e.target.style.display="none";}}
@@ -1092,14 +1191,15 @@ const GalleryScreen = ({onNext}) => {
               />
               <div style={{position:"absolute",inset:0,background:"rgba(255,240,248,.6)",opacity:i===galIndex?0:1,transition:"opacity 1.2s",pointerEvents:"none"}}/>
             </div>
-            <div style={{textAlign:"center",fontFamily:"'Caveat',cursive",fontSize:"clamp(11px,2.5vw,13px)",fontWeight:700,color:"#b05070",lineHeight:1,position:"absolute",bottom:"4px",left:0,right:0}}>
+            <div style={{textAlign:"center",fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,2.8vw,16px)",fontWeight:700,color:"#b05070",lineHeight:1,position:"absolute",bottom:"6px",left:0,right:0}}>
               {i===galIndex ? caption : photo.label}
             </div>
           </div>
         ))}
       </div>
+
       <div style={{display:"flex",alignItems:"center",gap:"10px",marginBottom:"6px",flexShrink:0}}>
-        <button onClick={prev} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"30px",height:"30px",borderRadius:"50%",color:"#fff",fontSize:"17px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 4px 14px rgba(220,70,140,.3)",lineHeight:1}}>‹</button>
+        <button onClick={prev} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"32px",height:"32px",borderRadius:"50%",color:"#fff",fontSize:"18px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 4px 14px rgba(220,70,140,.3)",lineHeight:1}}>‹</button>
         <div style={{display:"flex",gap:"4px",alignItems:"center"}}>
           {PHOTOS.map((_,i)=>(
             <div key={i} onClick={()=>{if(!isAnimating){setIsAnimating(true);setGalIndex(i);startAuto();setTimeout(()=>setIsAnimating(false),400);}}}
@@ -1107,9 +1207,10 @@ const GalleryScreen = ({onNext}) => {
             />
           ))}
         </div>
-        <button onClick={next} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"30px",height:"30px",borderRadius:"50%",color:"#fff",fontSize:"17px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 4px 14px rgba(220,70,140,.3)",lineHeight:1}}>›</button>
+        <button onClick={next} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"32px",height:"32px",borderRadius:"50%",color:"#fff",fontSize:"18px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 4px 14px rgba(220,70,140,.3)",lineHeight:1}}>›</button>
       </div>
-      <div style={{width:"min(320px,90vw)",flexShrink:0,display:"flex",flexDirection:"column",gap:"6px"}}>
+
+      <div style={{width:"min(360px,90vw)",flexShrink:0,display:"flex",flexDirection:"column",gap:"6px"}}>
         <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(12px,3vw,15px)",color:"#c07090",margin:0,textAlign:"center",lineHeight:1.3}}>
           {saved[galIndex]
             ? <span style={{color:"#4caf50",fontWeight:700}}></span>
@@ -1308,7 +1409,7 @@ const CreditsScreen = ({onRestart}) => {
 };
 
 /* ════════════════════════════════════════
-   OWNER PANEL — Birthday theme
+   OWNER PANEL
 ════════════════════════════════════════ */
 const OwnerPanel = ({onClose}) => {
   const [log, setLog] = useState(ownerLog.get());
@@ -1325,6 +1426,7 @@ const OwnerPanel = ({onClose}) => {
       case "name_wrong":       return { icon:"❌", color:"#c62828", bg:"#ffebee", sentence:`Wrong name attempt — she typed ${v}` };
       case "hint_opened":      return { icon:"💡", color:"#e65100", bg:"#fff3e0", sentence:"She clicked the hint button 😏" };
       case "hint_reply":       return { icon:"💬", color:"#ad1457", bg:"#fce4ec", sentence:`After seeing the hint: ${v}` };
+      case "ante_isthe_reply": return { icon:"💕", color:"#880e4f", bg:"#fce4ec", sentence:`Ante isthe reply: ${v}` };
       case "message_reaction": return { icon:"💌", color:"#6a1b9a", bg:"#f3e5f5", sentence:`Birthday message reaction: ${v}` };
       case "birthday_reaction":return { icon:"🎂", color:"#bf360c", bg:"#fbe9e7", sentence:`Happy Birthday screen feeling: ${v}` };
       case "credits_feeling":  return { icon:"💖", color:"#880e4f", bg:"#fce4ec", sentence:`Final feeling at the end: ${v}` };
@@ -1337,13 +1439,13 @@ const OwnerPanel = ({onClose}) => {
   };
 
   const SHOWN_TYPES = new Set([
-    "name_correct","name_wrong","hint_opened","hint_reply",
+    "name_correct","name_wrong","hint_opened","hint_reply","ante_isthe_reply",
     "message_reaction","birthday_reaction","credits_feeling","easter_egg",
     "slide_time","photo_feeling","bow_easter",
   ]);
 
   const filtered     = log.filter(e=>SHOWN_TYPES.has(e.type));
-  const feelingsOnly = log.filter(e=>["hint_reply","message_reaction","birthday_reaction","credits_feeling","photo_feeling"].includes(e.type));
+  const feelingsOnly = log.filter(e=>["hint_reply","ante_isthe_reply","message_reaction","birthday_reaction","credits_feeling","photo_feeling"].includes(e.type));
   const timelineOnly = log.filter(e=>e.type==="slide_time");
   const nameAttempts = log.filter(e=>e.type==="name_wrong").length;
   const gotItRight   = log.some(e=>e.type==="name_correct");
@@ -1414,7 +1516,7 @@ const OwnerPanel = ({onClose}) => {
               ? <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"12px",padding:"32px 16px"}}><div style={{fontSize:"48px",animation:"floatY 2s ease-in-out infinite"}}>💬</div><p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"18px",color:"#c070a0",textAlign:"center",margin:0}}>She hasn't typed anything yet 😊</p></div>
               : feelingsOnly.map((entry,i)=>{
                   const {icon,color,bg} = toSentence(entry);
-                  const typeLabels={hint_reply:"Hint reply",message_reaction:"Birthday message",birthday_reaction:"Happy Birthday screen",credits_feeling:"Final feeling",photo_feeling:"Photo feeling"};
+                  const typeLabels={hint_reply:"Hint reply",ante_isthe_reply:"Ante isthe reply",message_reaction:"Birthday message",birthday_reaction:"Happy Birthday screen",credits_feeling:"Final feeling",photo_feeling:"Photo feeling"};
                   return (
                     <div key={i} style={{background:bg,borderRadius:"18px",padding:"12px 16px",border:`1.5px solid ${color}33`}}>
                       <div style={{display:"flex",gap:"6px",alignItems:"center",marginBottom:"6px"}}>
@@ -1539,7 +1641,6 @@ export default function BirthdaySurprise() {
         @keyframes handSwipe      {0%,100%{transform:translateX(-10px);opacity:.5;}50%{transform:translateX(16px);opacity:1;}}
         @keyframes shimmer        {0%{background-position:200% center;}100%{background-position:-200% center;}}
 
-        /* ── Sticker celebration animations ── */
         @keyframes stickerBob     {0%{transform:translateX(0) translateY(0) rotate(-3deg);}100%{transform:translateX(0) translateY(-14px) rotate(3deg);}}
         @keyframes clapHand       {0%{transform:rotate(-20deg) scale(1);}100%{transform:rotate(20deg) scale(1.2) translateY(-6px);}}
         @keyframes celebBounce    {0%{transform:translateY(0) scale(1);}100%{transform:translateY(-14px) scale(1.2);}}
@@ -1560,7 +1661,8 @@ export default function BirthdaySurprise() {
 
       {showOwner&&<OwnerPanel onClose={()=>setShowOwner(false)}/>}
 
-      {screen==="unlock"    && <UnlockScreen    onOpen={()=>go("nameEntry")} onFirstTap={startMusic}/>}
+      {screen==="unlock"    && <UnlockScreen    onOpen={()=>go("anteIsthe")} onFirstTap={startMusic}/>}
+      {screen==="anteIsthe" && <AnteIshtheScreen onNext={()=>go("nameEntry")}/>}
       {screen==="nameEntry" && <NameEntryScreen  onSuccess={()=>go("countdown")} triggerBurst={triggerBurst}/>}
       {screen==="countdown" && <CountdownScreen  onDone={()=>go("loading")}/>}
       {screen==="loading"   && <LoadingScreen    onDone={()=>go("message")}/>}
