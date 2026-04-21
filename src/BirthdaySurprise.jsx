@@ -51,27 +51,27 @@ const LONG_PRESS    = 600;
 const BIRTHDAY_DATE = new Date("2026-04-18");
 
 const PHOTOS = [
-  { src:"photos/photo1.jpg",  label:"First photo 💖",          msg:"💖 First Photo is always special and means a lot 🫂" },
-  { src:"photos/photo2.jpg",  label:"💖 Sweet Moments",         msg:"You were glowing here. As always. ✨" },
-  { src:"photos/photo3.jpg",  label:"💗 A Memory",              msg:"Every moment with you is precious 💖" },
-  { src:"photos/photo4.jpg",  label:"💕 the dress i asked for", msg:"the vibe we match 💕" },
-  { src:"photos/photo5.jpg",  label:"💗 Special Day",           msg:"special memory. 💗" },
+  { src:"photos/photo1.jpg",  label:"First photo 💖",           msg:"💖 First Photo andhariki special ay but mana first photo edho general ga jarigipoyindhi but first time oka ammai nanu photo adigindhi🥹🫂" },
+  { src:"photos/photo2.jpg",  label:"💖 First saree pic",       msg:"expect cheyyakunda vachav call cheysav kurchukuni evaru lekapoyina selfie dhigam ✨" },
+  { src:"photos/photo3.jpg",  label:"💗 ee pic ante",           msg:"vaishu akka theysindi pic kani ah pic perfection ki 4-5 pics pattindhi😅💖" },
+  { src:"photos/photo4.jpg",  label:"💕 saree",                 msg:"actual ga saree kadathava ledha ani doubt but bale vunnav ahh saree lo🙈💕" },
+  { src:"photos/photo5.jpg",  label:"💗 Authority",             msg:"idhi one of my favourite pic ee pic lo nuvvu chuppinchina authority ki padipoya actual ga 😒💗" },
   { src:"photos/photo6.jpg",  label:"💗 Special Pic",           msg:"This pic made me fall for you every time. 💗" },
   { src:"photos/photo7.jpg",  label:"💗 Special Day",           msg:"Making memories together. 💗" },
   { src:"photos/photo8.jpg",  label:"💗 Special Day",           msg:"Making memories together. 💗" },
-  { src:"photos/photo9.jpg",  label:"💗 My Kukkapilla",         msg:"the day you have agreed. 💗" },
-  { src:"photos/photo10.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
-  { src:"photos/photo11.jpg", label:"💗 the one i wish",        msg:"the way you look at me 🥹🥹 💗" },
-  { src:"photos/photo14.jpg", label:"💗 the day i fall",        msg:"first time i got so excited by the way you called me. 💗" },
+  { src:"photos/photo9.jpg",  label:"💗 My Kukkapilla",         msg:"naa kukkapilla nannu owner ga accepted cheysi pampina memory 💗" },
+  { src:"photos/photo10.jpg", label:"💗 Celestra 2k25",         msg:"ee pic value appudu theliyaledhu but malli ila neetho pic theysukovali ani vundhi 🫠💗" },
+  { src:"photos/photo11.jpg", label:"💗 forever mine",          msg:"ee pic ni eni sarlu chussina edho special feeling the way you looks at me🙈💗" },
+  { src:"photos/photo14.jpg", label:"💗 the day i fall",        msg:"nuvvu call cheysi manchi shirt veysukuni raa ledhaa paguludhi ah feel emoo💗" },
   { src:"photos/photo18.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
-  { src:"photos/photo19.jpg", label:"💗 something special",     msg:"the day i felt naughty and loved. 💗" },
-  { src:"photos/photo20.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
-  { src:"photos/photo21.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
-  { src:"photos/photo23.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
+  { src:"photos/photo19.jpg", label:"💗 something special",     msg:"ee pic ante naaku gurthochedhi ahh hand placement 🫠😅💗" },
+  { src:"photos/photo20.jpg", label:"💗 trails for this pic",   msg:"entha try cheysa okasari ayyina cooperate cheysava pandhi laga 😒" },
+  { src:"photos/photo21.jpg", label:"💗 Celestra 2k26",         msg:"pic crop cheysaka ala vundhoo ledha mana presence oo thelidh but it has been bagged into my favs💗" },
+  { src:"photos/photo23.jpg", label:"💗 forever mine",          msg:"ee pic ni eni sarlu chussina edho special feeling the way you looks at me🙈💗" },
 ];
 
 const ROTATIONS   = [2,-3,1.5,-2,3,-1,2.5,-3.5,0.5,-2.5];
-const EASTER_MSGS = ["For the one who make me feel special 😘","For the one i got excited 😒","For you ❤️"];
+const EASTER_MSGS = ["For the one who make me feel special 😘","For the one i got excited 😒","For you and for mine🫠"];
 
 const LETTER_TEXT = `Firstly many more happy returns of the day kukkapilla 🫂❤️‍🩹😘. You are the one who made me special. Eppudu okalage vunde nannu koncham ayyina alochainchela cheysav. Neetho vunnappudu vunde feeling inka evarithonuu raledhu. Neetho gadipina moments and memories are still in my heart. Emo mundhu parichayam ayyithe inka enjoy cheysevalamoo ledha normal ga vundevalamoo thelidhu but at our peak manam kalisina kotha lo I felt very happy and loved the way you treated me.
 
@@ -1386,7 +1386,7 @@ const CreditsScreen = ({onRestart}) => {
               </p>
               <textarea
                 value={feelingVal} onChange={e=>setFeelingVal(e.target.value)}
-                placeholder=""
+                placeholder="😒"
                 maxLength={300} rows={3}
                 style={{width:"100%",border:`2px solid ${feelingShake?"#e040a0":"#f4a0c8"}`,borderRadius:"16px",padding:"12px 14px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,19px)",fontWeight:700,color:"#d8368e",background:"rgba(255,255,255,.85)",outline:"none",resize:"none",boxSizing:"border-box",lineHeight:1.5,animation:feelingShake?"shakeInput .4s ease":"none",transition:"border-color .25s",boxShadow:"0 4px 20px rgba(220,80,140,.15)"}}
               />
