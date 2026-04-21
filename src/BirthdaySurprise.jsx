@@ -1,19 +1,7 @@
-/*
-  ╔══════════════════════════════════════════════════════╗
-  ║   BIRTHDAY SURPRISE — React JSX (Fixed v4)          ║
-  ║   Fixes applied:                                    ║
-  ║   • Gallery button always visible (main fix)        ║
-  ║   • ownerLog moved to top (was ReferenceError)      ║
-  ║   • BIRTHDAY_DATE updated to 2026                   ║
-  ║   • CHIMES dead code cleaned up                     ║
-  ║   • Confetti RAF cancelation added                  ║
-  ╚══════════════════════════════════════════════════════╝
-*/
-
 import { useState, useEffect, useRef, useCallback } from "react";
 
 /* ─────────────────────────────────────
-   OWNER LOG  (moved to top — was causing ReferenceError in MessageScreen)
+   OWNER LOG
 ───────────────────────────────────── */
 const ownerLog = {
   add: (type, value) => {
@@ -59,26 +47,26 @@ const ownerLog = {
 const CORRECT_NAME  = "kukkapilla";
 const SWIPE_MIN     = 80;
 const LONG_PRESS    = 600;
-const BIRTHDAY_DATE = new Date("2026-04-18"); // ← updated to 2026
+const BIRTHDAY_DATE = new Date("2026-04-18");
 
 const PHOTOS = [
   { src:"photos/photo1.jpg",  label:"First photo 💖",          msg:"💖 First Photo is always special and means a lot 🫂" },
   { src:"photos/photo2.jpg",  label:"💖 Sweet Moments",         msg:"You were glowing here. As always. ✨" },
-  { src:"photos/photo3.jpg",  label:"🌸 A Memory",              msg:"Every moment with you is precious 💖" },
+  { src:"photos/photo3.jpg",  label:"💗 A Memory",              msg:"Every moment with you is precious 💖" },
   { src:"photos/photo4.jpg",  label:"💕 the dress i asked for", msg:"the vibe we match 💕" },
-  { src:"photos/photo5.jpg",  label:"🎀 Special Day",           msg:"special memory. 🎀" },
-  { src:"photos/photo6.jpg",  label:"🎀 Special Pic",           msg:"This pic made me fall for you every time. 🎀" },
-  { src:"photos/photo7.jpg",  label:"🎀 Special Day",           msg:"Making memories together. 🎀" },
-  { src:"photos/photo8.jpg",  label:"🎀 Special Day",           msg:"Making memories together. 🎀" },
-  { src:"photos/photo9.jpg",  label:"🎀 My Kukkapilla",         msg:"the day you have agreed. 🎀" },
-  { src:"photos/photo10.jpg", label:"🎀 Special Day",           msg:"Making memories together. 🎀" },
-  { src:"photos/photo11.jpg", label:"🎀 the one i wish",        msg:"the way you look at me 🥹🥹 🎀" },
-  { src:"photos/photo14.jpg", label:"🎀 the day i fall",        msg:"first time i got so excited by the way you called me. 🎀" },
-  { src:"photos/photo18.jpg", label:"🎀 Special Day",           msg:"Making memories together. 🎀" },
-  { src:"photos/photo19.jpg", label:"🎀 something special",     msg:"the day i felt naughty and loved. 🎀" },
-  { src:"photos/photo20.jpg", label:"🎀 Special Day",           msg:"Making memories together. 🎀" },
-  { src:"photos/photo21.jpg", label:"🎀 Special Day",           msg:"Making memories together. 🎀" },
-  { src:"photos/photo23.jpg", label:"🎀 Special Day",           msg:"Making memories together. 🎀" },
+  { src:"photos/photo5.jpg",  label:"💗 Special Day",           msg:"special memory. 💗" },
+  { src:"photos/photo6.jpg",  label:"💗 Special Pic",           msg:"This pic made me fall for you every time. 💗" },
+  { src:"photos/photo7.jpg",  label:"💗 Special Day",           msg:"Making memories together. 💗" },
+  { src:"photos/photo8.jpg",  label:"💗 Special Day",           msg:"Making memories together. 💗" },
+  { src:"photos/photo9.jpg",  label:"💗 My Kukkapilla",         msg:"the day you have agreed. 💗" },
+  { src:"photos/photo10.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
+  { src:"photos/photo11.jpg", label:"💗 the one i wish",        msg:"the way you look at me 🥹🥹 💗" },
+  { src:"photos/photo14.jpg", label:"💗 the day i fall",        msg:"first time i got so excited by the way you called me. 💗" },
+  { src:"photos/photo18.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
+  { src:"photos/photo19.jpg", label:"💗 something special",     msg:"the day i felt naughty and loved. 💗" },
+  { src:"photos/photo20.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
+  { src:"photos/photo21.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
+  { src:"photos/photo23.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
 ];
 
 const ROTATIONS   = [2,-3,1.5,-2,3,-1,2.5,-3.5,0.5,-2.5];
@@ -158,7 +146,7 @@ const useTyping = () => {
 };
 
 /* ─────────────────────────────────────
-   HELPER: days until birthday
+   HELPER
 ───────────────────────────────────── */
 const daysUntilBirthday = () => {
   const now=new Date();
@@ -179,13 +167,13 @@ const EmojiBurst = ({bursts}) => (
 );
 
 /* ─────────────────────────────────────
-   SPARKLE CURSOR
+   SPARKLE CURSOR — flowers → hearts
 ───────────────────────────────────── */
 const SparkleCursor = () => {
   const [sparks,setSparks]=useState([]);
   const nextId=useRef(0);
   useEffect(()=>{
-    const emojis=["✨","💖","🌸","⭐","💫","🌟","💕"];
+    const emojis=["✨","💖","💕","⭐","💫","🌟","💗"];
     const onMove=(e)=>{
       const id=nextId.current++;
       const spark={id,x:e.clientX,y:e.clientY,emoji:emojis[Math.floor(Math.random()*emojis.length)],size:10+Math.random()*10};
@@ -205,10 +193,10 @@ const SparkleCursor = () => {
 };
 
 /* ─────────────────────────────────────
-   PETALS
+   PETALS — all flowers → hearts
 ───────────────────────────────────── */
 const PETAL_DATA = Array.from({length:12},(_,i)=>({
-  id:i, emoji:["🌸","🌺","🌷","✨","💖","⭐","🌟","💕"][Math.floor(Math.random()*8)],
+  id:i, emoji:["💖","💕","💗","✨","💖","⭐","🌟","💕"][Math.floor(Math.random()*8)],
   left:Math.random()*100, delay:Math.random()*15, duration:20+Math.random()*15,
   size:12+Math.random()*10, opacity:0.15+Math.random()*0.25,
 }));
@@ -219,6 +207,225 @@ const Petals = () => (
     ))}
   </div>
 );
+
+/* ─────────────────────────────────────
+   ★ CUTE STICKER CHARACTER SVG
+   Matches the pink mouse sticker style in the reference image
+───────────────────────────────────── */
+const StickerChar = ({mirror=false, hat=false, wink=false}) => (
+  <svg
+    viewBox="0 0 110 125"
+    xmlns="http://www.w3.org/2000/svg"
+    width={80}
+    style={{display:"block", transform: mirror ? "scaleX(-1)" : "none"}}
+  >
+    {/* ── Ears ── */}
+    <circle cx="30" cy="26" r="19" fill="#f9a0c0"/>
+    <circle cx="80" cy="26" r="19" fill="#f9a0c0"/>
+    <circle cx="30" cy="26" r="11" fill="#ffc8dc"/>
+    <circle cx="80" cy="26" r="11" fill="#ffc8dc"/>
+
+    {/* ── Party hat (cake mode) ── */}
+    {hat && (
+      <>
+        <polygon points="55,2 38,42 72,42" fill="#f080b8"/>
+        <polygon points="55,2 38,42 55,42" fill="#e040a0"/>
+        <line x1="38" y1="42" x2="72" y2="42" stroke="#fde047" strokeWidth="2.5"/>
+        <circle cx="55" cy="2" r="3.5" fill="#fde047"/>
+        <circle cx="46" cy="18" r="2" fill="#fff"/>
+        <circle cx="60" cy="12" r="1.5" fill="#fde047"/>
+      </>
+    )}
+
+    {/* ── Body (rounded, like reference image) ── */}
+    <ellipse cx="55" cy="97" rx="33" ry="26" fill="#fff5fa" stroke="#f4a0c8" strokeWidth="1.5"/>
+    {/* belly tint */}
+    <ellipse cx="55" cy="100" rx="20" ry="16" fill="#ffdcec" opacity="0.5"/>
+
+    {/* ── Head ── */}
+    <circle cx="55" cy="55" r="30" fill="#fff" stroke="#f4a0c8" strokeWidth="1.5"/>
+
+    {/* ── Eyes ── */}
+    {wink ? (
+      <>
+        <circle cx="44" cy="51" r="5" fill="#333"/>
+        <circle cx="46" cy="49" r="1.8" fill="#fff"/>
+        {/* wink */}
+        <path d="M62 48 Q68 44 74 48" stroke="#333" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+      </>
+    ) : (
+      <>
+        <circle cx="44" cy="51" r="5" fill="#333"/>
+        <circle cx="66" cy="51" r="5" fill="#333"/>
+        <circle cx="46" cy="49" r="1.8" fill="#fff"/>
+        <circle cx="68" cy="49" r="1.8" fill="#fff"/>
+      </>
+    )}
+
+    {/* ── Nose ── */}
+    <ellipse cx="55" cy="61" rx="3" ry="2.2" fill="#f080a0"/>
+
+    {/* ── Smile ── */}
+    <path d="M47 68 Q55 76 63 68" stroke="#e06090" strokeWidth="2.2" fill="none" strokeLinecap="round"/>
+
+    {/* ── Rosy cheeks ── */}
+    <ellipse cx="38" cy="62" rx="8" ry="5" fill="#ffb0c8" opacity="0.55"/>
+    <ellipse cx="72" cy="62" rx="8" ry="5" fill="#ffb0c8" opacity="0.55"/>
+
+    {/* ── Bow (candle mode) ── */}
+    {!hat && (
+      <>
+        <path d="M72 28 Q78 22 84 28 Q78 34 72 28" fill="#f080b8"/>
+        <path d="M84 28 Q90 22 96 28 Q90 34 84 28" fill="#e040a0"/>
+        <circle cx="84" cy="28" r="3.5" fill="#ff40a0"/>
+      </>
+    )}
+
+    {/* ── Arms (raised for celebration) ── */}
+    <ellipse cx="19" cy="90" rx="9" ry="17" fill="#fff5fa" stroke="#f4a0c8" strokeWidth="1.5"
+      transform="rotate(-45 19 90)"/>
+    <ellipse cx="91" cy="90" rx="9" ry="17" fill="#fff5fa" stroke="#f4a0c8" strokeWidth="1.5"
+      transform="rotate(45 91 90)"/>
+
+    {/* ── Tiny heart accessory (matching reference image small dot) ── */}
+    <text x="92" y="52" fontSize="10" textAnchor="middle">💗</text>
+  </svg>
+);
+
+/* ─────────────────────────────────────
+   ★ CELEBRATION STICKERS
+   Renders ON the same screen — characters slide in from sides
+   type: "candle" | "cake"
+───────────────────────────────────── */
+const CelebrationStickers = ({type, onDone}) => {
+  const [phase, setPhase] = useState(0); // 0=hidden, 1=in, 2=out
+
+  useEffect(()=>{
+    const t1 = setTimeout(()=>setPhase(1), 60);
+    const t2 = setTimeout(()=>setPhase(2), 2800);
+    const t3 = setTimeout(()=>onDone(), 3500);
+    return()=>{ clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  },[]);
+
+  const isCandle = type === "candle";
+
+  /* per-side slide transform */
+  const slideStyle = (side) => {
+    const isIn = phase === 1;
+    const isOut = phase === 2;
+    return {
+      position:"fixed",
+      bottom:"5%",
+      [side]: 0,
+      zIndex: 7500,
+      pointerEvents:"none",
+      display:"flex",
+      flexDirection:"column",
+      alignItems:"center",
+      gap:"4px",
+      transform: isIn
+        ? "translateX(0)"
+        : side === "left" ? "translateX(-130%)" : "translateX(130%)",
+      transition: isOut
+        ? "transform 0.55s ease-in"
+        : "transform 0.65s cubic-bezier(.34,1.56,.64,1)",
+      animation: isIn ? `stickerBob 0.6s ease-in-out ${side==="left"?"0s":".1s"} infinite alternate` : "none",
+    };
+  };
+
+  /* top banner */
+  const bannerStyle = {
+    position:"fixed",
+    top:"10%",
+    left:"50%",
+    zIndex:7500,
+    pointerEvents:"none",
+    display:"flex",
+    flexDirection:"column",
+    alignItems:"center",
+    gap:"6px",
+    transform: phase === 1
+      ? "translateX(-50%) scale(1)"
+      : phase === 2
+        ? "translateX(-50%) scale(0)"
+        : "translateX(-50%) scale(0)",
+    transition: phase === 2
+      ? "transform 0.4s ease-in"
+      : phase === 1
+        ? "transform 0.6s cubic-bezier(.34,1.56,.64,1)"
+        : "none",
+    opacity: phase === 1 ? 1 : 0,
+  };
+
+  return (
+    <>
+      {/* ── Left sticker character ── */}
+      <div style={slideStyle("left")}>
+        {/* reaction bubble above character */}
+        <div style={{
+          background:"white",
+          borderRadius:"50%",
+          width:"clamp(36px,8vw,50px)",
+          height:"clamp(36px,8vw,50px)",
+          display:"flex",alignItems:"center",justifyContent:"center",
+          fontSize:"clamp(18px,5vw,26px)",
+          boxShadow:"0 4px 16px rgba(220,80,140,.25)",
+          border:"2px solid #f9c0d8",
+          animation: isCandle
+            ? "clapHand 0.35s ease-in-out infinite alternate"
+            : "celebBounce 0.5s ease-in-out infinite alternate",
+        }}>
+          {isCandle ? "🫂" : "🙈"}
+        </div>
+        <StickerChar mirror={false} hat={!isCandle} wink={false}/>
+      </div>
+
+      {/* ── Right sticker character (mirrored) ── */}
+      <div style={slideStyle("right")}>
+        <div style={{
+          background:"white",
+          borderRadius:"50%",
+          width:"clamp(36px,8vw,50px)",
+          height:"clamp(36px,8vw,50px)",
+          display:"flex",alignItems:"center",justifyContent:"center",
+          fontSize:"clamp(18px,5vw,26px)",
+          boxShadow:"0 4px 16px rgba(220,80,140,.25)",
+          border:"2px solid #f9c0d8",
+          animation: isCandle
+            ? "clapHand 0.35s ease-in-out 0.17s infinite alternate"
+            : "celebBounce 0.5s ease-in-out 0.25s infinite alternate",
+        }}>
+          {isCandle ? "😇" : "😘"}
+        </div>
+        <StickerChar mirror={true} hat={!isCandle} wink={true}/>
+      </div>
+
+      {/* ── Top celebration banner ── */}
+      <div style={bannerStyle}>
+        <div style={{
+          fontFamily:"'Baloo 2',cursive",fontWeight:800,
+          fontSize:"clamp(20px,5vw,34px)",
+          background:"linear-gradient(135deg,#f080b8,#c020a0)",
+          WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",
+        }}>
+          {isCandle ? "🎉 Yayyyy! 🎉" : "🎂 Wohoooo! 🎂"}
+        </div>
+        <div style={{
+          fontFamily:"'Caveat',cursive",fontWeight:700,
+          fontSize:"clamp(13px,3.5vw,18px)",
+          color:"#c060a0",
+          background:"rgba(255,255,255,0.88)",
+          borderRadius:"22px",padding:"5px 18px",
+          boxShadow:"0 4px 18px rgba(220,80,140,.2)",
+          border:"2px solid #f9c0d8",
+          whiteSpace:"nowrap",
+        }}>
+          {isCandle ? "anni candles blow chesav! 💨💖" : "cake cut chesav! 🍰💖"}
+        </div>
+      </div>
+    </>
+  );
+};
 
 /* ─────────────────────────────────────
    SVGs
@@ -279,7 +486,7 @@ const BirthdayKittySVG = () => (
     <ellipse cx="87" cy="84" rx="8" ry="5" fill="#f9c0d8" opacity="0.7"/>
     <ellipse cx="28" cy="108" rx="8" ry="15" fill="#ffe0f0" stroke="#f4a0c8" strokeWidth="1.5" transform="rotate(-50 28 108)"/>
     <ellipse cx="112" cy="108" rx="8" ry="15" fill="#ffe0f0" stroke="#f4a0c8" strokeWidth="1.5" transform="rotate(50 112 108)"/>
-    <text x="10" y="95" fontSize="16">🎉</text><text x="115" y="95" fontSize="16">🎊</text>
+    <text x="10" y="95" fontSize="16">🤩</text><text x="115" y="95" fontSize="16">🤗</text>
   </svg>
 );
 
@@ -384,7 +591,7 @@ const NameEntryScreen = ({onSuccess,triggerBurst}) => {
     if(val===CORRECT_NAME){
       setError(""); playPop();
       ownerLog.add("name_correct", `"${inputVal.trim()}" ✅`);
-      triggerBurst(["🎉","💖","✨","🌸","🎊","⭐","🎀"],24);
+      triggerBurst(["🤗","💖","✨","💗","💕","⭐","💗"],24);
       setTimeout(()=>onSuccess(),700); return;
     }
     attempts.current++;
@@ -398,7 +605,7 @@ const NameEntryScreen = ({onSuccess,triggerBurst}) => {
   const openHint=()=>{
     setShowHint(true);setHintText("");setShowHintInput(false);setHintReply("");playPop();
     ownerLog.add("hint_opened","Clicked 'hint kavalaaa' button");
-    type(setHintText,"hint uhh ledhu thokka ledhu musukuni alochinchukuni enter chey 😤",{charDelay:38},()=>setTimeout(()=>setShowHintInput(true),400));
+    type(setHintText,"hint uhh ledhu thokka ledhu musukuni alochinchukuni enter chey hint kavali anta hintuuuu😒",{charDelay:38},()=>setTimeout(()=>setShowHintInput(true),400));
   };
   const closeHint=()=>{
     const reply=hintReply.trim();
@@ -411,13 +618,13 @@ const NameEntryScreen = ({onSuccess,triggerBurst}) => {
   return (
     <Screen>
       <div style={{background:"white",borderRadius:"24px",padding:"clamp(24px,5vw,40px) clamp(24px,6vw,48px)",boxShadow:"0 8px 40px rgba(220,70,140,.2)",display:"flex",flexDirection:"column",alignItems:"center",gap:"12px",maxWidth:"380px",width:"88vw",border:"2px solid #f9d0e4",position:"relative",zIndex:1}}>
-        <div style={{fontSize:"clamp(36px,10vw,54px)",animation:"floatY 2s ease-in-out infinite"}}>🐱</div>
+        <div style={{fontSize:"clamp(36px,10vw,54px)",animation:"floatY 2s ease-in-out infinite"}}>🐶</div>
         <h2 style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:"clamp(18px,5vw,28px)",color:"#d8368e",margin:0,minHeight:"2em"}}>{title}</h2>
         <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,17px)",color:"#c07090",margin:0,minHeight:"1.5em"}}>{sub}</p>
         {showInput&&<input value={inputVal} onChange={e=>setInputVal(e.target.value)} onKeyDown={e=>e.key==="Enter"&&submit()} placeholder="Your name..." maxLength={20} autoComplete="off"
           style={{width:"100%",border:"2px solid #f4a0c8",borderRadius:"16px",padding:"12px 16px",fontFamily:"'Caveat',cursive",fontSize:"clamp(16px,4vw,22px)",fontWeight:700,color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",animation:shake?"shakeInput .4s ease":"none",boxSizing:"border-box"}}/>}
         {error&&<p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,16px)",color:"#e040a0",margin:0,textAlign:"center"}}>{error}</p>}
-        {showBtn&&<Btn onClick={submit} style={{width:"100%",justifyContent:"center"}}>Let's go! 🎀</Btn>}
+        {showBtn&&<Btn onClick={submit} style={{width:"100%",justifyContent:"center"}}>Let's go! 💗</Btn>}
         {showHintBtn&&<Btn onClick={openHint} variant="purple" style={{width:"100%",justifyContent:"center",marginTop:"8px"}}>hint kavalaaa.. 🤔</Btn>}
       </div>
       {showHint&&(
@@ -427,12 +634,11 @@ const NameEntryScreen = ({onSuccess,triggerBurst}) => {
           {showHintInput&&(
             <>
               <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(12px,3vw,15px)",color:"#d06090",margin:"4px 0 0",textAlign:"center"}}>
-                evaina cheppuko, close avvadam ki ✍️
               </p>
               <input
                 value={hintReply} onChange={e=>setHintReply(e.target.value)}
                 onKeyDown={e=>e.key==="Enter"&&closeHint()}
-                placeholder="type anything to close..."
+                placeholder="edhokati type chey close avvudhi.."
                 autoFocus
                 style={{width:"100%",border:"2px solid #f4a0c8",borderRadius:"14px",padding:"10px 14px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,19px)",fontWeight:700,color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",boxSizing:"border-box"}}
               />
@@ -446,7 +652,7 @@ const NameEntryScreen = ({onSuccess,triggerBurst}) => {
 };
 
 /* ════════════════════════════════════════
-   SCREEN 3: COUNTDOWN
+   SCREEN 3: COUNTDOWN — flowers → hearts
 ════════════════════════════════════════ */
 const CountdownScreen = ({onDone}) => {
   const [count,setCount]=useState(3); const [sub,setSub]=useState(""); const type=useTyping();
@@ -462,7 +668,7 @@ const CountdownScreen = ({onDone}) => {
   return (
     <Screen>
       <div style={{position:"absolute",inset:0,pointerEvents:"none",overflow:"hidden"}}>
-        {[{t:"10%",l:"12%",d:0,e:"✨"},{t:"18%",r:"10%",d:.5,e:"🌸"},{b:"20%",l:"8%",d:1,e:"💖"},{b:"15%",r:"14%",d:1.5,e:"⭐"},{t:"55%",l:"5%",d:.8,e:"🌸"}].map((s,i)=>(
+        {[{t:"10%",l:"12%",d:0,e:"✨"},{t:"18%",r:"10%",d:.5,e:"💖"},{b:"20%",l:"8%",d:1,e:"💗"},{b:"15%",r:"14%",d:1.5,e:"⭐"},{t:"55%",l:"5%",d:.8,e:"💕"}].map((s,i)=>(
           <span key={i} style={{position:"absolute",fontSize:"clamp(20px,4vw,32px)",top:s.t,bottom:s.b,left:s.l,right:s.r,animation:`floatSparkle 3s ease-in-out ${s.d}s infinite`}}>{s.e}</span>
         ))}
       </div>
@@ -478,7 +684,7 @@ const CountdownScreen = ({onDone}) => {
 const LoadingScreen = ({onDone}) => {
   const [text,setText]=useState(""); const type=useTyping();
   useEffect(()=>{
-    type(setText,"Aaagu Vasthadhii sugar ahh 😒...",{charDelay:45},()=>setTimeout(()=>onDone(),2000));
+    type(setText,"Aaagu Vasthadhii sugar ahh 😒...  owner gari dhagara ki ravadaniki vunte bagundu ahh sugar edho....😏😏",{charDelay:45},()=>setTimeout(()=>onDone(),2000));
   },[]);
   return (
     <Screen>
@@ -539,16 +745,15 @@ const MessageScreen = ({onNext}) => {
       {showInput&&(
         <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"8px",width:"min(340px,88vw)"}}>
           <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,16px)",color:"#c07090",margin:0}}>
-            ikkade em anipistundo cheppu, tarvata start avutadhi 🎀
           </p>
           <input
             value={msgVal} onChange={e=>setMsgVal(e.target.value)}
             onKeyDown={e=>e.key==="Enter"&&handleStart()}
-            placeholder="nee reaction type chey..."
+            placeholder="em ayyina cheptharaaaa..."
             maxLength={120} autoComplete="off"
             style={{width:"100%",border:`2px solid ${msgError?"#e040a0":"#f4a0c8"}`,borderRadius:"16px",padding:"12px 16px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,20px)",fontWeight:700,color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",boxSizing:"border-box",animation:msgError?"shakeInput .4s ease":"none",transition:"border-color .2s"}}
           />
-          <Btn onClick={handleStart} style={{width:"100%",justifyContent:"center"}}>🎀 Start the surprise</Btn>
+          <Btn onClick={handleStart} style={{width:"100%",justifyContent:"center"}}>💗 Start the surprise</Btn>
         </div>
       )}
       {showEaster&&(
@@ -564,52 +769,65 @@ const MessageScreen = ({onNext}) => {
 };
 
 /* ════════════════════════════════════════
-   SCREEN 6: CANDLE BLOW
+   SCREEN 6: CANDLE BLOW ← CelebrationStickers on same screen
 ════════════════════════════════════════ */
 const CandleScreen = ({onDone,triggerBurst}) => {
   const [title,setTitle]=useState(""); const [hint,setHint]=useState("");
   const [blown,setBlown]=useState([false,false,false]);
+  const [showCelebration, setShowCelebration] = useState(false);
   const colors=["#a78bfa","#f080b8","#34d399"]; const type=useTyping();
 
-  useEffect(()=>{type(setTitle,"blow cheyadam kudhradhu kani musukuni dhani medha click chey 🕯️",{charDelay:38});},[]); 
+  useEffect(()=>{type(setTitle,"blow cheyadam kudhradhu kani musukuni dhani medha click chey 🕯️",{charDelay:38});},[]);
 
   const blowCandle=(i)=>{
     if(blown[i]) return;
-    const nb=[...blown];nb[i]=true;setBlown(nb);playCandlePop();triggerBurst(["💨","✨","🌬️"],6);
+    const nb=[...blown];nb[i]=true;setBlown(nb);playCandlePop();triggerBurst(["😃","✨","🤗"],6);
     ownerLog.add("candle", `Blew candle ${i+1} of 3`);
     if(nb.every(Boolean)){
-      ownerLog.add("candle","All 3 candles blown! 🎉");
-      type(setHint,"🎉 Chal chaleee",{charDelay:38});playPop();triggerBurst(["🎉","✨","💖","🌸","🎊","⭐"],20);setTimeout(()=>onDone(),1400);}
+      ownerLog.add("candle","All 3 candles blown! 😇");
+      type(setHint,"🫂",{charDelay:38});
+      playPop();
+      triggerBurst(["💕","✨","💖","💗","🥹","⭐"],20);
+      setTimeout(()=>setShowCelebration(true), 400);
+    }
   };
 
   return (
-    <Screen>
-      <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(20px,5vw,36px)",textShadow:"0 0 8px rgba(255,100,160,.4)",textAlign:"center",maxWidth:"80vw",minHeight:"3em"}}>{title}</h2>
-      <div style={{display:"flex",gap:"clamp(20px,6vw,40px)",alignItems:"flex-end",padding:"20px 0 10px"}}>
-        {[0,1,2].map(i=>(
-          <div key={i} onClick={()=>blowCandle(i)} style={{display:"flex",flexDirection:"column",alignItems:"center",cursor:"pointer",position:"relative"}}>
-            <div style={{width:"clamp(22px,6vw,32px)",height:"clamp(32px,8vw,44px)",animation:blown[i]?"none":"flameFlicker .8s ease-in-out infinite alternate",opacity:blown[i]?0:1,transform:blown[i]?"scale(0) translateY(-10px)":"scale(1)",transition:"opacity .3s,transform .3s",transformOrigin:"bottom center"}}>
-              <div style={{width:"100%",height:"100%",background:"radial-gradient(ellipse at 50% 80%,#fde047 30%,#f97316 70%,transparent 100%)",borderRadius:"50% 50% 35% 35%/60% 60% 40% 40%",boxShadow:"0 0 12px rgba(253,224,71,.8),0 0 24px rgba(249,115,22,.5)"}}/>
+    <>
+      <Screen>
+        <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(20px,5vw,36px)",textShadow:"0 0 8px rgba(255,100,160,.4)",textAlign:"center",maxWidth:"80vw",minHeight:"3em"}}>{title}</h2>
+        <div style={{display:"flex",gap:"clamp(20px,6vw,40px)",alignItems:"flex-end",padding:"20px 0 10px"}}>
+          {[0,1,2].map(i=>(
+            <div key={i} onClick={()=>blowCandle(i)} style={{display:"flex",flexDirection:"column",alignItems:"center",cursor:"pointer",position:"relative"}}>
+              <div style={{width:"clamp(22px,6vw,32px)",height:"clamp(32px,8vw,44px)",animation:blown[i]?"none":"flameFlicker .8s ease-in-out infinite alternate",opacity:blown[i]?0:1,transform:blown[i]?"scale(0) translateY(-10px)":"scale(1)",transition:"opacity .3s,transform .3s",transformOrigin:"bottom center"}}>
+                <div style={{width:"100%",height:"100%",background:"radial-gradient(ellipse at 50% 80%,#fde047 30%,#f97316 70%,transparent 100%)",borderRadius:"50% 50% 35% 35%/60% 60% 40% 40%",boxShadow:"0 0 12px rgba(253,224,71,.8),0 0 24px rgba(249,115,22,.5)"}}/>
+              </div>
+              <div style={{width:"clamp(22px,6vw,30px)",height:"clamp(55px,14vw,80px)",borderRadius:"4px 4px 2px 2px",background:colors[i],position:"relative",overflow:"hidden"}}>
+                <div style={{position:"absolute",top:0,left:"20%",width:"20%",height:"100%",background:"rgba(255,255,255,.2)",borderRadius:"2px"}}/>
+              </div>
+              <div style={{width:"clamp(28px,8vw,38px)",height:"7px",background:"#f9c0d8",borderRadius:"50%",marginTop:"2px"}}/>
             </div>
-            <div style={{width:"clamp(22px,6vw,30px)",height:"clamp(55px,14vw,80px)",borderRadius:"4px 4px 2px 2px",background:colors[i],position:"relative",overflow:"hidden"}}>
-              <div style={{position:"absolute",top:0,left:"20%",width:"20%",height:"100%",background:"rgba(255,255,255,.2)",borderRadius:"2px"}}/>
-            </div>
-            <div style={{width:"clamp(28px,8vw,38px)",height:"7px",background:"#f9c0d8",borderRadius:"50%",marginTop:"2px"}}/>
-          </div>
-        ))}
-      </div>
-      <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,20px)",color:"#d06090",marginTop:"10px",minHeight:"1.5em"}}>{hint}</p>
-    </Screen>
+          ))}
+        </div>
+        <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,20px)",color:"#d06090",marginTop:"10px",minHeight:"1.5em"}}>{hint}</p>
+      </Screen>
+
+      {/* Stickers appear ON TOP of the same screen, at the sides */}
+      {showCelebration && (
+        <CelebrationStickers type="candle" onDone={onDone}/>
+      )}
+    </>
   );
 };
 
 /* ════════════════════════════════════════
-   SCREEN 7: CAKE
+   SCREEN 7: CAKE ← CelebrationStickers on same screen
 ════════════════════════════════════════ */
 const CakeScreen = ({onDone,triggerBurst}) => {
   const [title,setTitle]=useState(""); const [hint,setHint]=useState("");
   const [cutCount,setCutCount]=useState(0); const [splitAnim,setSplitAnim]=useState(false);
   const [knifePos,setKnifePos]=useState(null); const [cutting,setCutting]=useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
   const swipeRef=useRef({on:false,minX:Infinity,maxX:-Infinity}); const zoneRef=useRef(null); const type=useTyping();
 
   useEffect(()=>{
@@ -626,62 +844,75 @@ const CakeScreen = ({onDone,triggerBurst}) => {
   const registerCut=()=>{
     setCutCount(prev=>{
       const next=prev+1;playSlash();setTimeout(()=>setKnifePos(null),450);
-      if(next===1){triggerBurst(["❤️","💫","✨"],8);type(setHint,"✦ Great! One more swipe! ✦",{charDelay:38});}
-      else{setSplitAnim(true);triggerBurst(["🎉","💖","✨","🌸","🎊","⭐","🍰"],20);playPop();type(setHint,"cake cut cheyyadam kuda raadhu 😄",{charDelay:38});setTimeout(()=>onDone(),1200);}
+      if(next===1){triggerBurst(["❤️","💫","✨"],8);type(setHint,"✦ Inko sari cut chey ✦",{charDelay:38});}
+      else{
+        setSplitAnim(true);
+        triggerBurst(["🎉","💖","✨","💗","🎊","⭐","🍰"],20);
+        playPop();
+        type(setHint,"cake cut cheyyadam kuda raadhu 😄",{charDelay:38});
+        setTimeout(()=>setShowCelebration(true), 400);
+      }
       return next;
     });
   };
 
   return (
-    <Screen style={{gap:"8px"}}>
-      <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(16px,4vw,28px)",textShadow:"0 0 8px rgba(255,100,160,.4)",textAlign:"center",padding:"0 12px",maxWidth:"80vw",minHeight:"3em"}}>{title}</h2>
-      <div ref={zoneRef} onMouseDown={onStart} onMouseMove={onMove} onMouseUp={onEnd} onMouseLeave={onEnd} onTouchStart={onStart} onTouchMove={onMove} onTouchEnd={onEnd} onTouchCancel={onEnd}
-        style={{position:"relative",width:"clamp(240px,72vw,340px)",height:"clamp(240px,66vw,360px)",touchAction:"none",cursor:"crosshair",userSelect:"none",WebkitUserSelect:"none"}}>
-        {knifePos
-          ?<div style={{position:"absolute",left:knifePos.x,top:knifePos.y,transform:"translate(-50%,-50%) rotate(90deg) scale(1.15)",width:"clamp(60px,14vw,80px)",height:"clamp(60px,14vw,80px)",borderRadius:"50%",background:"radial-gradient(circle,#fff5fa 60%,#f9c0d8 100%)",boxShadow:"0 10px 32px rgba(220,80,140,.5)",display:"flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",zIndex:10,fontSize:"clamp(28px,7vw,40px)"}}>🔪</div>
-          :<div style={{position:"absolute",left:"12%",top:"20%",width:"clamp(60px,14vw,80px)",height:"clamp(60px,14vw,80px)",borderRadius:"50%",background:"radial-gradient(circle,#fff5fa 60%,#f9c0d8 100%)",boxShadow:"0 6px 24px rgba(220,80,140,.3)",display:"flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",zIndex:10,animation:"knifeFloat 2s ease-in-out infinite",fontSize:"clamp(28px,7vw,40px)"}}>🔪</div>
-        }
-        {cutCount===0&&!cutting&&(
-          <div style={{position:"absolute",top:"28%",left:0,right:0,display:"flex",alignItems:"center",justifyContent:"center",gap:"4px",pointerEvents:"none",zIndex:5,opacity:.8}}>
-            <span style={{fontSize:"26px",animation:"handSwipe 1.4s ease-in-out infinite"}}>👆</span>
-            <span style={{display:"inline-block",width:"44px",height:"3px",background:"linear-gradient(90deg,#f080b8,transparent)",borderRadius:"2px",animation:"handSwipe 1.4s ease-in-out infinite",animationDelay:".1s"}}/>
+    <>
+      <Screen style={{gap:"8px"}}>
+        <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(16px,4vw,28px)",textShadow:"0 0 8px rgba(255,100,160,.4)",textAlign:"center",padding:"0 12px",maxWidth:"80vw",minHeight:"3em"}}>{title}</h2>
+        <div ref={zoneRef} onMouseDown={onStart} onMouseMove={onMove} onMouseUp={onEnd} onMouseLeave={onEnd} onTouchStart={onStart} onTouchMove={onMove} onTouchEnd={onEnd} onTouchCancel={onEnd}
+          style={{position:"relative",width:"clamp(240px,72vw,340px)",height:"clamp(240px,66vw,360px)",touchAction:"none",cursor:"crosshair",userSelect:"none",WebkitUserSelect:"none"}}>
+          {knifePos
+            ?<div style={{position:"absolute",left:knifePos.x,top:knifePos.y,transform:"translate(-50%,-50%) rotate(90deg) scale(1.15)",width:"clamp(60px,14vw,80px)",height:"clamp(60px,14vw,80px)",borderRadius:"50%",background:"radial-gradient(circle,#fff5fa 60%,#f9c0d8 100%)",boxShadow:"0 10px 32px rgba(220,80,140,.5)",display:"flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",zIndex:10,fontSize:"clamp(28px,7vw,40px)"}}>🔪</div>
+            :<div style={{position:"absolute",left:"12%",top:"20%",width:"clamp(60px,14vw,80px)",height:"clamp(60px,14vw,80px)",borderRadius:"50%",background:"radial-gradient(circle,#fff5fa 60%,#f9c0d8 100%)",boxShadow:"0 6px 24px rgba(220,80,140,.3)",display:"flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",zIndex:10,animation:"knifeFloat 2s ease-in-out infinite",fontSize:"clamp(28px,7vw,40px)"}}>🔪</div>
+          }
+          {cutCount===0&&!cutting&&(
+            <div style={{position:"absolute",top:"28%",left:0,right:0,display:"flex",alignItems:"center",justifyContent:"center",gap:"4px",pointerEvents:"none",zIndex:5,opacity:.8}}>
+              <span style={{fontSize:"26px",animation:"handSwipe 1.4s ease-in-out infinite"}}>👆</span>
+              <span style={{display:"inline-block",width:"44px",height:"3px",background:"linear-gradient(90deg,#f080b8,transparent)",borderRadius:"2px",animation:"handSwipe 1.4s ease-in-out infinite",animationDelay:".1s"}}/>
+            </div>
+          )}
+          <div style={{position:"absolute",bottom:0,left:"50%",transform:"translateX(-50%)",width:"88%",pointerEvents:"none"}}>
+            <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" style={{width:"100%",height:"auto",filter:"drop-shadow(0 8px 20px rgba(220,80,140,.25))",display:"block",animation:"floatY 2.5s ease-in-out infinite"}}>
+              <g style={{animation:splitAnim?"splitLeft .6s ease forwards":"none"}}>
+                <rect x="30" y="125" width="70" height="44" rx="10" fill="#f9a8d4"/>
+                <rect x="42" y="90" width="58" height="40" rx="10" fill="#fcd5e8"/>
+                <rect x="55" y="62" width="45" height="33" rx="10" fill="#fbcfe8"/>
+                <path d="M30 130 Q45 120 60 130 Q75 120 90 130" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round"/>
+                <path d="M42 95 Q57 85 72 95 Q87 85 100 95" fill="none" stroke="#fff" strokeWidth="5" strokeLinecap="round"/>
+              </g>
+              <g style={{animation:splitAnim?"splitRight .6s ease forwards":"none"}}>
+                <rect x="100" y="125" width="70" height="44" rx="10" fill="#f9a8d4"/>
+                <rect x="100" y="90" width="58" height="40" rx="10" fill="#fcd5e8"/>
+                <rect x="100" y="62" width="45" height="33" rx="10" fill="#fbcfe8"/>
+                <path d="M100 130 Q115 120 130 130 Q145 120 160 130 Q165 120 170 130" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round"/>
+                <path d="M100 95 Q117 85 132 95 Q147 85 158 95" fill="none" stroke="#fff" strokeWidth="5" strokeLinecap="round"/>
+              </g>
+              <ellipse cx="100" cy="168" rx="80" ry="11" fill="#f9c0d8" opacity="0.45"/>
+              <rect x="78" y="44" width="8" height="22" rx="3" fill="#a78bfa"/>
+              <rect x="95" y="40" width="8" height="26" rx="3" fill="#f080b8"/>
+              <rect x="112" y="44" width="8" height="22" rx="3" fill="#34d399"/>
+              <ellipse cx="82" cy="42" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
+              <ellipse cx="82" cy="41" rx="2" ry="3" fill="#f97316"/>
+              <ellipse cx="99" cy="38" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
+              <ellipse cx="99" cy="37" rx="2" ry="3" fill="#f97316"/>
+              <ellipse cx="116" cy="42" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
+              <ellipse cx="116" cy="41" rx="2" ry="3" fill="#f97316"/>
+              <text x="100" y="155" textAnchor="middle" fontFamily="Baloo 2" fontWeight="800" fontSize="13" fill="#fff">Happy 21st!</text>
+            </svg>
           </div>
-        )}
-        <div style={{position:"absolute",bottom:0,left:"50%",transform:"translateX(-50%)",width:"88%",pointerEvents:"none"}}>
-          <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" style={{width:"100%",height:"auto",filter:"drop-shadow(0 8px 20px rgba(220,80,140,.25))",display:"block",animation:"floatY 2.5s ease-in-out infinite"}}>
-            <g style={{animation:splitAnim?"splitLeft .6s ease forwards":"none"}}>
-              <rect x="30" y="125" width="70" height="44" rx="10" fill="#f9a8d4"/>
-              <rect x="42" y="90" width="58" height="40" rx="10" fill="#fcd5e8"/>
-              <rect x="55" y="62" width="45" height="33" rx="10" fill="#fbcfe8"/>
-              <path d="M30 130 Q45 120 60 130 Q75 120 90 130" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round"/>
-              <path d="M42 95 Q57 85 72 95 Q87 85 100 95" fill="none" stroke="#fff" strokeWidth="5" strokeLinecap="round"/>
-            </g>
-            <g style={{animation:splitAnim?"splitRight .6s ease forwards":"none"}}>
-              <rect x="100" y="125" width="70" height="44" rx="10" fill="#f9a8d4"/>
-              <rect x="100" y="90" width="58" height="40" rx="10" fill="#fcd5e8"/>
-              <rect x="100" y="62" width="45" height="33" rx="10" fill="#fbcfe8"/>
-              <path d="M100 130 Q115 120 130 130 Q145 120 160 130 Q165 120 170 130" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round"/>
-              <path d="M100 95 Q117 85 132 95 Q147 85 158 95" fill="none" stroke="#fff" strokeWidth="5" strokeLinecap="round"/>
-            </g>
-            <ellipse cx="100" cy="168" rx="80" ry="11" fill="#f9c0d8" opacity="0.45"/>
-            <rect x="78" y="44" width="8" height="22" rx="3" fill="#a78bfa"/>
-            <rect x="95" y="40" width="8" height="26" rx="3" fill="#f080b8"/>
-            <rect x="112" y="44" width="8" height="22" rx="3" fill="#34d399"/>
-            <ellipse cx="82" cy="42" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
-            <ellipse cx="82" cy="41" rx="2" ry="3" fill="#f97316"/>
-            <ellipse cx="99" cy="38" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
-            <ellipse cx="99" cy="37" rx="2" ry="3" fill="#f97316"/>
-            <ellipse cx="116" cy="42" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
-            <ellipse cx="116" cy="41" rx="2" ry="3" fill="#f97316"/>
-            <text x="100" y="155" textAnchor="middle" fontFamily="Baloo 2" fontWeight="800" fontSize="13" fill="#fff">Happy 21st!</text>
-          </svg>
         </div>
-      </div>
-      <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,2.5vw,16px)",color:"#d06090",margin:"4px 0 2px",opacity:.85,minHeight:"1.5em"}}>{hint}</p>
-      <div style={{display:"flex",gap:"12px",justifyContent:"center",marginTop:"4px"}}>
-        {[0,1].map(i=><span key={i} style={{width:"14px",height:"14px",borderRadius:"50%",background:cutCount>i?"#e040a0":"#f9c0d8",border:`2px solid ${cutCount>i?"#e040a0":"#f4a0c8"}`,display:"block",transform:cutCount>i?"scale(1.25)":"scale(1)",transition:"all .3s",boxShadow:cutCount>i?"0 0 8px rgba(224,64,160,.5)":"none"}}/>)}
-      </div>
-    </Screen>
+        <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,2.5vw,16px)",color:"#d06090",margin:"4px 0 2px",opacity:.85,minHeight:"1.5em"}}>{hint}</p>
+        <div style={{display:"flex",gap:"12px",justifyContent:"center",marginTop:"4px"}}>
+          {[0,1].map(i=><span key={i} style={{width:"14px",height:"14px",borderRadius:"50%",background:cutCount>i?"#e040a0":"#f9c0d8",border:`2px solid ${cutCount>i?"#e040a0":"#f4a0c8"}`,display:"block",transform:cutCount>i?"scale(1.25)":"scale(1)",transition:"all .3s",boxShadow:cutCount>i?"0 0 8px rgba(224,64,160,.5)":"none"}}/>)}
+        </div>
+      </Screen>
+
+      {/* Stickers appear ON TOP of the same screen, at the sides */}
+      {showCelebration && (
+        <CelebrationStickers type="cake" onDone={onDone}/>
+      )}
+    </>
   );
 };
 
@@ -695,7 +926,7 @@ const BirthdayScreen = ({onNext}) => {
   useEffect(()=>{
     enterTime.current=Date.now();
     rafRef.current = launchConfetti(canvasRef.current);
-    type(setTitle,"Happy Birthday, kukkapilla garuuuuu 😘😘! 💙",{charDelay:42},()=>setTimeout(()=>setShowInput(true),600));
+    type(setTitle,"Happy Birthday, kukkapilla garuuuuu🫂🫂😘😘🙈",{charDelay:42},()=>setTimeout(()=>setShowInput(true),600));
     return () => { if(rafRef.current) cancelAnimationFrame(rafRef.current); };
   },[]);
 
@@ -719,12 +950,11 @@ const BirthdayScreen = ({onNext}) => {
         {showInput&&(
           <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"8px",width:"min(320px,88vw)"}}>
             <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,17px)",color:"#e8407a",margin:0}}>
-              oka maata cheppu happy ga vundava? 💖
             </p>
             <input
               value={bdayVal} onChange={e=>setBdayVal(e.target.value)}
               onKeyDown={e=>e.key==="Enter"&&handleNext()}
-              placeholder="nee feeling cheppu..."
+              placeholder="....."
               maxLength={120} autoComplete="off"
               style={{width:"100%",border:`2px solid ${bdayError?"#e040a0":"#f4a0c8"}`,borderRadius:"16px",padding:"12px 16px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,20px)",fontWeight:700,color:"#d8368e",background:"rgba(255,255,255,.85)",outline:"none",textAlign:"center",boxSizing:"border-box",animation:bdayError?"shakeInput .4s ease":"none",transition:"border-color .2s"}}
             />
@@ -736,7 +966,6 @@ const BirthdayScreen = ({onNext}) => {
   );
 };
 
-// Returns the RAF id so caller can cancel it
 function launchConfetti(canvas) {
   if(!canvas) return null;
   const ctx=canvas.getContext("2d");
@@ -755,36 +984,28 @@ function launchConfetti(canvas) {
 }
 
 /* ════════════════════════════════════════
-   SCREEN 9: GALLERY — with per-photo feeling text boxes
+   SCREEN 9: GALLERY
 ════════════════════════════════════════ */
 const GalleryScreen = ({onNext}) => {
   const [title,setTitle]=useState("");
   const [galIndex,setGalIndex]=useState(0); const [isAnimating,setIsAnimating]=useState(false);
   const [lightbox,setLightbox]=useState(null);
   const [caption,setCaption]=useState("");
-
-  // Per-photo feelings: array of strings, one per photo
   const [feelings,setFeelings]=useState(()=>Array(PHOTOS.length).fill(""));
-  // Which photos have been saved (submitted)
   const [saved,setSaved]=useState(()=>Array(PHOTOS.length).fill(false));
-  // Draft value for current photo's input
   const [draft,setDraft]=useState("");
-  // Shake animation on empty submit
   const [inputShake,setInputShake]=useState(false);
-  // Whether user is actively typing (pauses auto-advance)
   const [isTyping,setIsTyping]=useState(false);
   const typingTimer=useRef(null);
-
   const autoRef=useRef(null); const touchStart=useRef(0);
   const inputRef=useRef(null);
   const type=useTyping();
 
   useEffect(()=>{
-    type(setTitle,"The moments that makes me one 🌸",{charDelay:42},()=>startAuto());
+    type(setTitle,"The moments that makes me one 💖",{charDelay:42},()=>startAuto());
     return()=>clearInterval(autoRef.current);
   },[]);
 
-  // Sync draft when photo changes — load saved feeling back into box
   useEffect(()=>{
     setDraft(feelings[galIndex]);
     setCaption("");
@@ -807,46 +1028,32 @@ const GalleryScreen = ({onNext}) => {
     return{opacity:0,zIndex:0,pointerEvents:"none"};
   };
 
-  // Called when user types in the feeling box
   const handleDraftChange=(val)=>{
-    setDraft(val);
-    setIsTyping(true);
-    stopAuto();
+    setDraft(val);setIsTyping(true);stopAuto();
     clearTimeout(typingTimer.current);
-    // Resume auto-advance 4s after they stop typing
     typingTimer.current=setTimeout(()=>{setIsTyping(false);startAuto();},4000);
   };
 
-  // Save feeling for current photo
   const saveFeelingForCurrent=()=>{
     const val=draft.trim();
-    if(!val){
-      setInputShake(true);playWrong();
-      setTimeout(()=>setInputShake(false),500);
-      return;
-    }
+    if(!val){setInputShake(true);playWrong();setTimeout(()=>setInputShake(false),500);return;}
     const newFeelings=[...feelings];newFeelings[galIndex]=val;setFeelings(newFeelings);
     const newSaved=[...saved];newSaved[galIndex]=true;setSaved(newSaved);
     ownerLog.add("photo_feeling",`Photo ${galIndex+1} "${PHOTOS[galIndex].label}": "${val}"`);
     playPop();
-    // Briefly resume auto, then move to next unsaved photo if any
     setTimeout(()=>{
       const nextUnsaved=newSaved.findIndex((s,i)=>!s);
       if(nextUnsaved!==-1 && nextUnsaved!==galIndex){
-        setIsAnimating(true);
-        setGalIndex(nextUnsaved);
-        setTimeout(()=>setIsAnimating(false),400);
+        setIsAnimating(true);setGalIndex(nextUnsaved);setTimeout(()=>setIsAnimating(false),400);
       }
       startAuto();
     },600);
   };
 
   const savedCount=saved.filter(Boolean).length;
-  // Allow proceeding once all photos have feelings saved
   const canProceed=savedCount===PHOTOS.length;
 
   const handleNext=()=>{
-    // Save current draft if not yet saved before proceeding
     const val=draft.trim();
     if(val && !saved[galIndex]){
       const newFeelings=[...feelings];newFeelings[galIndex]=val;
@@ -854,17 +1061,12 @@ const GalleryScreen = ({onNext}) => {
       ownerLog.add("photo_feeling",`Photo ${galIndex+1} "${PHOTOS[galIndex].label}": "${val}"`);
       setFeelings(newFeelings);setSaved(newSaved);
     }
-    playPop();
-    onNext();
+    playPop();onNext();
   };
 
   return (
     <Screen style={{gap:0,padding:"6px 14px 12px",justifyContent:"center",display:"flex",flexDirection:"column",alignItems:"center"}}>
-
-      {/* Title */}
       <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(15px,3.8vw,24px)",margin:"0 0 6px",textShadow:"0 0 8px rgba(255,100,160,.4)",flexShrink:0,minHeight:"28px"}}>{title}</h2>
-
-      {/* Polaroid stack — height tightened to 38vh to leave room for text box */}
       <div
         style={{position:"relative",width:"min(220px,62vw)",height:"min(255px,38vh)",margin:"0 auto 8px",perspective:"900px",cursor:"pointer",flexShrink:0}}
         onTouchStart={e=>{touchStart.current=e.touches[0].clientX;}}
@@ -877,9 +1079,8 @@ const GalleryScreen = ({onNext}) => {
             transition:"transform .45s cubic-bezier(.34,1.5,.64,1),opacity .35s ease",
             willChange:"transform,opacity",...cardStyle(i),
           }}
-            onClick={()=>{ if(i===galIndex){/* do nothing — let input handle */} else next(); }}
+            onClick={()=>{ if(i===galIndex){} else next(); }}
           >
-            {/* Saved checkmark badge */}
             {saved[i]&&(
               <div style={{position:"absolute",top:"4px",right:"4px",width:"20px",height:"20px",borderRadius:"50%",background:"linear-gradient(135deg,#4caf50,#2e7d32)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:20,fontSize:"11px",boxShadow:"0 2px 6px rgba(0,0,0,.2)"}}>✓</div>
             )}
@@ -897,11 +1098,8 @@ const GalleryScreen = ({onNext}) => {
           </div>
         ))}
       </div>
-
-      {/* Navigation */}
       <div style={{display:"flex",alignItems:"center",gap:"10px",marginBottom:"6px",flexShrink:0}}>
         <button onClick={prev} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"30px",height:"30px",borderRadius:"50%",color:"#fff",fontSize:"17px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 4px 14px rgba(220,70,140,.3)",lineHeight:1}}>‹</button>
-        {/* Progress dots */}
         <div style={{display:"flex",gap:"4px",alignItems:"center"}}>
           {PHOTOS.map((_,i)=>(
             <div key={i} onClick={()=>{if(!isAnimating){setIsAnimating(true);setGalIndex(i);startAuto();setTimeout(()=>setIsAnimating(false),400);}}}
@@ -911,59 +1109,41 @@ const GalleryScreen = ({onNext}) => {
         </div>
         <button onClick={next} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"30px",height:"30px",borderRadius:"50%",color:"#fff",fontSize:"17px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 4px 14px rgba(220,70,140,.3)",lineHeight:1}}>›</button>
       </div>
-
-      {/* ── Per-photo feeling text box ── */}
       <div style={{width:"min(320px,90vw)",flexShrink:0,display:"flex",flexDirection:"column",gap:"6px"}}>
         <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(12px,3vw,15px)",color:"#c07090",margin:0,textAlign:"center",lineHeight:1.3}}>
           {saved[galIndex]
-            ? <span style={{color:"#4caf50",fontWeight:700}}>✓ saved! edit cheyyadam ki type cheyyi 💚</span>
-            : `photo ${galIndex+1} gurinchi nee feeling cheppu 💖`
+            ? <span style={{color:"#4caf50",fontWeight:700}}></span>
+            : `em ayyina cheppali ante cheppochuu vinnevalu okalu vunnaru evariki kanapadav le😒💖`
           }
         </p>
         <div style={{display:"flex",gap:"6px",alignItems:"center"}}>
           <input
             ref={inputRef}
-            key={galIndex} // remounts input on photo change — clears focus state
+            key={galIndex}
             value={draft}
             onChange={e=>handleDraftChange(e.target.value)}
             onFocus={()=>{setIsTyping(true);stopAuto();}}
             onBlur={()=>{clearTimeout(typingTimer.current);typingTimer.current=setTimeout(()=>{setIsTyping(false);startAuto();},3000);}}
             onKeyDown={e=>{ if(e.key==="Enter"){e.preventDefault();saveFeelingForCurrent();} }}
-            placeholder={saved[galIndex]?"change cheyali ante type chey...":"ikkade type chey..."}
+            placeholder={saved[galIndex]?"💕":"🙈"}
             maxLength={140}
             autoComplete="off"
-            style={{
-              flex:1,
-              border:`2px solid ${inputShake?"#e040a0":saved[galIndex]?"#4caf50":"#f4a0c8"}`,
-              borderRadius:"14px",padding:"9px 12px",
-              fontFamily:"'Caveat',cursive",
-              fontSize:"clamp(14px,3.5vw,18px)",fontWeight:700,
-              color:"#d8368e",background:"#fff5fa",outline:"none",
-              textAlign:"center",boxSizing:"border-box",
-              transition:"border-color .25s",
-              animation:inputShake?"shakeInput .4s ease":"none",
-            }}
+            style={{flex:1,border:`2px solid ${inputShake?"#e040a0":saved[galIndex]?"#4caf50":"#f4a0c8"}`,borderRadius:"14px",padding:"9px 12px",fontFamily:"'Caveat',cursive",fontSize:"clamp(14px,3.5vw,18px)",fontWeight:700,color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",boxSizing:"border-box",transition:"border-color .25s",animation:inputShake?"shakeInput .4s ease":"none"}}
           />
-          {/* Save button — tick icon */}
           <button onClick={saveFeelingForCurrent}
             style={{flexShrink:0,width:"38px",height:"38px",borderRadius:"50%",border:"none",background:draft.trim()?"linear-gradient(135deg,#f080b8,#e040a0)":"#f4d0e4",cursor:draft.trim()?"pointer":"default",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"18px",boxShadow:draft.trim()?"0 4px 14px rgba(220,70,140,.3)":"none",transition:"all .2s"}}
           >
             {saved[galIndex]?"💾":"💖"}
           </button>
         </div>
-        {/* Progress counter */}
         <p style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#d0a0b8",margin:0,textAlign:"center",opacity:.8}}>
-          {savedCount} / {PHOTOS.length} photos lo feeling cheppindi
-          {savedCount===PHOTOS.length?" 🎉 anni cheppindi!":" · double tap fullscreen"}
+          {savedCount} / {PHOTOS.length}
+          {savedCount===PHOTOS.length?" ":" · double tap chey pic pedhadhi avvudhi"}
         </p>
       </div>
-
-      {/* ── Continue button ── */}
       <Btn onClick={handleNext} style={{flexShrink:0,marginTop:"8px",opacity:canProceed?1:.5,cursor:canProceed?"pointer":"default"}}>
-        {canProceed?"✉️ chudali ani vunte chudu":"✉️ anni photos ki feeling cheppi proceed cheyyi"}
+        {canProceed?"✉️ chudali ani vunte chudoochuuu alage chadhivaka hug kuda ivochuuu em anukomu🙈":""}
       </Btn>
-
-      {/* Lightbox */}
       {lightbox&&(
         <div onClick={()=>setLightbox(null)} style={{position:"fixed",inset:0,background:"rgba(0,0,0,.9)",zIndex:9500,display:"flex",alignItems:"center",justifyContent:"center",padding:"20px",cursor:"zoom-out"}}>
           <img src={lightbox} style={{maxWidth:"95vw",maxHeight:"92vh",objectFit:"contain",borderRadius:"8px",boxShadow:"0 0 60px rgba(255,120,180,.3)"}} onClick={e=>e.stopPropagation()} alt="fullscreen"/>
@@ -990,7 +1170,7 @@ const LetterScreen = ({onNext}) => {
   const cancelBreak=()=>clearTimeout(pressTimer.current);
   const doBreak=()=>{
     setSealBroken(true);playPop();
-    setTimeout(()=>{type(setLetterTitle,"A Special Message 💌",{charDelay:50},()=>startLetterType());},700);
+    setTimeout(()=>{type(setLetterTitle,"Edho cheppa ante cheppali ante em ravatlee koni manchivi koni neeku nachanivi 💌",{charDelay:50},()=>startLetterType());},700);
   };
   const startLetterType=()=>{
     setLetterTyped(""); setShowEnd(false);
@@ -1000,9 +1180,7 @@ const LetterScreen = ({onNext}) => {
       for(let c=0;c<4&&i<LETTER_TEXT.length;c++){acc+=LETTER_TEXT[i++];}
       setLetterTyped(acc);
       if(i>=LETTER_TEXT.length){
-        clearInterval(iv);
-        setShowEnd(true);
-        setTimeout(()=>setShowNextBtn(true),600);
+        clearInterval(iv);setShowEnd(true);setTimeout(()=>setShowNextBtn(true),600);
       }
     },30);
   };
@@ -1014,7 +1192,7 @@ const LetterScreen = ({onNext}) => {
   const handleBowTap=()=>{
     const n=bowTaps+1;setBowTaps(n);playTone(600+n*40,"triangle",.08,.15);
     if(n>=5){setBowTaps(0);setBowEaster(true);setBowText("");setBowBtn(false);playPop();
-      type(setBowText,"Oka secret — nuvvu naa world lo most special person 🌍💖",{charDelay:38},()=>setTimeout(()=>setBowBtn(true),400));}
+      type(setBowText,"Oka secret- Idhi kanipettev ante emo max kani pettev ane anukuntunna I wanna say you as mine 🫂💖",{charDelay:38},()=>setTimeout(()=>setBowBtn(true),400));}
   };
 
   return (
@@ -1032,7 +1210,7 @@ const LetterScreen = ({onNext}) => {
       {sealBroken&&(
         <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:0,width:"100%",height:"100%",padding:"8px 0",animation:"fadeInUp .5s ease"}}>
           <h2 style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,fontStyle:"italic",fontSize:"clamp(18px,4vw,32px)",color:"#d8368e",margin:"0 0 4px",flexShrink:0}}>{letterTitle}</h2>
-          <div onClick={handleBowTap} style={{fontSize:"20px",margin:"2px 0 6px",flexShrink:0,cursor:"pointer",userSelect:"none",transition:"transform .15s"}} title="Tap 5x for a secret 🌸">🎀</div>
+          <div onClick={handleBowTap} style={{fontSize:"20px",margin:"2px 0 6px",flexShrink:0,cursor:"pointer",userSelect:"none",transition:"transform .15s"}} title="Tap 5x for a secret 💗">💗</div>
           <div style={{position:"relative",width:"94vw",maxWidth:"680px",flex:1,minHeight:0,display:"flex"}}>
             <div style={{position:"absolute",left:0,top:0,bottom:0,width:"4px",borderRadius:"4px",background:"#f9d0e4",zIndex:2,flexShrink:0}}>
               <div style={{width:"100%",height:`${scrollPct}%`,background:"linear-gradient(180deg,#f080b8,#e040a0)",borderRadius:"4px",transition:"height .1s"}}/>
@@ -1044,7 +1222,7 @@ const LetterScreen = ({onNext}) => {
                 <div style={{height:"100vh",background:"linear-gradient(105deg,transparent 40%,rgba(255,200,230,.15) 50%,transparent 60%)",backgroundSize:"200% 100%",animation:"shimmer 3s linear infinite",marginTop:"-2px"}}/>
               </div>
               <p style={{margin:0,whiteSpace:"pre-wrap",position:"relative",zIndex:2}}>{letterTyped}</p>
-              {showEnd&&<div style={{fontSize:"22px",margin:"6px 0",position:"relative",zIndex:2}}>🌸</div>}
+              {showEnd&&<div style={{fontSize:"22px",margin:"6px 0",position:"relative",zIndex:2}}>💖</div>}
             </div>
           </div>
           {showNextBtn&&<Btn onClick={onNext} style={{marginTop:"10px",flexShrink:0}}>Continue ✨</Btn>}
@@ -1052,7 +1230,7 @@ const LetterScreen = ({onNext}) => {
       )}
       {bowEaster&&(
         <Modal onBackdropClick={()=>setBowEaster(false)}>
-          <div style={{fontSize:"40px"}}>🎀✨</div>
+          <div style={{fontSize:"40px"}}>💗✨</div>
           <h3 style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,color:"#d8368e",margin:0,fontSize:"20px"}}>A Hidden Note 💌</h3>
           <p style={{fontFamily:"'Caveat',cursive",fontWeight:700,color:"#c070a0",textAlign:"center",lineHeight:1.6,fontSize:"clamp(15px,3.8vw,18px)",margin:0}}>{bowText}</p>
           {bowBtn&&<Btn onClick={()=>setBowEaster(false)}>💖</Btn>}
@@ -1071,11 +1249,11 @@ const CreditsScreen = ({onRestart}) => {
   const [feelingSaved,setFeelingsSaved]=useState(false);
   const [feelingShake,setFeelingShake]=useState(false);
   const lines=[
-    {text:"Made with 💖",            size:"clamp(28px,6vw,52px)", font:"'Great Vibes',cursive",   color:"#d1006f"},
-    {text:"for the one and only",    size:"clamp(16px,3vw,24px)", font:"'Caveat',cursive",         color:"#c070a0"},
+    {text:"edho try cheysa nachithe ok ledha em cheyyalenu",            size:"clamp(28px,6vw,52px)", font:"'Great Vibes',cursive",   color:"#d1006f"},
+    {text:"for the one and only my",    size:"clamp(16px,3vw,24px)", font:"'Caveat',cursive",         color:"#c070a0"},
     {text:"kukkapilla 🐾",           size:"clamp(24px,5vw,42px)", font:"'Dancing Script',cursive", color:"#e040a0"},
-    {text:"Happy 21st Birthday 🎂",  size:"clamp(18px,4vw,32px)", font:"'Pacifico',cursive",       color:"#f080b8"},
-    {text:"— with all my heart ❤️", size:"clamp(14px,2.8vw,20px)",font:"'Caveat',cursive",         color:"#b05070"},
+    {text:"Happy 21st Birthday 🫂",  size:"clamp(18px,4vw,32px)", font:"'Pacifico',cursive",       color:"#f080b8"},
+    {text:"- from you owner garuuu", size:"clamp(14px,2.8vw,20px)",font:"'Caveat',cursive",         color:"#b05070"},
   ];
   useEffect(()=>{
     const timers=lines.map((_,i)=>setTimeout(()=>setPhase(p=>Math.max(p,i+1)),600+i*1100));
@@ -1087,74 +1265,42 @@ const CreditsScreen = ({onRestart}) => {
     const val=feelingVal.trim();
     if(!val){setFeelingShake(true);playWrong();setTimeout(()=>setFeelingShake(false),500);return;}
     ownerLog.add("credits_feeling",`"${val}"`);
-    playPop();
-    setFeelingsSaved(true);
+    playPop();setFeelingsSaved(true);
   };
 
   return (
     <Screen style={{background:"radial-gradient(ellipse at 50% 40%,#fff0f8,#ffd0ec 60%,#ffb8e0 100%)",overflowY:"auto",justifyContent:"flex-start",paddingTop:"clamp(20px,5vh,40px)",paddingBottom:"24px"}}>
       <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"18px",width:"100%",maxWidth:"440px",margin:"0 auto"}}>
-        {/* Cinematic lines */}
         {lines.map((l,i)=>(
           <div key={i} style={{opacity:phase>i?1:0,transform:phase>i?"translateY(0)":"translateY(24px)",transition:"opacity .9s ease,transform .9s ease",fontFamily:l.font,fontSize:l.size,color:l.color,textAlign:"center",textShadow:"0 2px 12px rgba(220,80,140,.2)"}}>
             {l.text}
           </div>
         ))}
-
-        {/* ── Feeling text box — appears after all lines reveal ── */}
-        <div style={{
-          opacity:phase>lines.length?1:0,
-          transform:phase>lines.length?"translateY(0)":"translateY(30px)",
-          transition:"opacity 1s ease .3s,transform 1s ease .3s",
-          width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:"10px",
-          marginTop:"8px",padding:"0 8px",
-        }}>
+        <div style={{opacity:phase>lines.length?1:0,transform:phase>lines.length?"translateY(0)":"translateY(30px)",transition:"opacity 1s ease .3s,transform 1s ease .3s",width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:"10px",marginTop:"8px",padding:"0 8px"}}>
           {!feelingSaved ? (
             <>
               <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(14px,3.5vw,18px)",color:"#b05070",margin:0,textAlign:"center",lineHeight:1.4}}>
-                anni chusaka ippudu em anipistundhi? 🌸<br/>
-                <span style={{fontSize:"clamp(12px,2.8vw,14px)",opacity:.7}}>nee final feeling ikkade type cheyyi</span>
+                em ayyina vunte cheppu i mean motham chadhivaka nee abhiprayam 💖<br/>
+                <span style={{fontSize:"clamp(12px,2.8vw,14px)",opacity:.7}}>manditory em kaadhu but cheppali anipisthe cheppu endhuku ante idhi evaru chudaru kabati</span>
               </p>
               <textarea
-                value={feelingVal}
-                onChange={e=>setFeelingVal(e.target.value)}
-                placeholder="nee manasulo em vundho ikkade cheppu..."
-                maxLength={300}
-                rows={3}
-                style={{
-                  width:"100%",
-                  border:`2px solid ${feelingShake?"#e040a0":"#f4a0c8"}`,
-                  borderRadius:"16px",padding:"12px 14px",
-                  fontFamily:"'Caveat',cursive",
-                  fontSize:"clamp(15px,3.5vw,19px)",fontWeight:700,
-                  color:"#d8368e",background:"rgba(255,255,255,.85)",
-                  outline:"none",resize:"none",
-                  boxSizing:"border-box",lineHeight:1.5,
-                  animation:feelingShake?"shakeInput .4s ease":"none",
-                  transition:"border-color .25s",
-                  boxShadow:"0 4px 20px rgba(220,80,140,.15)",
-                }}
+                value={feelingVal} onChange={e=>setFeelingVal(e.target.value)}
+                placeholder=""
+                maxLength={300} rows={3}
+                style={{width:"100%",border:`2px solid ${feelingShake?"#e040a0":"#f4a0c8"}`,borderRadius:"16px",padding:"12px 14px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,19px)",fontWeight:700,color:"#d8368e",background:"rgba(255,255,255,.85)",outline:"none",resize:"none",boxSizing:"border-box",lineHeight:1.5,animation:feelingShake?"shakeInput .4s ease":"none",transition:"border-color .25s",boxShadow:"0 4px 20px rgba(220,80,140,.15)"}}
               />
-              <Btn onClick={saveFeeling} style={{width:"100%",justifyContent:"center"}}>
-                💖 save & finish
-              </Btn>
+              <Btn onClick={saveFeeling} style={{width:"100%",justifyContent:"center"}}>💖</Btn>
             </>
           ) : (
             <div style={{background:"rgba(255,255,255,.7)",backdropFilter:"blur(8px)",borderRadius:"18px",padding:"16px 20px",textAlign:"center",border:"2px solid #f4a0c8",boxShadow:"0 4px 20px rgba(220,80,140,.15)"}}>
-              <div style={{fontSize:"28px",marginBottom:"6px"}}>🌸</div>
-              <p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(14px,3.5vw,18px)",color:"#d8368e",margin:"0 0 4px"}}>
-                {feelingVal}
-              </p>
-              <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(12px,2.8vw,14px)",color:"#c07090",margin:0,opacity:.8}}>
-                saved 💖 thank you for telling me
-              </p>
+              <div style={{fontSize:"28px",marginBottom:"6px"}}>💖</div>
+              <p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(14px,3.5vw,18px)",color:"#d8368e",margin:"0 0 4px"}}>{feelingVal}</p>
+              <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(12px,2.8vw,14px)",color:"#c07090",margin:0,opacity:.8}}>saved 💖 thank you for telling me</p>
             </div>
           )}
         </div>
-
-        {/* Replay button */}
         <div style={{opacity:phase>lines.length?1:0,transition:"opacity .9s ease",display:"flex",gap:"10px",flexWrap:"wrap",justifyContent:"center",marginTop:"4px"}}>
-          <Btn onClick={onRestart} variant="purple">🔁 Replay from start</Btn>
+          <Btn onClick={onRestart} variant="purple">malli chudali anipisthe chudochuuu..😒</Btn>
         </div>
       </div>
     </Screen>
@@ -1162,32 +1308,31 @@ const CreditsScreen = ({onRestart}) => {
 };
 
 /* ════════════════════════════════════════
-   OWNER PANEL
+   OWNER PANEL — Birthday theme
 ════════════════════════════════════════ */
 const OwnerPanel = ({onClose}) => {
   const [log, setLog] = useState(ownerLog.get());
-  const [activeTab, setActiveTab] = useState("story"); // "story" | "feelings" | "timeline"
+  const [activeTab, setActiveTab] = useState("story");
   useEffect(()=>{
     const iv = setInterval(()=>setLog(ownerLog.get()), 2000);
     return ()=>clearInterval(iv);
   },[]);
 
-  // ── Human-readable sentence builder ──
   const toSentence = (entry) => {
     const v = entry.value;
     switch(entry.type) {
-      case "name_correct":    return { icon:"✅", color:"#4caf50", sentence:`She got the name right! Typed ${v}` };
-      case "name_wrong":      return { icon:"❌", color:"#ff6b6b", sentence:`Wrong name attempt — she typed ${v}` };
-      case "hint_opened":     return { icon:"💡", color:"#ffd93d", sentence:"She clicked the hint button 😏" };
-      case "hint_reply":      return { icon:"💬", color:"#f8a5c2", sentence:`After seeing the hint, she typed: ${v}` };
-      case "message_reaction":return { icon:"💌", color:"#ff9ff3", sentence:`Her reaction to the birthday message: ${v}` };
-      case "birthday_reaction":return { icon:"🎂", color:"#ffeaa7", sentence:`Her feeling on the Birthday screen: ${v}` };
-      case "credits_feeling": return { icon:"🌸", color:"#fd79a8", sentence:`Her final feeling at the end: ${v}` };
-      case "easter_egg":      return { icon:"🐾", color:"#a29bfe", sentence:`Found a secret! ${v}` };
-      case "slide_time":      return { icon:"⏱️", color:"#74b9ff", sentence:v };
-      case "photo_feeling":   return { icon:"📸", color:"#fab1e1", sentence:v };
-      case "bow_easter":      return { icon:"🎀", color:"#f8bbd9", sentence:"Tapped the bow 5 times — found the hidden note! 🎀" };
-      default:                return { icon:"🔹", color:"#aaa",    sentence:v };
+      case "name_correct":     return { icon:"✅", color:"#2e7d32", bg:"#e8f5e9", sentence:`She got the name right! Typed ${v}` };
+      case "name_wrong":       return { icon:"❌", color:"#c62828", bg:"#ffebee", sentence:`Wrong name attempt — she typed ${v}` };
+      case "hint_opened":      return { icon:"💡", color:"#e65100", bg:"#fff3e0", sentence:"She clicked the hint button 😏" };
+      case "hint_reply":       return { icon:"💬", color:"#ad1457", bg:"#fce4ec", sentence:`After seeing the hint: ${v}` };
+      case "message_reaction": return { icon:"💌", color:"#6a1b9a", bg:"#f3e5f5", sentence:`Birthday message reaction: ${v}` };
+      case "birthday_reaction":return { icon:"🎂", color:"#bf360c", bg:"#fbe9e7", sentence:`Happy Birthday screen feeling: ${v}` };
+      case "credits_feeling":  return { icon:"💖", color:"#880e4f", bg:"#fce4ec", sentence:`Final feeling at the end: ${v}` };
+      case "easter_egg":       return { icon:"🐾", color:"#4527a0", bg:"#ede7f6", sentence:`Found a secret! ${v}` };
+      case "slide_time":       return { icon:"⏱️", color:"#0277bd", bg:"#e1f5fe", sentence:v };
+      case "photo_feeling":    return { icon:"📸", color:"#880e4f", bg:"#fce4ec", sentence:v };
+      case "bow_easter":       return { icon:"💗", color:"#c2185b", bg:"#fce4ec", sentence:"Tapped the bow 5 times!" };
+      default:                 return { icon:"🔹", color:"#78909c", bg:"#f5f5f5", sentence:v };
     }
   };
 
@@ -1197,130 +1342,108 @@ const OwnerPanel = ({onClose}) => {
     "slide_time","photo_feeling","bow_easter",
   ]);
 
-  const filtered = log.filter(e=>SHOWN_TYPES.has(e.type));
-
-  // feelings-only tab: all text she typed
+  const filtered     = log.filter(e=>SHOWN_TYPES.has(e.type));
   const feelingsOnly = log.filter(e=>["hint_reply","message_reaction","birthday_reaction","credits_feeling","photo_feeling"].includes(e.type));
-
-  // timeline tab: slide times
   const timelineOnly = log.filter(e=>e.type==="slide_time");
-
-  // stats
   const nameAttempts = log.filter(e=>e.type==="name_wrong").length;
   const gotItRight   = log.some(e=>e.type==="name_correct");
   const photosDone   = log.filter(e=>e.type==="photo_feeling").length;
   const secretsFound = log.filter(e=>e.type==="easter_egg").length;
 
-  const TAB_STYLE = (active) => ({
-    flex:1, padding:"6px 4px", border:"none", borderRadius:"8px",
-    fontFamily:"monospace", fontSize:"11px", fontWeight:700, cursor:"pointer",
-    background: active ? "#e040a0" : "#2a0a14", color: active ? "#fff" : "#888",
-    transition:"all .2s",
-  });
+  const TAB = (id, label, active) => (
+    <button onClick={()=>setActiveTab(id)} style={{flex:1,padding:"9px 4px",border:"none",borderRadius:"20px",fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,2.8vw,16px)",fontWeight:700,cursor:"pointer",transition:"all .25s",background:active?"linear-gradient(135deg,#f080b8,#e040a0)":"transparent",color:active?"#fff":"#c070a0",boxShadow:active?"0 4px 14px rgba(220,70,140,.3)":"none"}}>{label}</button>
+  );
+
+  const STAT_CARD = ({icon,label,value,color,bg}) => (
+    <div style={{background:bg||"#fff5fa",borderRadius:"16px",padding:"10px 8px",flex:"1",textAlign:"center",border:`2px solid ${color}33`,display:"flex",flexDirection:"column",alignItems:"center",gap:"3px"}}>
+      <div style={{fontSize:"18px",lineHeight:1}}>{icon}</div>
+      <div style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:"clamp(16px,4vw,22px)",color:color,lineHeight:1.1}}>{value}</div>
+      <div style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(10px,2vw,12px)",color:"#c090a0",fontWeight:700,lineHeight:1}}>{label}</div>
+    </div>
+  );
+
+  const LOG_CARD = ({entry}) => {
+    const {icon,color,bg,sentence} = toSentence(entry);
+    return (
+      <div style={{background:bg,borderRadius:"16px",padding:"10px 14px",display:"flex",gap:"10px",alignItems:"flex-start",border:`1.5px solid ${color}28`,animation:"screenFadeIn .4s ease"}}>
+        <span style={{fontSize:"18px",flexShrink:0,marginTop:"2px",lineHeight:1}}>{icon}</span>
+        <div style={{flex:1,minWidth:0}}>
+          <div style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(14px,3vw,17px)",color:color,wordBreak:"break-word",lineHeight:1.4}}>{sentence}</div>
+        </div>
+        <span style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#c0a0b0",flexShrink:0,marginTop:"3px",whiteSpace:"nowrap"}}>{entry.time}</span>
+      </div>
+    );
+  };
 
   return (
-    <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.93)",zIndex:99999,display:"flex",alignItems:"center",justifyContent:"center",padding:"14px"}}>
-      <div style={{background:"#120608",border:"2px solid #e040a0",borderRadius:"22px",padding:"18px",maxWidth:"490px",width:"98vw",maxHeight:"90vh",display:"flex",flexDirection:"column",gap:"10px"}}>
-
-        {/* ── Header ── */}
+    <div style={{position:"fixed",inset:0,background:"rgba(255,200,230,0.35)",backdropFilter:"blur(12px)",zIndex:99999,display:"flex",alignItems:"center",justifyContent:"center",padding:"14px"}}>
+      <div style={{background:"linear-gradient(160deg,#fff5fb,#ffe8f4)",border:"2.5px solid #f4a0c8",borderRadius:"28px",padding:"20px",maxWidth:"500px",width:"96vw",maxHeight:"90vh",display:"flex",flexDirection:"column",gap:"12px",boxShadow:"0 12px 56px rgba(220,70,140,.22)"}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexShrink:0}}>
           <div>
-            <div style={{color:"#f080b8",fontWeight:700,fontSize:"16px",fontFamily:"monospace"}}>🔐 Owner's View</div>
-            <div style={{color:"#555",fontSize:"10px",fontFamily:"monospace"}}>music 🎵 ×5 to open · refreshes every 2s</div>
+            <div style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:"clamp(18px,4vw,26px)",background:"linear-gradient(135deg,#f080b8,#c020a0)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",lineHeight:1.1}}>🔐 Owner's View</div>
+            <div style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(11px,2.5vw,13px)",color:"#c090a0",marginTop:"2px"}}>🎵×5 to open · auto-refreshes every 2s</div>
           </div>
-          <div style={{display:"flex",gap:"6px"}}>
-            <button onClick={()=>{ownerLog.clear();setLog([]);}} style={{background:"#c0392b",border:"none",color:"white",borderRadius:"8px",padding:"5px 9px",cursor:"pointer",fontSize:"11px",fontFamily:"monospace"}}>🗑 Clear</button>
-            <button onClick={onClose} style={{background:"#333",border:"none",color:"white",borderRadius:"8px",padding:"5px 9px",cursor:"pointer",fontSize:"11px",fontFamily:"monospace"}}>✕</button>
+          <div style={{display:"flex",gap:"8px",alignItems:"center"}}>
+            <button onClick={()=>{ownerLog.clear();setLog([]);}} style={{background:"linear-gradient(135deg,#ff8a80,#e53935)",border:"none",color:"white",borderRadius:"14px",padding:"7px 12px",cursor:"pointer",fontFamily:"'Caveat',cursive",fontSize:"clamp(12px,2.5vw,14px)",fontWeight:700,boxShadow:"0 3px 10px rgba(229,57,53,.3)"}}>🗑 clear</button>
+            <button onClick={onClose} style={{background:"linear-gradient(135deg,#f4a0c8,#e040a0)",border:"none",color:"white",borderRadius:"14px",padding:"7px 12px",cursor:"pointer",fontFamily:"'Caveat',cursive",fontSize:"clamp(12px,2.5vw,14px)",fontWeight:700,boxShadow:"0 3px 10px rgba(220,70,140,.3)"}}>✕ close</button>
           </div>
         </div>
-
-        {/* ── Stats row ── */}
-        <div style={{display:"flex",gap:"5px",flexShrink:0}}>
-          {[
-            {label:"Name tries",  val:nameAttempts,                    color:"#ff6b6b"},
-            {label:"Name found",  val:gotItRight?"Yes ✅":"No ❌",      color:gotItRight?"#4caf50":"#ff6b6b"},
-            {label:"Photos done", val:`${photosDone}/${PHOTOS.length}`, color:"#fab1e1"},
-            {label:"Secrets",     val:secretsFound,                    color:"#a29bfe"},
-          ].map((s,i)=>(
-            <div key={i} style={{background:"#1e0a10",border:`1px solid ${s.color}44`,borderRadius:"10px",padding:"6px 8px",flex:"1",textAlign:"center"}}>
-              <div style={{color:s.color,fontSize:"14px",fontWeight:800,fontFamily:"monospace"}}>{s.val}</div>
-              <div style={{color:"#555",fontSize:"9px",fontFamily:"monospace",marginTop:"1px"}}>{s.label}</div>
-            </div>
-          ))}
+        <div style={{height:"2px",borderRadius:"2px",background:"linear-gradient(90deg,#f4a0c8,#f080b8,#f4a0c8)",flexShrink:0}}/>
+        <div style={{display:"flex",gap:"8px",flexShrink:0}}>
+          <STAT_CARD icon="✍️" label="Name tries"   value={nameAttempts}                color="#c62828" bg="#ffebee"/>
+          <STAT_CARD icon="✅" label="Got it right" value={gotItRight?"Yes!":"Not yet"} color={gotItRight?"#2e7d32":"#c62828"} bg={gotItRight?"#e8f5e9":"#ffebee"}/>
+          <STAT_CARD icon="📸" label="Photos done"  value={`${photosDone}/${PHOTOS.length}`} color="#ad1457" bg="#fce4ec"/>
+          <STAT_CARD icon="🐾" label="Secrets"      value={secretsFound}                color="#4527a0" bg="#ede7f6"/>
         </div>
-
-        {/* ── Tabs ── */}
-        <div style={{display:"flex",gap:"4px",flexShrink:0}}>
-          <button style={TAB_STYLE(activeTab==="story")}   onClick={()=>setActiveTab("story")}>📖 Story</button>
-          <button style={TAB_STYLE(activeTab==="feelings")} onClick={()=>setActiveTab("feelings")}>💬 Her words</button>
-          <button style={TAB_STYLE(activeTab==="timeline")} onClick={()=>setActiveTab("timeline")}>⏱ Time spent</button>
+        <div style={{display:"flex",gap:"4px",background:"rgba(244,160,200,0.15)",borderRadius:"24px",padding:"4px",flexShrink:0}}>
+          {TAB("story",    "📖 Story",     activeTab==="story")}
+          {TAB("feelings", "💬 Her words", activeTab==="feelings")}
+          {TAB("timeline", "⏱ Time",       activeTab==="timeline")}
         </div>
-
-        {/* ── Story tab: all meaningful events in order ── */}
         {activeTab==="story" && (
-          <div style={{overflowY:"auto",flex:1,display:"flex",flexDirection:"column",gap:"6px"}}>
+          <div style={{overflowY:"auto",flex:1,display:"flex",flexDirection:"column",gap:"8px",paddingRight:"2px"}}>
             {filtered.length===0
-              ? <p style={{color:"#444",textAlign:"center",fontFamily:"monospace",marginTop:"24px",fontSize:"13px"}}>Nothing yet — she hasn't started!</p>
-              : [...filtered].reverse().map((entry,i)=>{
-                  const {icon,color,sentence} = toSentence(entry);
-                  return (
-                    <div key={i} style={{background:"#1a0a12",borderRadius:"10px",padding:"9px 11px",display:"flex",gap:"9px",alignItems:"flex-start",border:`1px solid ${color}28`}}>
-                      <span style={{fontSize:"17px",flexShrink:0,marginTop:"1px"}}>{icon}</span>
-                      <div style={{flex:1,minWidth:0}}>
-                        <div style={{color:"#f0d0e0",fontSize:"15px",fontFamily:"'Caveat',cursive",fontWeight:700,wordBreak:"break-word",lineHeight:1.35}}>{sentence}</div>
-                      </div>
-                      <span style={{color:"#3a1a22",fontSize:"10px",fontFamily:"monospace",flexShrink:0,marginTop:"3px",color:"#664455"}}>{entry.time}</span>
-                    </div>
-                  );
-                })
+              ? <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"12px",padding:"32px 16px"}}><div style={{fontSize:"48px",animation:"floatY 2s ease-in-out infinite"}}>💗</div><p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"18px",color:"#c070a0",textAlign:"center",margin:0}}>Nothing yet!<br/>She hasn't started 💖</p></div>
+              : [...filtered].reverse().map((entry,i)=><LOG_CARD key={i} entry={entry}/>)
             }
           </div>
         )}
-
-        {/* ── Her words tab: only typed text ── */}
         {activeTab==="feelings" && (
-          <div style={{overflowY:"auto",flex:1,display:"flex",flexDirection:"column",gap:"6px"}}>
+          <div style={{overflowY:"auto",flex:1,display:"flex",flexDirection:"column",gap:"8px",paddingRight:"2px"}}>
             {feelingsOnly.length===0
-              ? <p style={{color:"#444",textAlign:"center",fontFamily:"monospace",marginTop:"24px",fontSize:"13px"}}>She hasn't typed anything yet 😊</p>
+              ? <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"12px",padding:"32px 16px"}}><div style={{fontSize:"48px",animation:"floatY 2s ease-in-out infinite"}}>💬</div><p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"18px",color:"#c070a0",textAlign:"center",margin:0}}>She hasn't typed anything yet 😊</p></div>
               : feelingsOnly.map((entry,i)=>{
-                  const {icon,color,sentence} = toSentence(entry);
+                  const {icon,color,bg} = toSentence(entry);
+                  const typeLabels={hint_reply:"Hint reply",message_reaction:"Birthday message",birthday_reaction:"Happy Birthday screen",credits_feeling:"Final feeling",photo_feeling:"Photo feeling"};
                   return (
-                    <div key={i} style={{background:"#1e0814",borderRadius:"12px",padding:"10px 13px",border:`1px solid ${color}44`}}>
-                      <div style={{display:"flex",gap:"6px",alignItems:"center",marginBottom:"5px"}}>
-                        <span style={{fontSize:"14px"}}>{icon}</span>
-                        <span style={{color:color,fontSize:"10px",fontFamily:"monospace",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.06em"}}>
-                          {entry.type==="photo_feeling"?"Photo":""}
-                          {entry.type==="hint_reply"?"Hint reply":""}
-                          {entry.type==="message_reaction"?"Birthday message reaction":""}
-                          {entry.type==="birthday_reaction"?"Happy Birthday screen":""}
-                          {entry.type==="credits_feeling"?"Final feeling":""}
-                        </span>
-                        <span style={{color:"#444",fontSize:"9px",fontFamily:"monospace",marginLeft:"auto"}}>{entry.time}</span>
+                    <div key={i} style={{background:bg,borderRadius:"18px",padding:"12px 16px",border:`1.5px solid ${color}33`}}>
+                      <div style={{display:"flex",gap:"6px",alignItems:"center",marginBottom:"6px"}}>
+                        <span style={{fontSize:"15px",lineHeight:1}}>{icon}</span>
+                        <span style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(11px,2.5vw,13px)",color:color,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.05em"}}>{typeLabels[entry.type]||""}</span>
+                        <span style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#c0a0b0",marginLeft:"auto",whiteSpace:"nowrap"}}>{entry.time}</span>
                       </div>
-                      <div style={{color:"#ffd0e8",fontSize:"17px",fontFamily:"'Caveat',cursive",fontWeight:700,lineHeight:1.4,wordBreak:"break-word"}}>{entry.value}</div>
+                      <div style={{fontFamily:"'Dancing Script',cursive",fontWeight:700,fontSize:"clamp(16px,4vw,21px)",color:color,lineHeight:1.45,wordBreak:"break-word"}}>{entry.value}</div>
                     </div>
                   );
                 })
             }
           </div>
         )}
-
-        {/* ── Timeline tab ── */}
         {activeTab==="timeline" && (
-          <div style={{overflowY:"auto",flex:1,display:"flex",flexDirection:"column",gap:"5px"}}>
+          <div style={{overflowY:"auto",flex:1,display:"flex",flexDirection:"column",gap:"8px",paddingRight:"2px"}}>
             {timelineOnly.length===0
-              ? <p style={{color:"#444",textAlign:"center",fontFamily:"monospace",marginTop:"24px",fontSize:"13px"}}>No timing data yet</p>
+              ? <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"12px",padding:"32px 16px"}}><div style={{fontSize:"48px",animation:"floatY 2s ease-in-out infinite"}}>⏳</div><p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"18px",color:"#c070a0",textAlign:"center",margin:0}}>No timing data yet!</p></div>
               : timelineOnly.map((entry,i)=>(
-                  <div key={i} style={{background:"#12101a",borderRadius:"8px",padding:"7px 11px",display:"flex",gap:"8px",alignItems:"center",border:"1px solid #74b9ff22"}}>
-                    <span style={{fontSize:"14px"}}>⏱️</span>
-                    <span style={{color:"#a0c8ff",fontSize:"13px",fontFamily:"'Caveat',cursive",fontWeight:700,flex:1}}>{entry.value}</span>
-                    <span style={{color:"#334",fontSize:"9px",fontFamily:"monospace",color:"#445566"}}>{entry.time}</span>
+                  <div key={i} style={{background:"#e1f5fe",borderRadius:"16px",padding:"10px 14px",display:"flex",gap:"10px",alignItems:"center",border:"1.5px solid #0277bd22"}}>
+                    <span style={{fontSize:"18px",lineHeight:1,flexShrink:0}}>⏱️</span>
+                    <span style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(14px,3vw,17px)",color:"#0277bd",flex:1,lineHeight:1.3}}>{entry.value}</span>
+                    <span style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#90caf9",flexShrink:0,whiteSpace:"nowrap"}}>{entry.time}</span>
                   </div>
                 ))
             }
           </div>
         )}
-
+        <div style={{fontFamily:"'Caveat',cursive",fontSize:"12px",color:"#d4a0b8",textAlign:"center",flexShrink:0,opacity:.6}}>made with 💖 · secret panel</div>
       </div>
     </div>
   );
@@ -1337,7 +1460,7 @@ export default function BirthdaySurprise() {
   const audioRef=useRef(null);
   const musicTapRef=useRef({count:0,timer:null});
 
-  const triggerBurst=useCallback((emojis=["🎉","💖","✨","🌸","🎊","⭐"],count=16)=>{
+  const triggerBurst=useCallback((emojis=["🎉","💖","✨","💗","🎊","⭐"],count=16)=>{
     const nb=Array.from({length:count},(_,i)=>({id:Date.now()+i,emoji:emojis[Math.floor(Math.random()*emojis.length)],x:(10+Math.random()*80)+"vw",y:(20+Math.random()*60)+"vh",size:(18+Math.random()*22)+"px",delay:(Math.random()*.4)+"s"}));
     setBursts(nb); setTimeout(()=>setBursts([]),1400);
   },[]);
@@ -1346,10 +1469,8 @@ export default function BirthdaySurprise() {
   const screenNameRef=useRef("unlock");
 
   const go=useCallback((s)=>{
-    // log time spent on the screen we're leaving
     const elapsed=Date.now()-screenEnterTime.current;
     ownerLog.addScreenTime(screenNameRef.current, elapsed);
-    // move to new screen
     screenEnterTime.current=Date.now();
     screenNameRef.current=s;
     setScreen(s);
@@ -1370,12 +1491,8 @@ export default function BirthdaySurprise() {
     const t=musicTapRef.current;
     t.count++;
     clearTimeout(t.timer);
-    if(t.count>=5){
-      t.count=0;
-      setShowOwner(true);
-      return;
-    }
-    t.timer=setTimeout(()=>{ t.count=0; },2000);
+    if(t.count>=5){t.count=0;setShowOwner(true);return;}
+    t.timer=setTimeout(()=>{t.count=0;},2000);
     toggleMusic();
   };
 
@@ -1422,6 +1539,11 @@ export default function BirthdaySurprise() {
         @keyframes handSwipe      {0%,100%{transform:translateX(-10px);opacity:.5;}50%{transform:translateX(16px);opacity:1;}}
         @keyframes shimmer        {0%{background-position:200% center;}100%{background-position:-200% center;}}
 
+        /* ── Sticker celebration animations ── */
+        @keyframes stickerBob     {0%{transform:translateX(0) translateY(0) rotate(-3deg);}100%{transform:translateX(0) translateY(-14px) rotate(3deg);}}
+        @keyframes clapHand       {0%{transform:rotate(-20deg) scale(1);}100%{transform:rotate(20deg) scale(1.2) translateY(-6px);}}
+        @keyframes celebBounce    {0%{transform:translateY(0) scale(1);}100%{transform:translateY(-14px) scale(1.2);}}
+
         .letter-scroll::-webkit-scrollbar { width: 6px; }
         .letter-scroll::-webkit-scrollbar-track { background: #f9d0e4; border-radius: 4px; }
         .letter-scroll::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#f080b8,#e040a0); border-radius: 4px; }
@@ -1432,7 +1554,6 @@ export default function BirthdaySurprise() {
       <EmojiBurst bursts={bursts}/>
       <SparkleCursor/>
 
-      {/* Music Button */}
       <button onClick={handleMusicBtn} style={{position:"fixed",top:"12px",right:"12px",zIndex:9999,width:"42px",height:"42px",borderRadius:"50%",background:"linear-gradient(135deg,#f4a0c8,#e040a0)",border:"none",cursor:"pointer",fontSize:"17px",display:"flex",alignItems:"center",justifyContent:"center",boxShadow:"0 2px 16px rgba(220,70,140,.35)",padding:0,transition:"transform .2s"}}>
         {musicOn?"🔇":"🎵"}
       </button>
