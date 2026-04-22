@@ -51,27 +51,27 @@ const LONG_PRESS    = 600;
 const BIRTHDAY_DATE = new Date("2026-04-18");
 
 const PHOTOS = [
-  { src:"photos/photo1.jpg",  label:"First photo 💖",           msg:"💖 First Photo andhariki special ay but mana first photo edho general ga jarigipoyindhi but first time oka ammai nanu photo adigindhi🥹🫂" },
-  { src:"photos/photo2.jpg",  label:"💖 First saree pic",       msg:"expect cheyyakunda vachav call cheysav kurchukuni evaru lekapoyina selfie dhigam ✨" },
-  { src:"photos/photo3.jpg",  label:"💗 ee pic ante",           msg:"vaishu akka theysindi pic kani ah pic perfection ki 4-5 pics pattindhi😅💖" },
-  { src:"photos/photo4.jpg",  label:"💕 saree",                 msg:"actual ga saree kadathava ledha ani doubt but bale vunnav ahh saree lo🙈💕" },
-  { src:"photos/photo5.jpg",  label:"💗 Authority",             msg:"idhi one of my favourite pic ee pic lo nuvvu chuppinchina authority ki padipoya actual ga 😒💗" },
+  { src:"photos/photo1.jpg",  label:"First photo 💖",          msg:"💖 First Photo is always special and means a lot 🫂" },
+  { src:"photos/photo2.jpg",  label:"💖 Sweet Moments",         msg:"You were glowing here. As always. ✨" },
+  { src:"photos/photo3.jpg",  label:"💗 A Memory",              msg:"Every moment with you is precious 💖" },
+  { src:"photos/photo4.jpg",  label:"💕 the dress i asked for", msg:"the vibe we match 💕" },
+  { src:"photos/photo5.jpg",  label:"💗 Special Day",           msg:"special memory. 💗" },
   { src:"photos/photo6.jpg",  label:"💗 Special Pic",           msg:"This pic made me fall for you every time. 💗" },
   { src:"photos/photo7.jpg",  label:"💗 Special Day",           msg:"Making memories together. 💗" },
   { src:"photos/photo8.jpg",  label:"💗 Special Day",           msg:"Making memories together. 💗" },
-  { src:"photos/photo9.jpg",  label:"💗 My Kukkapilla",         msg:"naa kukkapilla nannu owner ga accepted cheysi pampina memory 💗" },
-  { src:"photos/photo10.jpg", label:"💗 Celestra 2k25",         msg:"ee pic value appudu theliyaledhu but malli ila neetho pic theysukovali ani vundhi 🫠💗" },
-  { src:"photos/photo11.jpg", label:"💗 forever mine",          msg:"ee pic ni eni sarlu chussina edho special feeling the way you looks at me🙈💗" },
-  { src:"photos/photo14.jpg", label:"💗 the day i fall",        msg:"nuvvu call cheysi manchi shirt veysukuni raa ledhaa paguludhi ah feel emoo💗" },
+  { src:"photos/photo9.jpg",  label:"💗 My Kukkapilla",         msg:"the day you have agreed. 💗" },
+  { src:"photos/photo10.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
+  { src:"photos/photo11.jpg", label:"💗 the one i wish",        msg:"the way you look at me 🥹🥹 💗" },
+  { src:"photos/photo14.jpg", label:"💗 the day i fall",        msg:"first time i got so excited by the way you called me. 💗" },
   { src:"photos/photo18.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
-  { src:"photos/photo19.jpg", label:"💗 something special",     msg:"ee pic ante naaku gurthochedhi ahh hand placement 🫠😅💗" },
-  { src:"photos/photo20.jpg", label:"💗 trails for this pic",   msg:"entha try cheysa okasari ayyina cooperate cheysava pandhi laga 😒" },
-  { src:"photos/photo21.jpg", label:"💗 Celestra 2k26",         msg:"pic crop cheysaka ala vundhoo ledha mana presence oo thelidh but it has been bagged into my favs💗" },
-  { src:"photos/photo23.jpg", label:"💗 forever mine",          msg:"ee pic ni eni sarlu chussina edho special feeling the way you looks at me🙈💗" },
+  { src:"photos/photo19.jpg", label:"💗 something special",     msg:"the day i felt naughty and loved. 💗" },
+  { src:"photos/photo20.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
+  { src:"photos/photo21.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
+  { src:"photos/photo23.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
 ];
 
 const ROTATIONS   = [2,-3,1.5,-2,3,-1,2.5,-3.5,0.5,-2.5];
-const EASTER_MSGS = ["For the one who make me feel special 😘","For the one i got excited 😒","For you and for mine🫠"];
+const EASTER_MSGS = ["For the one who make me feel special 😘","For the one i got excited 😒","For you ❤️"];
 
 const LETTER_TEXT = `Firstly many more happy returns of the day kukkapilla 🫂❤️‍🩹😘. You are the one who made me special. Eppudu okalage vunde nannu koncham ayyina alochainchela cheysav. Neetho vunnappudu vunde feeling inka evarithonuu raledhu. Neetho gadipina moments and memories are still in my heart. Emo mundhu parichayam ayyithe inka enjoy cheysevalamoo ledha normal ga vundevalamoo thelidhu but at our peak manam kalisina kotha lo I felt very happy and loved the way you treated me.
 
@@ -557,7 +557,7 @@ const AnteIshtheScreen = ({onNext}) => {
 
   const submit = () => {
     const val = inputVal.trim();
-    if (!val) { setError("chepthee nee sommu em ayyina aarigipothadhaaaa 😤"); doShake(); return; }
+    if (!val) { setError("oka word ainaaa type chey 😤"); doShake(); return; }
     ownerLog.add("ante_isthe_reply", `"${val}"`);
     playPop();
     setTimeout(() => onNext(), 300);
@@ -612,7 +612,7 @@ const AnteIshtheScreen = ({onNext}) => {
           lineHeight:1.55,
           opacity:0.85
         }}>
-          parleeee cheppuuu evaru chudaru 🙈
+          em ayyina cheppu — evaru chudaru 🙈
         </p>
 
         {showInput && (
@@ -620,7 +620,7 @@ const AnteIshtheScreen = ({onNext}) => {
             value={inputVal}
             onChange={e => setInputVal(e.target.value)}
             onKeyDown={e => e.key === "Enter" && submit()}
-            placeholder="🙈"
+            placeholder="meeru cheppandi..."
             maxLength={80}
             autoFocus
             autoComplete="off"
@@ -658,7 +658,7 @@ const AnteIshtheScreen = ({onNext}) => {
 
         {showBtn && (
           <Btn onClick={submit} style={{width:"100%",justifyContent:"center",fontSize:"clamp(15px,3vw,20px)",padding:"13px 28px"}}>
-            💗
+            cheppanu 💗
           </Btn>
         )}
       </div>
@@ -1162,12 +1162,12 @@ const GalleryScreen = ({onNext}) => {
   };
 
   return (
-    <Screen style={{gap:0,padding:"6px 14px 12px",justifyContent:"center",display:"flex",flexDirection:"column",alignItems:"center"}}>
-      <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(15px,3.8vw,24px)",margin:"0 0 6px",textShadow:"0 0 8px rgba(255,100,160,.4)",flexShrink:0,minHeight:"28px"}}>{title}</h2>
+    <Screen style={{gap:0,padding:"4px 14px 6px",justifyContent:"flex-start",display:"flex",flexDirection:"column",alignItems:"center",overflowY:"auto"}}>
+      <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(14px,3.5vw,20px)",margin:"0 0 4px",textShadow:"0 0 8px rgba(255,100,160,.4)",flexShrink:0}}>{title}</h2>
 
-      {/* ── LARGER FRAME: ~doubled from original min(220px,62vw) / min(255px,38vh) ── */}
+      {/* ── Photo frame: height capped so nav dots + input + button always stay on-screen ── */}
       <div
-        style={{position:"relative",width:"min(420px,88vw)",height:"min(490px,68vh)",margin:"0 auto 8px",perspective:"900px",cursor:"pointer",flexShrink:0}}
+        style={{position:"relative",width:"min(400px,88vw)",height:"min(390px,50vh)",margin:"0 auto 4px",perspective:"900px",cursor:"pointer",flexShrink:0}}
         onTouchStart={e=>{touchStart.current=e.touches[0].clientX;}}
         onTouchEnd={e=>{const dx=e.changedTouches[0].clientX-touchStart.current;if(Math.abs(dx)>40){dx<0?next():prev();}}}
       >
@@ -1198,7 +1198,7 @@ const GalleryScreen = ({onNext}) => {
         ))}
       </div>
 
-      <div style={{display:"flex",alignItems:"center",gap:"10px",marginBottom:"6px",flexShrink:0}}>
+      <div style={{display:"flex",alignItems:"center",gap:"8px",marginBottom:"4px",flexShrink:0}}>
         <button onClick={prev} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"32px",height:"32px",borderRadius:"50%",color:"#fff",fontSize:"18px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 4px 14px rgba(220,70,140,.3)",lineHeight:1}}>‹</button>
         <div style={{display:"flex",gap:"4px",alignItems:"center"}}>
           {PHOTOS.map((_,i)=>(
@@ -1210,7 +1210,7 @@ const GalleryScreen = ({onNext}) => {
         <button onClick={next} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"32px",height:"32px",borderRadius:"50%",color:"#fff",fontSize:"18px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 4px 14px rgba(220,70,140,.3)",lineHeight:1}}>›</button>
       </div>
 
-      <div style={{width:"min(360px,90vw)",flexShrink:0,display:"flex",flexDirection:"column",gap:"6px"}}>
+      <div style={{width:"min(360px,90vw)",flexShrink:0,display:"flex",flexDirection:"column",gap:"4px"}}>
         <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(12px,3vw,15px)",color:"#c07090",margin:0,textAlign:"center",lineHeight:1.3}}>
           {saved[galIndex]
             ? <span style={{color:"#4caf50",fontWeight:700}}></span>
@@ -1242,7 +1242,7 @@ const GalleryScreen = ({onNext}) => {
           {savedCount===PHOTOS.length?" ":" · double tap chey pic pedhadhi avvudhi"}
         </p>
       </div>
-      <Btn onClick={handleNext} style={{flexShrink:0,marginTop:"8px",opacity:canProceed?1:.5,cursor:canProceed?"pointer":"default"}}>
+      <Btn onClick={handleNext} style={{flexShrink:0,marginTop:"4px",opacity:canProceed?1:.5,cursor:canProceed?"pointer":"default"}}>
         {canProceed?"✉️ chudali ani vunte chudoochuuu alage chadhivaka hug kuda ivochuuu em anukomu🙈":""}
       </Btn>
       {lightbox&&(
@@ -1386,7 +1386,7 @@ const CreditsScreen = ({onRestart}) => {
               </p>
               <textarea
                 value={feelingVal} onChange={e=>setFeelingVal(e.target.value)}
-                placeholder="😒"
+                placeholder=""
                 maxLength={300} rows={3}
                 style={{width:"100%",border:`2px solid ${feelingShake?"#e040a0":"#f4a0c8"}`,borderRadius:"16px",padding:"12px 14px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,19px)",fontWeight:700,color:"#d8368e",background:"rgba(255,255,255,.85)",outline:"none",resize:"none",boxSizing:"border-box",lineHeight:1.5,animation:feelingShake?"shakeInput .4s ease":"none",transition:"border-color .25s",boxShadow:"0 4px 20px rgba(220,80,140,.15)"}}
               />
