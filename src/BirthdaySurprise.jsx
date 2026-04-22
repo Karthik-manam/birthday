@@ -213,58 +213,44 @@ const Petals = () => (
    STICKER CHARACTER SVG
 ───────────────────────────────────── */
 const StickerChar = ({mirror=false, hat=false, wink=false}) => (
-  <svg
-    viewBox="0 0 110 125"
-    xmlns="http://www.w3.org/2000/svg"
-    width={80}
-    style={{display:"block", transform: mirror ? "scaleX(-1)" : "none"}}
-  >
+  <svg viewBox="0 0 110 125" xmlns="http://www.w3.org/2000/svg" width={80}
+    style={{display:"block", transform: mirror ? "scaleX(-1)" : "none"}}>
     <circle cx="30" cy="26" r="19" fill="#f9a0c0"/>
     <circle cx="80" cy="26" r="19" fill="#f9a0c0"/>
     <circle cx="30" cy="26" r="11" fill="#ffc8dc"/>
     <circle cx="80" cy="26" r="11" fill="#ffc8dc"/>
-    {hat && (
-      <>
-        <polygon points="55,2 38,42 72,42" fill="#f080b8"/>
-        <polygon points="55,2 38,42 55,42" fill="#e040a0"/>
-        <line x1="38" y1="42" x2="72" y2="42" stroke="#fde047" strokeWidth="2.5"/>
-        <circle cx="55" cy="2" r="3.5" fill="#fde047"/>
-        <circle cx="46" cy="18" r="2" fill="#fff"/>
-        <circle cx="60" cy="12" r="1.5" fill="#fde047"/>
-      </>
-    )}
+    {hat && (<>
+      <polygon points="55,2 38,42 72,42" fill="#f080b8"/>
+      <polygon points="55,2 38,42 55,42" fill="#e040a0"/>
+      <line x1="38" y1="42" x2="72" y2="42" stroke="#fde047" strokeWidth="2.5"/>
+      <circle cx="55" cy="2" r="3.5" fill="#fde047"/>
+      <circle cx="46" cy="18" r="2" fill="#fff"/>
+      <circle cx="60" cy="12" r="1.5" fill="#fde047"/>
+    </>)}
     <ellipse cx="55" cy="97" rx="33" ry="26" fill="#fff5fa" stroke="#f4a0c8" strokeWidth="1.5"/>
     <ellipse cx="55" cy="100" rx="20" ry="16" fill="#ffdcec" opacity="0.5"/>
     <circle cx="55" cy="55" r="30" fill="#fff" stroke="#f4a0c8" strokeWidth="1.5"/>
-    {wink ? (
-      <>
-        <circle cx="44" cy="51" r="5" fill="#333"/>
-        <circle cx="46" cy="49" r="1.8" fill="#fff"/>
-        <path d="M62 48 Q68 44 74 48" stroke="#333" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-      </>
-    ) : (
-      <>
-        <circle cx="44" cy="51" r="5" fill="#333"/>
-        <circle cx="66" cy="51" r="5" fill="#333"/>
-        <circle cx="46" cy="49" r="1.8" fill="#fff"/>
-        <circle cx="68" cy="49" r="1.8" fill="#fff"/>
-      </>
-    )}
+    {wink ? (<>
+      <circle cx="44" cy="51" r="5" fill="#333"/>
+      <circle cx="46" cy="49" r="1.8" fill="#fff"/>
+      <path d="M62 48 Q68 44 74 48" stroke="#333" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+    </>) : (<>
+      <circle cx="44" cy="51" r="5" fill="#333"/>
+      <circle cx="66" cy="51" r="5" fill="#333"/>
+      <circle cx="46" cy="49" r="1.8" fill="#fff"/>
+      <circle cx="68" cy="49" r="1.8" fill="#fff"/>
+    </>)}
     <ellipse cx="55" cy="61" rx="3" ry="2.2" fill="#f080a0"/>
     <path d="M47 68 Q55 76 63 68" stroke="#e06090" strokeWidth="2.2" fill="none" strokeLinecap="round"/>
     <ellipse cx="38" cy="62" rx="8" ry="5" fill="#ffb0c8" opacity="0.55"/>
     <ellipse cx="72" cy="62" rx="8" ry="5" fill="#ffb0c8" opacity="0.55"/>
-    {!hat && (
-      <>
-        <path d="M72 28 Q78 22 84 28 Q78 34 72 28" fill="#f080b8"/>
-        <path d="M84 28 Q90 22 96 28 Q90 34 84 28" fill="#e040a0"/>
-        <circle cx="84" cy="28" r="3.5" fill="#ff40a0"/>
-      </>
-    )}
-    <ellipse cx="19" cy="90" rx="9" ry="17" fill="#fff5fa" stroke="#f4a0c8" strokeWidth="1.5"
-      transform="rotate(-45 19 90)"/>
-    <ellipse cx="91" cy="90" rx="9" ry="17" fill="#fff5fa" stroke="#f4a0c8" strokeWidth="1.5"
-      transform="rotate(45 91 90)"/>
+    {!hat && (<>
+      <path d="M72 28 Q78 22 84 28 Q78 34 72 28" fill="#f080b8"/>
+      <path d="M84 28 Q90 22 96 28 Q90 34 84 28" fill="#e040a0"/>
+      <circle cx="84" cy="28" r="3.5" fill="#ff40a0"/>
+    </>)}
+    <ellipse cx="19" cy="90" rx="9" ry="17" fill="#fff5fa" stroke="#f4a0c8" strokeWidth="1.5" transform="rotate(-45 19 90)"/>
+    <ellipse cx="91" cy="90" rx="9" ry="17" fill="#fff5fa" stroke="#f4a0c8" strokeWidth="1.5" transform="rotate(45 91 90)"/>
     <text x="92" y="52" fontSize="10" textAnchor="middle">💗</text>
   </svg>
 );
@@ -274,126 +260,45 @@ const StickerChar = ({mirror=false, hat=false, wink=false}) => (
 ───────────────────────────────────── */
 const CelebrationStickers = ({type, onDone}) => {
   const [phase, setPhase] = useState(0);
-
   useEffect(()=>{
-    const t1 = setTimeout(()=>setPhase(1), 60);
-    const t2 = setTimeout(()=>setPhase(2), 2800);
-    const t3 = setTimeout(()=>onDone(), 3500);
-    return()=>{ clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    const t1=setTimeout(()=>setPhase(1),60);
+    const t2=setTimeout(()=>setPhase(2),2800);
+    const t3=setTimeout(()=>onDone(),3500);
+    return()=>{ clearTimeout(t1);clearTimeout(t2);clearTimeout(t3); };
   },[]);
-
-  const isCandle = type === "candle";
-
-  const slideStyle = (side) => {
-    const isIn = phase === 1;
-    const isOut = phase === 2;
-    return {
-      position:"fixed",
-      bottom:"5%",
-      [side]: 0,
-      zIndex: 7500,
-      pointerEvents:"none",
-      display:"flex",
-      flexDirection:"column",
-      alignItems:"center",
-      gap:"4px",
-      transform: isIn
-        ? "translateX(0)"
-        : side === "left" ? "translateX(-130%)" : "translateX(130%)",
-      transition: isOut
-        ? "transform 0.55s ease-in"
-        : "transform 0.65s cubic-bezier(.34,1.56,.64,1)",
-      animation: isIn ? `stickerBob 0.6s ease-in-out ${side==="left"?"0s":".1s"} infinite alternate` : "none",
-    };
+  const isCandle=type==="candle";
+  const slideStyle=(side)=>{
+    const isIn=phase===1,isOut=phase===2;
+    return {position:"fixed",bottom:"5%",[side]:0,zIndex:7500,pointerEvents:"none",display:"flex",flexDirection:"column",alignItems:"center",gap:"4px",
+      transform:isIn?"translateX(0)":side==="left"?"translateX(-130%)":"translateX(130%)",
+      transition:isOut?"transform 0.55s ease-in":"transform 0.65s cubic-bezier(.34,1.56,.64,1)",
+      animation:isIn?`stickerBob 0.6s ease-in-out ${side==="left"?"0s":".1s"} infinite alternate`:"none"};
   };
-
-  const bannerStyle = {
-    position:"fixed",
-    top:"10%",
-    left:"50%",
-    zIndex:7500,
-    pointerEvents:"none",
-    display:"flex",
-    flexDirection:"column",
-    alignItems:"center",
-    gap:"6px",
-    transform: phase === 1
-      ? "translateX(-50%) scale(1)"
-      : phase === 2
-        ? "translateX(-50%) scale(0)"
-        : "translateX(-50%) scale(0)",
-    transition: phase === 2
-      ? "transform 0.4s ease-in"
-      : phase === 1
-        ? "transform 0.6s cubic-bezier(.34,1.56,.64,1)"
-        : "none",
-    opacity: phase === 1 ? 1 : 0,
-  };
-
-  return (
-    <>
-      <div style={slideStyle("left")}>
-        <div style={{
-          background:"white",
-          borderRadius:"50%",
-          width:"clamp(36px,8vw,50px)",
-          height:"clamp(36px,8vw,50px)",
-          display:"flex",alignItems:"center",justifyContent:"center",
-          fontSize:"clamp(18px,5vw,26px)",
-          boxShadow:"0 4px 16px rgba(220,80,140,.25)",
-          border:"2px solid #f9c0d8",
-          animation: isCandle
-            ? "clapHand 0.35s ease-in-out infinite alternate"
-            : "celebBounce 0.5s ease-in-out infinite alternate",
-        }}>
-          {isCandle ? "🫂" : "🙈"}
-        </div>
-        <StickerChar mirror={false} hat={!isCandle} wink={false}/>
+  const bannerStyle={position:"fixed",top:"10%",left:"50%",zIndex:7500,pointerEvents:"none",display:"flex",flexDirection:"column",alignItems:"center",gap:"6px",
+    transform:phase===1?"translateX(-50%) scale(1)":phase===2?"translateX(-50%) scale(0)":"translateX(-50%) scale(0)",
+    transition:phase===2?"transform 0.4s ease-in":phase===1?"transform 0.6s cubic-bezier(.34,1.56,.64,1)":"none",opacity:phase===1?1:0};
+  return (<>
+    <div style={slideStyle("left")}>
+      <div style={{background:"white",borderRadius:"50%",width:"clamp(36px,8vw,50px)",height:"clamp(36px,8vw,50px)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"clamp(18px,5vw,26px)",boxShadow:"0 4px 16px rgba(220,80,140,.25)",border:"2px solid #f9c0d8",animation:isCandle?"clapHand 0.35s ease-in-out infinite alternate":"celebBounce 0.5s ease-in-out infinite alternate"}}>
+        {isCandle?"🫂":"🙈"}
       </div>
-
-      <div style={slideStyle("right")}>
-        <div style={{
-          background:"white",
-          borderRadius:"50%",
-          width:"clamp(36px,8vw,50px)",
-          height:"clamp(36px,8vw,50px)",
-          display:"flex",alignItems:"center",justifyContent:"center",
-          fontSize:"clamp(18px,5vw,26px)",
-          boxShadow:"0 4px 16px rgba(220,80,140,.25)",
-          border:"2px solid #f9c0d8",
-          animation: isCandle
-            ? "clapHand 0.35s ease-in-out 0.17s infinite alternate"
-            : "celebBounce 0.5s ease-in-out 0.25s infinite alternate",
-        }}>
-          {isCandle ? "😇" : "😘"}
-        </div>
-        <StickerChar mirror={true} hat={!isCandle} wink={true}/>
+      <StickerChar mirror={false} hat={!isCandle} wink={false}/>
+    </div>
+    <div style={slideStyle("right")}>
+      <div style={{background:"white",borderRadius:"50%",width:"clamp(36px,8vw,50px)",height:"clamp(36px,8vw,50px)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"clamp(18px,5vw,26px)",boxShadow:"0 4px 16px rgba(220,80,140,.25)",border:"2px solid #f9c0d8",animation:isCandle?"clapHand 0.35s ease-in-out 0.17s infinite alternate":"celebBounce 0.5s ease-in-out 0.25s infinite alternate"}}>
+        {isCandle?"😇":"😘"}
       </div>
-
-      <div style={bannerStyle}>
-        <div style={{
-          fontFamily:"'Baloo 2',cursive",fontWeight:800,
-          fontSize:"clamp(20px,5vw,34px)",
-          background:"linear-gradient(135deg,#f080b8,#c020a0)",
-          WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",
-        }}>
-          {isCandle ? "🎉 Yayyyy! 🎉" : "🎂 Wohoooo! 🎂"}
-        </div>
-        <div style={{
-          fontFamily:"'Caveat',cursive",fontWeight:700,
-          fontSize:"clamp(13px,3.5vw,18px)",
-          color:"#c060a0",
-          background:"rgba(255,255,255,0.88)",
-          borderRadius:"22px",padding:"5px 18px",
-          boxShadow:"0 4px 18px rgba(220,80,140,.2)",
-          border:"2px solid #f9c0d8",
-          whiteSpace:"nowrap",
-        }}>
-          {isCandle ? "anni candles blow chesav! 💨💖" : "cake cut chesav! 🍰💖"}
-        </div>
+      <StickerChar mirror={true} hat={!isCandle} wink={true}/>
+    </div>
+    <div style={bannerStyle}>
+      <div style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:"clamp(20px,5vw,34px)",background:"linear-gradient(135deg,#f080b8,#c020a0)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>
+        {isCandle?"🎉 Yayyyy! 🎉":"🎂 Wohoooo! 🎂"}
       </div>
-    </>
-  );
+      <div style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(13px,3.5vw,18px)",color:"#c060a0",background:"rgba(255,255,255,0.88)",borderRadius:"22px",padding:"5px 18px",boxShadow:"0 4px 18px rgba(220,80,140,.2)",border:"2px solid #f9c0d8",whiteSpace:"nowrap"}}>
+        {isCandle?"anni candles blow chesav! 💨💖":"cake cut chesav! 🍰💖"}
+      </div>
+    </div>
+  </>);
 };
 
 /* ─────────────────────────────────────
@@ -495,32 +400,23 @@ const UnlockScreen = ({onOpen,onFirstTap}) => {
   const [opened,setOpened]=useState(false);
   const [hearts,setHearts]=useState([]);
   const days=daysUntilBirthday();
-
   const handleOpen=()=>{
     if(opened) return;
-    setOpened(true);
-    onFirstTap&&onFirstTap();
-    playUnlock();
+    setOpened(true); onFirstTap&&onFirstTap(); playUnlock();
     setHearts(Array.from({length:12},(_,i)=>({id:i,left:Math.random()*100})));
-    setTimeout(()=>playPop(),400);
-    setTimeout(()=>onOpen(),1200);
+    setTimeout(()=>playPop(),400); setTimeout(()=>onOpen(),1200);
   };
-
   return (
     <Screen style={{background:"radial-gradient(ellipse at 50% 30%,#ffe0f4 0%,#ffc8e8 40%,#ffb0d8 100%)"}}>
-      {hearts.map(h=>(
-        <span key={h.id} style={{position:"absolute",fontSize:"20px",left:`${h.left}vw`,top:"60vh",animation:"floatUp 2.5s ease-out forwards",pointerEvents:"none"}}>💖</span>
-      ))}
+      {hearts.map(h=><span key={h.id} style={{position:"absolute",fontSize:"20px",left:`${h.left}vw`,top:"60vh",animation:"floatUp 2.5s ease-out forwards",pointerEvents:"none"}}>💖</span>)}
       <div style={{position:"absolute",top:"16px",left:"50%",transform:"translateX(-50%)",background:"rgba(255,255,255,.55)",backdropFilter:"blur(6px)",borderRadius:"20px",padding:"6px 18px",fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(12px,3vw,15px)",color:"#c060a0",whiteSpace:"nowrap",boxShadow:"0 2px 12px rgba(220,80,140,.15)"}}>
-        {days===0?"🎉 Today is her birthday!": `🎂 ${days} days until her birthday!`}
+        {days===0?"🎉 Today is her birthday!":`🎂 ${days} days until her birthday!`}
       </div>
       <div onClick={handleOpen} style={{display:"flex",flexDirection:"column",alignItems:"center",cursor:"pointer",gap:"28px",userSelect:"none",position:"relative",zIndex:2}}>
         <div style={{animation:"envFloat 3s ease-in-out infinite",filter:"drop-shadow(0 20px 50px rgba(180,60,100,.45))"}}>
           <EnvelopeSVG opened={opened}/>
         </div>
-        <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(17px,3.8vw,24px)",fontWeight:700,color:"#c060a0",animation:"blink 1.8s ease-in-out infinite",margin:0}}>
-          💖 Tap to open your love letter 💖
-        </p>
+        <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(17px,3.8vw,24px)",fontWeight:700,color:"#c060a0",animation:"blink 1.8s ease-in-out infinite",margin:0}}>💖 Tap to open your love letter 💖</p>
       </div>
     </Screen>
   );
@@ -538,129 +434,41 @@ const EnvelopeSVG = ({opened}) => (
    SCREEN 1.5: ANTE ISTHE
 ════════════════════════════════════════ */
 const AnteIshtheScreen = ({onNext}) => {
-  const [title, setTitle] = useState("");
-  const [showInput, setShowInput] = useState(false);
-  const [showBtn, setShowBtn] = useState(false);
-  const [inputVal, setInputVal] = useState("");
-  const [error, setError] = useState("");
-  const [shake, setShake] = useState(false);
-  const type = useTyping();
-
-  useEffect(() => {
-    type(setTitle, "ante isthe theysukuntavaaa.......", {charDelay: 55}, () => {
-      setTimeout(() => {
-        setShowInput(true);
-        setTimeout(() => setShowBtn(true), 300);
-      }, 400);
+  const [title,setTitle]=useState("");
+  const [showInput,setShowInput]=useState(false);
+  const [showBtn,setShowBtn]=useState(false);
+  const [inputVal,setInputVal]=useState("");
+  const [error,setError]=useState("");
+  const [shake,setShake]=useState(false);
+  const type=useTyping();
+  useEffect(()=>{
+    type(setTitle,"ante isthe theysukuntavaaa.......",{charDelay:55},()=>{
+      setTimeout(()=>{setShowInput(true);setTimeout(()=>setShowBtn(true),300);},400);
     });
-  }, []);
-
-  const submit = () => {
-    const val = inputVal.trim();
-    if (!val) { setError("oka word ainaaa type chey 😤"); doShake(); return; }
-    ownerLog.add("ante_isthe_reply", `"${val}"`);
-    playPop();
-    setTimeout(() => onNext(), 300);
+  },[]);
+  const submit=()=>{
+    const val=inputVal.trim();
+    if(!val){setError("oka word ainaaa type chey 😤");doShake();return;}
+    ownerLog.add("ante_isthe_reply",`"${val}"`);
+    playPop(); setTimeout(()=>onNext(),300);
   };
-  const doShake = () => { setShake(true); setTimeout(() => setShake(false), 400); };
-
+  const doShake=()=>{setShake(true);setTimeout(()=>setShake(false),400);};
   return (
     <Screen style={{background:"radial-gradient(ellipse at 50% 30%,#ffe0f4 0%,#ffc8e8 40%,#ffb0d8 100%)"}}>
-      <div style={{
-        background:"white",
-        borderRadius:"28px",
-        padding:"clamp(28px,6vw,48px) clamp(24px,6vw,52px)",
-        boxShadow:"0 8px 48px rgba(220,70,140,.22)",
-        display:"flex",
-        flexDirection:"column",
-        alignItems:"center",
-        gap:"16px",
-        maxWidth:"440px",
-        width:"88vw",
-        border:"2.5px solid #f9d0e4",
-        position:"relative",
-        zIndex:1,
-        animation:"popIn .5s cubic-bezier(.34,1.56,.64,1)"
-      }}>
-        {/* Decorative hearts */}
+      <div style={{background:"white",borderRadius:"28px",padding:"clamp(28px,6vw,48px) clamp(24px,6vw,52px)",boxShadow:"0 8px 48px rgba(220,70,140,.22)",display:"flex",flexDirection:"column",alignItems:"center",gap:"16px",maxWidth:"440px",width:"88vw",border:"2.5px solid #f9d0e4",position:"relative",zIndex:1,animation:"popIn .5s cubic-bezier(.34,1.56,.64,1)"}}>
         <div style={{position:"absolute",top:"-18px",left:"50%",transform:"translateX(-50%)",display:"flex",gap:"8px"}}>
-          {["💖","💕","💗"].map((e,i)=>(
-            <span key={i} style={{fontSize:"22px",animation:`hbeat ${1.2+i*0.2}s ease-in-out infinite`,animationDelay:`${i*0.15}s`}}>{e}</span>
-          ))}
+          {["💖","💕","💗"].map((e,i)=><span key={i} style={{fontSize:"22px",animation:`hbeat ${1.2+i*0.2}s ease-in-out infinite`,animationDelay:`${i*0.15}s`}}>{e}</span>)}
         </div>
-
         <div style={{fontSize:"clamp(44px,12vw,68px)",animation:"floatY 2s ease-in-out infinite",marginTop:"8px"}}>💌</div>
-
-        <h2 style={{
-          fontFamily:"'Baloo 2',cursive",
-          fontWeight:800,
-          fontSize:"clamp(20px,5.5vw,34px)",
-          color:"#d8368e",
-          margin:0,
-          minHeight:"2em",
-          lineHeight:1.3,
-          textAlign:"center",
-          textShadow:"0 2px 12px rgba(220,80,140,.15)"
-        }}>{title}</h2>
-
-        <p style={{
-          fontFamily:"'Caveat',cursive",
-          fontSize:"clamp(13px,3vw,17px)",
-          color:"#c07090",
-          margin:0,
-          textAlign:"center",
-          lineHeight:1.55,
-          opacity:0.85
-        }}>
-          em ayyina cheppu — evaru chudaru 🙈
-        </p>
-
-        {showInput && (
-          <input
-            value={inputVal}
-            onChange={e => setInputVal(e.target.value)}
-            onKeyDown={e => e.key === "Enter" && submit()}
-            placeholder="meeru cheppandi..."
-            maxLength={80}
-            autoFocus
-            autoComplete="off"
-            style={{
-              width:"100%",
-              border:"2px solid #f4a0c8",
-              borderRadius:"18px",
-              padding:"13px 18px",
-              fontFamily:"'Caveat',cursive",
-              fontSize:"clamp(16px,4vw,24px)",
-              fontWeight:700,
-              color:"#d8368e",
-              background:"#fff5fa",
-              outline:"none",
-              textAlign:"center",
-              animation:shake?"shakeInput .4s ease":"none",
-              boxSizing:"border-box",
-              transition:"border-color .2s, box-shadow .2s",
-              boxShadow:"0 2px 12px rgba(220,80,140,.1)"
-            }}
-            onFocus={e => { e.target.style.borderColor="#e040a0"; e.target.style.boxShadow="0 4px 18px rgba(220,80,140,.25)"; }}
-            onBlur={e => { e.target.style.borderColor="#f4a0c8"; e.target.style.boxShadow="0 2px 12px rgba(220,80,140,.1)"; }}
-          />
-        )}
-
-        {error && (
-          <p style={{
-            fontFamily:"'Caveat',cursive",
-            fontSize:"clamp(13px,3vw,16px)",
-            color:"#e040a0",
-            margin:0,
-            textAlign:"center"
-          }}>{error}</p>
-        )}
-
-        {showBtn && (
-          <Btn onClick={submit} style={{width:"100%",justifyContent:"center",fontSize:"clamp(15px,3vw,20px)",padding:"13px 28px"}}>
-            cheppanu 💗
-          </Btn>
-        )}
+        <h2 style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:"clamp(20px,5.5vw,34px)",color:"#d8368e",margin:0,minHeight:"2em",lineHeight:1.3,textAlign:"center",textShadow:"0 2px 12px rgba(220,80,140,.15)"}}>{title}</h2>
+        <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,17px)",color:"#c07090",margin:0,textAlign:"center",lineHeight:1.55,opacity:0.85}}>em ayyina cheppu — evaru chudaru 🙈</p>
+        {showInput&&<input value={inputVal} onChange={e=>setInputVal(e.target.value)} onKeyDown={e=>e.key==="Enter"&&submit()} placeholder="meeru cheppandi..." maxLength={80} autoFocus autoComplete="off"
+          style={{width:"100%",border:"2px solid #f4a0c8",borderRadius:"18px",padding:"13px 18px",fontFamily:"'Caveat',cursive",fontSize:"clamp(16px,4vw,24px)",fontWeight:700,color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",animation:shake?"shakeInput .4s ease":"none",boxSizing:"border-box",transition:"border-color .2s, box-shadow .2s",boxShadow:"0 2px 12px rgba(220,80,140,.1)"}}
+          onFocus={e=>{e.target.style.borderColor="#e040a0";e.target.style.boxShadow="0 4px 18px rgba(220,80,140,.25)";}}
+          onBlur={e=>{e.target.style.borderColor="#f4a0c8";e.target.style.boxShadow="0 2px 12px rgba(220,80,140,.1)";}}
+        />}
+        {error&&<p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,16px)",color:"#e040a0",margin:0,textAlign:"center"}}>{error}</p>}
+        {showBtn&&<Btn onClick={submit} style={{width:"100%",justifyContent:"center",fontSize:"clamp(15px,3vw,20px)",padding:"13px 28px"}}>cheppanu 💗</Btn>}
       </div>
     </Screen>
   );
@@ -670,14 +478,13 @@ const AnteIshtheScreen = ({onNext}) => {
    SCREEN 2: NAME ENTRY
 ════════════════════════════════════════ */
 const NameEntryScreen = ({onSuccess,triggerBurst}) => {
-  const [title,setTitle]=useState(""); const [sub,setSub]=useState("");
-  const [showInput,setShowInput]=useState(false); const [showBtn,setShowBtn]=useState(false);
-  const [showHintBtn,setShowHintBtn]=useState(false); const [inputVal,setInputVal]=useState("");
-  const [error,setError]=useState(""); const [shake,setShake]=useState(false);
-  const [showHint,setShowHint]=useState(false); const [hintText,setHintText]=useState(""); const [showHintInput,setShowHintInput]=useState(false);
+  const [title,setTitle]=useState("");const [sub,setSub]=useState("");
+  const [showInput,setShowInput]=useState(false);const [showBtn,setShowBtn]=useState(false);
+  const [showHintBtn,setShowHintBtn]=useState(false);const [inputVal,setInputVal]=useState("");
+  const [error,setError]=useState("");const [shake,setShake]=useState(false);
+  const [showHint,setShowHint]=useState(false);const [hintText,setHintText]=useState("");const [showHintInput,setShowHintInput]=useState(false);
   const [hintReply,setHintReply]=useState("");
-  const attempts=useRef(0); const type=useTyping();
-
+  const attempts=useRef(0);const type=useTyping();
   useEffect(()=>{
     type(setTitle,"Enter your name",{charDelay:55},()=>{
       type(setSub,"nijam ga nuvvu chudali anukunte first attempt lo access chey 😒",{charDelay:38},()=>{
@@ -685,22 +492,20 @@ const NameEntryScreen = ({onSuccess,triggerBurst}) => {
       });
     });
   },[]);
-
   const submit=()=>{
     const val=inputVal.trim().toLowerCase();
     if(!val){setError("musukuni sariga enter chey ledha muthi paguludhi 😤");doShake();return;}
     if(val===CORRECT_NAME){
-      setError(""); playPop();
-      ownerLog.add("name_correct", `"${inputVal.trim()}" ✅`);
+      setError("");playPop();
+      ownerLog.add("name_correct",`"${inputVal.trim()}" ✅`);
       triggerBurst(["🤗","💖","✨","💗","💕","⭐","💗"],24);
-      setTimeout(()=>onSuccess(),700); return;
+      setTimeout(()=>onSuccess(),700);return;
     }
-    attempts.current++;
-    playWrong();
-    ownerLog.add("name_wrong", `"${inputVal.trim()}" (attempt ${attempts.current})`);
+    attempts.current++;playWrong();
+    ownerLog.add("name_wrong",`"${inputVal.trim()}" (attempt ${attempts.current})`);
     if(attempts.current>=2){setError("Hint kavali ana ledhu");setTimeout(()=>setShowHintBtn(true),400);}
     else setError("musukuni sariga enter chey ledha muthi paguludhi 😤");
-    doShake(); setInputVal("");
+    doShake();setInputVal("");
   };
   const doShake=()=>{setShake(true);setTimeout(()=>setShake(false),400);};
   const openHint=()=>{
@@ -712,10 +517,8 @@ const NameEntryScreen = ({onSuccess,triggerBurst}) => {
     const reply=hintReply.trim();
     if(!reply){playWrong();return;}
     ownerLog.add("hint_reply",`"${reply}"`);
-    playPop();
-    setShowHint(false);setHintReply("");
+    playPop();setShowHint(false);setHintReply("");
   };
-
   return (
     <Screen>
       <div style={{background:"white",borderRadius:"24px",padding:"clamp(24px,5vw,40px) clamp(24px,6vw,48px)",boxShadow:"0 8px 40px rgba(220,70,140,.2)",display:"flex",flexDirection:"column",alignItems:"center",gap:"12px",maxWidth:"380px",width:"88vw",border:"2px solid #f9d0e4",position:"relative",zIndex:1}}>
@@ -732,20 +535,11 @@ const NameEntryScreen = ({onSuccess,triggerBurst}) => {
         <Modal onBackdropClick={()=>{}}>
           <div style={{fontSize:"44px"}}>😤</div>
           <p style={{fontFamily:"'Caveat',cursive",fontWeight:700,color:"#c070a0",textAlign:"center",lineHeight:1.6,fontSize:"clamp(15px,3.8vw,20px)",margin:0}}>{hintText}</p>
-          {showHintInput&&(
-            <>
-              <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(12px,3vw,15px)",color:"#d06090",margin:"4px 0 0",textAlign:"center"}}>
-              </p>
-              <input
-                value={hintReply} onChange={e=>setHintReply(e.target.value)}
-                onKeyDown={e=>e.key==="Enter"&&closeHint()}
-                placeholder="edhokati type chey close avvudhi.."
-                autoFocus
-                style={{width:"100%",border:"2px solid #f4a0c8",borderRadius:"14px",padding:"10px 14px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,19px)",fontWeight:700,color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",boxSizing:"border-box"}}
-              />
-              <Btn onClick={closeHint} style={{width:"100%",justifyContent:"center"}}>okay 💖</Btn>
-            </>
-          )}
+          {showHintInput&&(<>
+            <input value={hintReply} onChange={e=>setHintReply(e.target.value)} onKeyDown={e=>e.key==="Enter"&&closeHint()} placeholder="edhokati type chey close avvudhi.." autoFocus
+              style={{width:"100%",border:"2px solid #f4a0c8",borderRadius:"14px",padding:"10px 14px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,19px)",fontWeight:700,color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",boxSizing:"border-box"}}/>
+            <Btn onClick={closeHint} style={{width:"100%",justifyContent:"center"}}>okay 💖</Btn>
+          </>)}
         </Modal>
       )}
     </Screen>
@@ -756,7 +550,7 @@ const NameEntryScreen = ({onSuccess,triggerBurst}) => {
    SCREEN 3: COUNTDOWN
 ════════════════════════════════════════ */
 const CountdownScreen = ({onDone}) => {
-  const [count,setCount]=useState(3); const [sub,setSub]=useState(""); const type=useTyping();
+  const [count,setCount]=useState(3);const [sub,setSub]=useState("");const type=useTyping();
   useEffect(()=>{
     let iv;
     type(setSub,"Get ready...",{charDelay:55},()=>{
@@ -783,7 +577,7 @@ const CountdownScreen = ({onDone}) => {
    SCREEN 4: LOADING
 ════════════════════════════════════════ */
 const LoadingScreen = ({onDone}) => {
-  const [text,setText]=useState(""); const type=useTyping();
+  const [text,setText]=useState("");const type=useTyping();
   useEffect(()=>{
     type(setText,"Aaagu Vasthadhii sugar ahh 😒...  owner gari dhagara ki ravadaniki vunte bagundu ahh sugar edho....😏😏",{charDelay:45},()=>setTimeout(()=>onDone(),2000));
   },[]);
@@ -804,17 +598,15 @@ const LoadingScreen = ({onDone}) => {
    SCREEN 5: MESSAGE
 ════════════════════════════════════════ */
 const MessageScreen = ({onNext}) => {
-  const [title,setTitle]=useState(""); const [sub,setSub]=useState(""); const [showInput,setShowInput]=useState(false);
-  const [showEaster,setShowEaster]=useState(false); const [easterText,setEasterText]=useState(""); const [easterBtn,setEasterBtn]=useState(false);
-  const [msgVal,setMsgVal]=useState(""); const [msgError,setMsgError]=useState(false);
-  const tapCount=useRef(0); const tapTimer=useRef(null); const type=useTyping();
-
+  const [title,setTitle]=useState("");const [sub,setSub]=useState("");const [showInput,setShowInput]=useState(false);
+  const [showEaster,setShowEaster]=useState(false);const [easterText,setEasterText]=useState("");const [easterBtn,setEasterBtn]=useState(false);
+  const [msgVal,setMsgVal]=useState("");const [msgError,setMsgError]=useState(false);
+  const tapCount=useRef(0);const tapTimer=useRef(null);const type=useTyping();
   useEffect(()=>{
     type(setTitle,"kukkapilla putti 1year 1 month 27 days ayyina oka pandhi putti 21 years avvuthundhi eerojuki 😒",{charDelay:36},()=>{
       type(setSub,"Happy 21st birthday pandhi and Happy birthday kukkapilla 🫂🫂🎂💖",{charDelay:38},()=>setTimeout(()=>setShowInput(true),500));
     });
   },[]);
-
   const handleKittyTap=()=>{
     tapCount.current++;playTone(600+tapCount.current*60,"triangle",.08,.2);
     clearTimeout(tapTimer.current);tapTimer.current=setTimeout(()=>{tapCount.current=0;},2000);
@@ -822,15 +614,12 @@ const MessageScreen = ({onNext}) => {
       ownerLog.add("easter_egg","Kitty tapped 5× — saw secret message!");
       type(setEasterText,EASTER_MSGS[Math.floor(Math.random()*EASTER_MSGS.length)],{charDelay:38},()=>setTimeout(()=>setEasterBtn(true),400));}
   };
-
   const handleStart=()=>{
     const val=msgVal.trim();
     if(!val){setMsgError(true);playWrong();setTimeout(()=>setMsgError(false),600);return;}
     ownerLog.add("message_reaction",`"${val}"`);
-    playPop();
-    setTimeout(()=>onNext(),300);
+    playPop();setTimeout(()=>onNext(),300);
   };
-
   return (
     <Screen>
       <div style={{position:"relative",display:"inline-block",marginBottom:"8px"}}>
@@ -845,13 +634,7 @@ const MessageScreen = ({onNext}) => {
       <p style={{fontFamily:"'Pacifico',cursive",fontSize:"clamp(13px,3vw,20px)",color:"#e8407a",margin:"0 0 14px",minHeight:"1.5em"}}>{sub}</p>
       {showInput&&(
         <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"8px",width:"min(340px,88vw)"}}>
-          <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,16px)",color:"#c07090",margin:0}}>
-          </p>
-          <input
-            value={msgVal} onChange={e=>setMsgVal(e.target.value)}
-            onKeyDown={e=>e.key==="Enter"&&handleStart()}
-            placeholder="em ayyina cheptharaaaa..."
-            maxLength={120} autoComplete="off"
+          <input value={msgVal} onChange={e=>setMsgVal(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleStart()} placeholder="em ayyina cheptharaaaa..." maxLength={120} autoComplete="off"
             style={{width:"100%",border:`2px solid ${msgError?"#e040a0":"#f4a0c8"}`,borderRadius:"16px",padding:"12px 16px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,20px)",fontWeight:700,color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",boxSizing:"border-box",animation:msgError?"shakeInput .4s ease":"none",transition:"border-color .2s"}}
           />
           <Btn onClick={handleStart} style={{width:"100%",justifyContent:"center"}}>💗 Start the surprise</Btn>
@@ -873,186 +656,153 @@ const MessageScreen = ({onNext}) => {
    SCREEN 6: CANDLE BLOW
 ════════════════════════════════════════ */
 const CandleScreen = ({onDone,triggerBurst}) => {
-  const [title,setTitle]=useState(""); const [hint,setHint]=useState("");
+  const [title,setTitle]=useState("");const [hint,setHint]=useState("");
   const [blown,setBlown]=useState([false,false,false]);
-  const [showCelebration, setShowCelebration] = useState(false);
-  const colors=["#a78bfa","#f080b8","#34d399"]; const type=useTyping();
-
+  const [showCelebration,setShowCelebration]=useState(false);
+  const colors=["#a78bfa","#f080b8","#34d399"];const type=useTyping();
   useEffect(()=>{type(setTitle,"blow cheyadam kudhradhu kani musukuni dhani medha click chey 🕯️",{charDelay:38});},[]);
-
   const blowCandle=(i)=>{
     if(blown[i]) return;
     const nb=[...blown];nb[i]=true;setBlown(nb);playCandlePop();triggerBurst(["😃","✨","🤗"],6);
-    ownerLog.add("candle", `Blew candle ${i+1} of 3`);
+    ownerLog.add("candle",`Blew candle ${i+1} of 3`);
     if(nb.every(Boolean)){
       ownerLog.add("candle","All 3 candles blown! 😇");
       type(setHint,"🫂",{charDelay:38});
-      playPop();
-      triggerBurst(["💕","✨","💖","💗","🥹","⭐"],20);
-      setTimeout(()=>setShowCelebration(true), 400);
+      playPop();triggerBurst(["💕","✨","💖","💗","🥹","⭐"],20);
+      setTimeout(()=>setShowCelebration(true),400);
     }
   };
-
-  return (
-    <>
-      <Screen>
-        <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(20px,5vw,36px)",textShadow:"0 0 8px rgba(255,100,160,.4)",textAlign:"center",maxWidth:"80vw",minHeight:"3em"}}>{title}</h2>
-        <div style={{display:"flex",gap:"clamp(20px,6vw,40px)",alignItems:"flex-end",padding:"20px 0 10px"}}>
-          {[0,1,2].map(i=>(
-            <div key={i} onClick={()=>blowCandle(i)} style={{display:"flex",flexDirection:"column",alignItems:"center",cursor:"pointer",position:"relative"}}>
-              <div style={{width:"clamp(22px,6vw,32px)",height:"clamp(32px,8vw,44px)",animation:blown[i]?"none":"flameFlicker .8s ease-in-out infinite alternate",opacity:blown[i]?0:1,transform:blown[i]?"scale(0) translateY(-10px)":"scale(1)",transition:"opacity .3s,transform .3s",transformOrigin:"bottom center"}}>
-                <div style={{width:"100%",height:"100%",background:"radial-gradient(ellipse at 50% 80%,#fde047 30%,#f97316 70%,transparent 100%)",borderRadius:"50% 50% 35% 35%/60% 60% 40% 40%",boxShadow:"0 0 12px rgba(253,224,71,.8),0 0 24px rgba(249,115,22,.5)"}}/>
-              </div>
-              <div style={{width:"clamp(22px,6vw,30px)",height:"clamp(55px,14vw,80px)",borderRadius:"4px 4px 2px 2px",background:colors[i],position:"relative",overflow:"hidden"}}>
-                <div style={{position:"absolute",top:0,left:"20%",width:"20%",height:"100%",background:"rgba(255,255,255,.2)",borderRadius:"2px"}}/>
-              </div>
-              <div style={{width:"clamp(28px,8vw,38px)",height:"7px",background:"#f9c0d8",borderRadius:"50%",marginTop:"2px"}}/>
+  return (<>
+    <Screen>
+      <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(20px,5vw,36px)",textShadow:"0 0 8px rgba(255,100,160,.4)",textAlign:"center",maxWidth:"80vw",minHeight:"3em"}}>{title}</h2>
+      <div style={{display:"flex",gap:"clamp(20px,6vw,40px)",alignItems:"flex-end",padding:"20px 0 10px"}}>
+        {[0,1,2].map(i=>(
+          <div key={i} onClick={()=>blowCandle(i)} style={{display:"flex",flexDirection:"column",alignItems:"center",cursor:"pointer",position:"relative"}}>
+            <div style={{width:"clamp(22px,6vw,32px)",height:"clamp(32px,8vw,44px)",animation:blown[i]?"none":"flameFlicker .8s ease-in-out infinite alternate",opacity:blown[i]?0:1,transform:blown[i]?"scale(0) translateY(-10px)":"scale(1)",transition:"opacity .3s,transform .3s",transformOrigin:"bottom center"}}>
+              <div style={{width:"100%",height:"100%",background:"radial-gradient(ellipse at 50% 80%,#fde047 30%,#f97316 70%,transparent 100%)",borderRadius:"50% 50% 35% 35%/60% 60% 40% 40%",boxShadow:"0 0 12px rgba(253,224,71,.8),0 0 24px rgba(249,115,22,.5)"}}/>
             </div>
-          ))}
-        </div>
-        <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,20px)",color:"#d06090",marginTop:"10px",minHeight:"1.5em"}}>{hint}</p>
-      </Screen>
-      {showCelebration && (
-        <CelebrationStickers type="candle" onDone={onDone}/>
-      )}
-    </>
-  );
+            <div style={{width:"clamp(22px,6vw,30px)",height:"clamp(55px,14vw,80px)",borderRadius:"4px 4px 2px 2px",background:colors[i],position:"relative",overflow:"hidden"}}>
+              <div style={{position:"absolute",top:0,left:"20%",width:"20%",height:"100%",background:"rgba(255,255,255,.2)",borderRadius:"2px"}}/>
+            </div>
+            <div style={{width:"clamp(28px,8vw,38px)",height:"7px",background:"#f9c0d8",borderRadius:"50%",marginTop:"2px"}}/>
+          </div>
+        ))}
+      </div>
+      <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,20px)",color:"#d06090",marginTop:"10px",minHeight:"1.5em"}}>{hint}</p>
+    </Screen>
+    {showCelebration&&<CelebrationStickers type="candle" onDone={onDone}/>}
+  </>);
 };
 
 /* ════════════════════════════════════════
    SCREEN 7: CAKE
 ════════════════════════════════════════ */
 const CakeScreen = ({onDone,triggerBurst}) => {
-  const [title,setTitle]=useState(""); const [hint,setHint]=useState("");
-  const [cutCount,setCutCount]=useState(0); const [splitAnim,setSplitAnim]=useState(false);
-  const [knifePos,setKnifePos]=useState(null); const [cutting,setCutting]=useState(false);
-  const [showCelebration, setShowCelebration] = useState(false);
-  const swipeRef=useRef({on:false,minX:Infinity,maxX:-Infinity}); const zoneRef=useRef(null); const type=useTyping();
-
+  const [title,setTitle]=useState("");const [hint,setHint]=useState("");
+  const [cutCount,setCutCount]=useState(0);const [splitAnim,setSplitAnim]=useState(false);
+  const [knifePos,setKnifePos]=useState(null);const [cutting,setCutting]=useState(false);
+  const [showCelebration,setShowCelebration]=useState(false);
+  const swipeRef=useRef({on:false,minX:Infinity,maxX:-Infinity});const zoneRef=useRef(null);const type=useTyping();
   useEffect(()=>{
     type(setTitle,"elago maaku direct ga cut cheyyinche aadhrustam ledhu kani ikkade cut cheyse 🎂",{charDelay:38},()=>{
       type(setHint,"✦ Ahh knife pattukuni drag chey 😒 ✦",{charDelay:36});
     });
   },[]);
-
   const getPos=(e)=>{if(e.touches?.length)return{x:e.touches[0].clientX,y:e.touches[0].clientY};if(e.changedTouches?.length)return{x:e.changedTouches[0].clientX,y:e.changedTouches[0].clientY};return{x:e.clientX,y:e.clientY};};
   const onStart=(e)=>{e.preventDefault();const p=getPos(e);swipeRef.current={on:true,minX:p.x,maxX:p.x};setCutting(true);const r=zoneRef.current?.getBoundingClientRect();if(r)setKnifePos({x:p.x-r.left,y:p.y-r.top});};
   const onMove=(e)=>{if(!swipeRef.current.on)return;e.preventDefault();const p=getPos(e);swipeRef.current.minX=Math.min(swipeRef.current.minX,p.x);swipeRef.current.maxX=Math.max(swipeRef.current.maxX,p.x);const r=zoneRef.current?.getBoundingClientRect();if(r)setKnifePos({x:p.x-r.left,y:p.y-r.top});};
   const onEnd=()=>{if(!swipeRef.current.on)return;swipeRef.current.on=false;setCutting(false);if(swipeRef.current.maxX-swipeRef.current.minX>=SWIPE_MIN)registerCut();else setKnifePos(null);};
-
   const registerCut=()=>{
     setCutCount(prev=>{
       const next=prev+1;playSlash();setTimeout(()=>setKnifePos(null),450);
       if(next===1){triggerBurst(["❤️","💫","✨"],8);type(setHint,"✦ Inko sari cut chey ✦",{charDelay:38});}
-      else{
-        setSplitAnim(true);
-        triggerBurst(["🎉","💖","✨","💗","🎊","⭐","🍰"],20);
-        playPop();
-        type(setHint,"cake cut cheyyadam kuda raadhu 😄",{charDelay:38});
-        setTimeout(()=>setShowCelebration(true), 400);
-      }
+      else{setSplitAnim(true);triggerBurst(["🎉","💖","✨","💗","🎊","⭐","🍰"],20);playPop();type(setHint,"cake cut cheyyadam kuda raadhu 😄",{charDelay:38});setTimeout(()=>setShowCelebration(true),400);}
       return next;
     });
   };
-
-  return (
-    <>
-      <Screen style={{gap:"8px"}}>
-        <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(16px,4vw,28px)",textShadow:"0 0 8px rgba(255,100,160,.4)",textAlign:"center",padding:"0 12px",maxWidth:"80vw",minHeight:"3em"}}>{title}</h2>
-        <div ref={zoneRef} onMouseDown={onStart} onMouseMove={onMove} onMouseUp={onEnd} onMouseLeave={onEnd} onTouchStart={onStart} onTouchMove={onMove} onTouchEnd={onEnd} onTouchCancel={onEnd}
-          style={{position:"relative",width:"clamp(240px,72vw,340px)",height:"clamp(240px,66vw,360px)",touchAction:"none",cursor:"crosshair",userSelect:"none",WebkitUserSelect:"none"}}>
-          {knifePos
-            ?<div style={{position:"absolute",left:knifePos.x,top:knifePos.y,transform:"translate(-50%,-50%) rotate(90deg) scale(1.15)",width:"clamp(60px,14vw,80px)",height:"clamp(60px,14vw,80px)",borderRadius:"50%",background:"radial-gradient(circle,#fff5fa 60%,#f9c0d8 100%)",boxShadow:"0 10px 32px rgba(220,80,140,.5)",display:"flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",zIndex:10,fontSize:"clamp(28px,7vw,40px)"}}>🔪</div>
-            :<div style={{position:"absolute",left:"12%",top:"20%",width:"clamp(60px,14vw,80px)",height:"clamp(60px,14vw,80px)",borderRadius:"50%",background:"radial-gradient(circle,#fff5fa 60%,#f9c0d8 100%)",boxShadow:"0 6px 24px rgba(220,80,140,.3)",display:"flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",zIndex:10,animation:"knifeFloat 2s ease-in-out infinite",fontSize:"clamp(28px,7vw,40px)"}}>🔪</div>
-          }
-          {cutCount===0&&!cutting&&(
-            <div style={{position:"absolute",top:"28%",left:0,right:0,display:"flex",alignItems:"center",justifyContent:"center",gap:"4px",pointerEvents:"none",zIndex:5,opacity:.8}}>
-              <span style={{fontSize:"26px",animation:"handSwipe 1.4s ease-in-out infinite"}}>👆</span>
-              <span style={{display:"inline-block",width:"44px",height:"3px",background:"linear-gradient(90deg,#f080b8,transparent)",borderRadius:"2px",animation:"handSwipe 1.4s ease-in-out infinite",animationDelay:".1s"}}/>
-            </div>
-          )}
-          <div style={{position:"absolute",bottom:0,left:"50%",transform:"translateX(-50%)",width:"88%",pointerEvents:"none"}}>
-            <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" style={{width:"100%",height:"auto",filter:"drop-shadow(0 8px 20px rgba(220,80,140,.25))",display:"block",animation:"floatY 2.5s ease-in-out infinite"}}>
-              <g style={{animation:splitAnim?"splitLeft .6s ease forwards":"none"}}>
-                <rect x="30" y="125" width="70" height="44" rx="10" fill="#f9a8d4"/>
-                <rect x="42" y="90" width="58" height="40" rx="10" fill="#fcd5e8"/>
-                <rect x="55" y="62" width="45" height="33" rx="10" fill="#fbcfe8"/>
-                <path d="M30 130 Q45 120 60 130 Q75 120 90 130" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round"/>
-                <path d="M42 95 Q57 85 72 95 Q87 85 100 95" fill="none" stroke="#fff" strokeWidth="5" strokeLinecap="round"/>
-              </g>
-              <g style={{animation:splitAnim?"splitRight .6s ease forwards":"none"}}>
-                <rect x="100" y="125" width="70" height="44" rx="10" fill="#f9a8d4"/>
-                <rect x="100" y="90" width="58" height="40" rx="10" fill="#fcd5e8"/>
-                <rect x="100" y="62" width="45" height="33" rx="10" fill="#fbcfe8"/>
-                <path d="M100 130 Q115 120 130 130 Q145 120 160 130 Q165 120 170 130" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round"/>
-                <path d="M100 95 Q117 85 132 95 Q147 85 158 95" fill="none" stroke="#fff" strokeWidth="5" strokeLinecap="round"/>
-              </g>
-              <ellipse cx="100" cy="168" rx="80" ry="11" fill="#f9c0d8" opacity="0.45"/>
-              <rect x="78" y="44" width="8" height="22" rx="3" fill="#a78bfa"/>
-              <rect x="95" y="40" width="8" height="26" rx="3" fill="#f080b8"/>
-              <rect x="112" y="44" width="8" height="22" rx="3" fill="#34d399"/>
-              <ellipse cx="82" cy="42" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
-              <ellipse cx="82" cy="41" rx="2" ry="3" fill="#f97316"/>
-              <ellipse cx="99" cy="38" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
-              <ellipse cx="99" cy="37" rx="2" ry="3" fill="#f97316"/>
-              <ellipse cx="116" cy="42" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
-              <ellipse cx="116" cy="41" rx="2" ry="3" fill="#f97316"/>
-              <text x="100" y="155" textAnchor="middle" fontFamily="Baloo 2" fontWeight="800" fontSize="13" fill="#fff">Happy 21st!</text>
-            </svg>
+  return (<>
+    <Screen style={{gap:"8px"}}>
+      <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(16px,4vw,28px)",textShadow:"0 0 8px rgba(255,100,160,.4)",textAlign:"center",padding:"0 12px",maxWidth:"80vw",minHeight:"3em"}}>{title}</h2>
+      <div ref={zoneRef} onMouseDown={onStart} onMouseMove={onMove} onMouseUp={onEnd} onMouseLeave={onEnd} onTouchStart={onStart} onTouchMove={onMove} onTouchEnd={onEnd} onTouchCancel={onEnd}
+        style={{position:"relative",width:"clamp(240px,72vw,340px)",height:"clamp(240px,66vw,360px)",touchAction:"none",cursor:"crosshair",userSelect:"none",WebkitUserSelect:"none"}}>
+        {knifePos
+          ?<div style={{position:"absolute",left:knifePos.x,top:knifePos.y,transform:"translate(-50%,-50%) rotate(90deg) scale(1.15)",width:"clamp(60px,14vw,80px)",height:"clamp(60px,14vw,80px)",borderRadius:"50%",background:"radial-gradient(circle,#fff5fa 60%,#f9c0d8 100%)",boxShadow:"0 10px 32px rgba(220,80,140,.5)",display:"flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",zIndex:10,fontSize:"clamp(28px,7vw,40px)"}}>🔪</div>
+          :<div style={{position:"absolute",left:"12%",top:"20%",width:"clamp(60px,14vw,80px)",height:"clamp(60px,14vw,80px)",borderRadius:"50%",background:"radial-gradient(circle,#fff5fa 60%,#f9c0d8 100%)",boxShadow:"0 6px 24px rgba(220,80,140,.3)",display:"flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",zIndex:10,animation:"knifeFloat 2s ease-in-out infinite",fontSize:"clamp(28px,7vw,40px)"}}>🔪</div>
+        }
+        {cutCount===0&&!cutting&&(
+          <div style={{position:"absolute",top:"28%",left:0,right:0,display:"flex",alignItems:"center",justifyContent:"center",gap:"4px",pointerEvents:"none",zIndex:5,opacity:.8}}>
+            <span style={{fontSize:"26px",animation:"handSwipe 1.4s ease-in-out infinite"}}>👆</span>
+            <span style={{display:"inline-block",width:"44px",height:"3px",background:"linear-gradient(90deg,#f080b8,transparent)",borderRadius:"2px",animation:"handSwipe 1.4s ease-in-out infinite",animationDelay:".1s"}}/>
           </div>
+        )}
+        <div style={{position:"absolute",bottom:0,left:"50%",transform:"translateX(-50%)",width:"88%",pointerEvents:"none"}}>
+          <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" style={{width:"100%",height:"auto",filter:"drop-shadow(0 8px 20px rgba(220,80,140,.25))",display:"block",animation:"floatY 2.5s ease-in-out infinite"}}>
+            <g style={{animation:splitAnim?"splitLeft .6s ease forwards":"none"}}>
+              <rect x="30" y="125" width="70" height="44" rx="10" fill="#f9a8d4"/>
+              <rect x="42" y="90" width="58" height="40" rx="10" fill="#fcd5e8"/>
+              <rect x="55" y="62" width="45" height="33" rx="10" fill="#fbcfe8"/>
+              <path d="M30 130 Q45 120 60 130 Q75 120 90 130" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round"/>
+              <path d="M42 95 Q57 85 72 95 Q87 85 100 95" fill="none" stroke="#fff" strokeWidth="5" strokeLinecap="round"/>
+            </g>
+            <g style={{animation:splitAnim?"splitRight .6s ease forwards":"none"}}>
+              <rect x="100" y="125" width="70" height="44" rx="10" fill="#f9a8d4"/>
+              <rect x="100" y="90" width="58" height="40" rx="10" fill="#fcd5e8"/>
+              <rect x="100" y="62" width="45" height="33" rx="10" fill="#fbcfe8"/>
+              <path d="M100 130 Q115 120 130 130 Q145 120 160 130 Q165 120 170 130" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round"/>
+              <path d="M100 95 Q117 85 132 95 Q147 85 158 95" fill="none" stroke="#fff" strokeWidth="5" strokeLinecap="round"/>
+            </g>
+            <ellipse cx="100" cy="168" rx="80" ry="11" fill="#f9c0d8" opacity="0.45"/>
+            <rect x="78" y="44" width="8" height="22" rx="3" fill="#a78bfa"/>
+            <rect x="95" y="40" width="8" height="26" rx="3" fill="#f080b8"/>
+            <rect x="112" y="44" width="8" height="22" rx="3" fill="#34d399"/>
+            <ellipse cx="82" cy="42" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
+            <ellipse cx="82" cy="41" rx="2" ry="3" fill="#f97316"/>
+            <ellipse cx="99" cy="38" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
+            <ellipse cx="99" cy="37" rx="2" ry="3" fill="#f97316"/>
+            <ellipse cx="116" cy="42" rx="4" ry="6" fill="#fde047" opacity="0.9"/>
+            <ellipse cx="116" cy="41" rx="2" ry="3" fill="#f97316"/>
+            <text x="100" y="155" textAnchor="middle" fontFamily="Baloo 2" fontWeight="800" fontSize="13" fill="#fff">Happy 21st!</text>
+          </svg>
         </div>
-        <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,2.5vw,16px)",color:"#d06090",margin:"4px 0 2px",opacity:.85,minHeight:"1.5em"}}>{hint}</p>
-        <div style={{display:"flex",gap:"12px",justifyContent:"center",marginTop:"4px"}}>
-          {[0,1].map(i=><span key={i} style={{width:"14px",height:"14px",borderRadius:"50%",background:cutCount>i?"#e040a0":"#f9c0d8",border:`2px solid ${cutCount>i?"#e040a0":"#f4a0c8"}`,display:"block",transform:cutCount>i?"scale(1.25)":"scale(1)",transition:"all .3s",boxShadow:cutCount>i?"0 0 8px rgba(224,64,160,.5)":"none"}}/>)}
-        </div>
-      </Screen>
-      {showCelebration && (
-        <CelebrationStickers type="cake" onDone={onDone}/>
-      )}
-    </>
-  );
+      </div>
+      <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,2.5vw,16px)",color:"#d06090",margin:"4px 0 2px",opacity:.85,minHeight:"1.5em"}}>{hint}</p>
+      <div style={{display:"flex",gap:"12px",justifyContent:"center",marginTop:"4px"}}>
+        {[0,1].map(i=><span key={i} style={{width:"14px",height:"14px",borderRadius:"50%",background:cutCount>i?"#e040a0":"#f9c0d8",border:`2px solid ${cutCount>i?"#e040a0":"#f4a0c8"}`,display:"block",transform:cutCount>i?"scale(1.25)":"scale(1)",transition:"all .3s",boxShadow:cutCount>i?"0 0 8px rgba(224,64,160,.5)":"none"}}/>)}
+      </div>
+    </Screen>
+    {showCelebration&&<CelebrationStickers type="cake" onDone={onDone}/>}
+  </>);
 };
 
 /* ════════════════════════════════════════
    SCREEN 8: BIRTHDAY
 ════════════════════════════════════════ */
 const BirthdayScreen = ({onNext}) => {
-  const [title,setTitle]=useState(""); const [showInput,setShowInput]=useState(false);
-  const [bdayVal,setBdayVal]=useState(""); const [bdayError,setBdayError]=useState(false);
-  const canvasRef=useRef(null); const rafRef=useRef(null); const enterTime=useRef(Date.now()); const type=useTyping();
+  const [title,setTitle]=useState("");const [showInput,setShowInput]=useState(false);
+  const [bdayVal,setBdayVal]=useState("");const [bdayError,setBdayError]=useState(false);
+  const canvasRef=useRef(null);const rafRef=useRef(null);const enterTime=useRef(Date.now());const type=useTyping();
   useEffect(()=>{
     enterTime.current=Date.now();
-    rafRef.current = launchConfetti(canvasRef.current);
+    rafRef.current=launchConfetti(canvasRef.current);
     type(setTitle,"Happy Birthday, kukkapilla garuuuuu🫂🫂😘😘🙈",{charDelay:42},()=>setTimeout(()=>setShowInput(true),600));
-    return () => { if(rafRef.current) cancelAnimationFrame(rafRef.current); };
+    return()=>{if(rafRef.current)cancelAnimationFrame(rafRef.current);};
   },[]);
-
   const handleNext=()=>{
     const val=bdayVal.trim();
     if(!val){setBdayError(true);playWrong();setTimeout(()=>setBdayError(false),600);return;}
     const secs=Math.round((Date.now()-enterTime.current)/1000);
     ownerLog.add("birthday_reaction",`"${val}" · spent ${secs}s on this page`);
-    playPop();
-    setTimeout(()=>onNext(),300);
+    playPop();setTimeout(()=>onNext(),300);
   };
-
   return (
     <Screen style={{position:"fixed",inset:0}}>
       <canvas ref={canvasRef} style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:0}}/>
       <div style={{position:"relative",zIndex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:"14px"}}>
         <h1 style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,fontStyle:"italic",fontSize:"clamp(24px,5.5vw,46px)",color:"#d8368e",lineHeight:1.25,margin:0,minHeight:"2em"}}>{title}</h1>
-        <div style={{animation:"floatY 2s ease-in-out infinite",filter:"drop-shadow(0 6px 14px rgba(220,80,140,.2))"}}>
-          <BirthdayKittySVG/>
-        </div>
+        <div style={{animation:"floatY 2s ease-in-out infinite",filter:"drop-shadow(0 6px 14px rgba(220,80,140,.2))"}}><BirthdayKittySVG/></div>
         {showInput&&(
           <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"8px",width:"min(320px,88vw)"}}>
-            <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,17px)",color:"#e8407a",margin:0}}>
-            </p>
-            <input
-              value={bdayVal} onChange={e=>setBdayVal(e.target.value)}
-              onKeyDown={e=>e.key==="Enter"&&handleNext()}
-              placeholder="....."
-              maxLength={120} autoComplete="off"
+            <input value={bdayVal} onChange={e=>setBdayVal(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleNext()} placeholder="....." maxLength={120} autoComplete="off"
               style={{width:"100%",border:`2px solid ${bdayError?"#e040a0":"#f4a0c8"}`,borderRadius:"16px",padding:"12px 16px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,20px)",fontWeight:700,color:"#d8368e",background:"rgba(255,255,255,.85)",outline:"none",textAlign:"center",boxSizing:"border-box",animation:bdayError?"shakeInput .4s ease":"none",transition:"border-color .2s"}}
             />
             <Btn onClick={handleNext} style={{width:"100%",justifyContent:"center"}}>Next →</Btn>
@@ -1066,14 +816,14 @@ const BirthdayScreen = ({onNext}) => {
 function launchConfetti(canvas) {
   if(!canvas) return null;
   const ctx=canvas.getContext("2d");
-  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
   const colors=["#ff78b8","#ff3080","#f7c0dc","#ffacdf","#ffd0e8","#e040a0","#fff","#ffa0cc","#a78bfa","#fde047"];
   const pieces=Array.from({length:180},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height-canvas.height,r:Math.random()*8+3,d:Math.random()*2.5+1.2,color:colors[Math.floor(Math.random()*colors.length)],tilt:Math.random()*Math.PI*2,ti:(Math.random()-.5)*.1}));
-  let frame=0, rafId=null;
+  let frame=0,rafId=null;
   const draw=()=>{
     ctx.clearRect(0,0,canvas.width,canvas.height);
     pieces.forEach(p=>{p.tilt+=p.ti;p.y+=p.d;if(p.y>canvas.height+20){p.y=-10;p.x=Math.random()*canvas.width;}ctx.beginPath();ctx.fillStyle=p.color;ctx.ellipse(p.x,p.y,p.r,p.r*.45,p.tilt,0,Math.PI*2);ctx.fill();});
-    if(++frame<480) rafId=requestAnimationFrame(draw);
+    if(++frame<480)rafId=requestAnimationFrame(draw);
     else ctx.clearRect(0,0,canvas.width,canvas.height);
   };
   rafId=requestAnimationFrame(draw);
@@ -1081,21 +831,22 @@ function launchConfetti(canvas) {
 }
 
 /* ════════════════════════════════════════
-   SCREEN 9: GALLERY  ← LARGER FRAME SIZE
+   SCREEN 9: GALLERY  ← PORTRAIT FRAME + ALWAYS-VISIBLE BUTTON
 ════════════════════════════════════════ */
 const GalleryScreen = ({onNext}) => {
   const [title,setTitle]=useState("");
-  const [galIndex,setGalIndex]=useState(0); const [isAnimating,setIsAnimating]=useState(false);
+  const [galIndex,setGalIndex]=useState(0);
+  const [isAnimating,setIsAnimating]=useState(false);
   const [lightbox,setLightbox]=useState(null);
   const [caption,setCaption]=useState("");
   const [feelings,setFeelings]=useState(()=>Array(PHOTOS.length).fill(""));
   const [saved,setSaved]=useState(()=>Array(PHOTOS.length).fill(false));
   const [draft,setDraft]=useState("");
   const [inputShake,setInputShake]=useState(false);
-  const [isTyping,setIsTyping]=useState(false);
+  const [isTypingInput,setIsTypingInput]=useState(false);
   const typingTimer=useRef(null);
-  const autoRef=useRef(null); const touchStart=useRef(0);
-  const inputRef=useRef(null);
+  const autoRef=useRef(null);
+  const touchStart=useRef(0);
   const type=useTyping();
 
   useEffect(()=>{
@@ -1109,40 +860,37 @@ const GalleryScreen = ({onNext}) => {
     type(setCaption,PHOTOS[galIndex].label,{charDelay:35});
   },[galIndex]);
 
-  const startAuto=()=>{clearInterval(autoRef.current);autoRef.current=setInterval(()=>{if(!isTyping)next();},3200);};
+  const startAuto=()=>{clearInterval(autoRef.current);autoRef.current=setInterval(()=>{if(!isTypingInput)next();},3500);};
   const stopAuto=()=>clearInterval(autoRef.current);
-
   const next=()=>{if(isAnimating)return;setIsAnimating(true);setGalIndex(p=>(p+1)%PHOTOS.length);startAuto();setTimeout(()=>setIsAnimating(false),400);};
   const prev=()=>{if(isAnimating)return;setIsAnimating(true);setGalIndex(p=>(p-1+PHOTOS.length)%PHOTOS.length);startAuto();setTimeout(()=>setIsAnimating(false),400);};
 
   const cardStyle=(i)=>{
-    const total=PHOTOS.length, diff=((i-galIndex)%total+total)%total;
-    if(diff===0) return{transform:"translateX(0) scale(1)",opacity:1,zIndex:10,pointerEvents:"all",boxShadow:"0 16px 40px rgba(180,60,120,.28)"};
-    if(diff===1) return{transform:`rotate(${ROTATIONS[i%ROTATIONS.length]}deg) scale(.92) translateX(18px) translateY(8px)`,opacity:.7,zIndex:6,pointerEvents:"none"};
-    if(diff===total-1) return{transform:`rotate(${-ROTATIONS[i%ROTATIONS.length]}deg) scale(.92) translateX(-18px) translateY(8px)`,opacity:.7,zIndex:6,pointerEvents:"none"};
-    if(diff===2) return{transform:"rotate(7deg) scale(.85) translateX(28px) translateY(14px)",opacity:.35,zIndex:3,pointerEvents:"none"};
-    if(diff===total-2) return{transform:"rotate(-7deg) scale(.85) translateX(-28px) translateY(14px)",opacity:.35,zIndex:3,pointerEvents:"none"};
+    const total=PHOTOS.length,diff=((i-galIndex)%total+total)%total;
+    if(diff===0) return{transform:"translateX(0) scale(1)",opacity:1,zIndex:10,pointerEvents:"all",boxShadow:"0 14px 40px rgba(180,60,120,.32)"};
+    if(diff===1) return{transform:`rotate(${ROTATIONS[i%ROTATIONS.length]}deg) scale(.91) translateX(16px) translateY(6px)`,opacity:.6,zIndex:6,pointerEvents:"none"};
+    if(diff===total-1) return{transform:`rotate(${-ROTATIONS[i%ROTATIONS.length]}deg) scale(.91) translateX(-16px) translateY(6px)`,opacity:.6,zIndex:6,pointerEvents:"none"};
+    if(diff===2) return{transform:"rotate(6deg) scale(.83) translateX(24px) translateY(12px)",opacity:.28,zIndex:3,pointerEvents:"none"};
+    if(diff===total-2) return{transform:"rotate(-6deg) scale(.83) translateX(-24px) translateY(12px)",opacity:.28,zIndex:3,pointerEvents:"none"};
     return{opacity:0,zIndex:0,pointerEvents:"none"};
   };
 
   const handleDraftChange=(val)=>{
-    setDraft(val);setIsTyping(true);stopAuto();
+    setDraft(val);setIsTypingInput(true);stopAuto();
     clearTimeout(typingTimer.current);
-    typingTimer.current=setTimeout(()=>{setIsTyping(false);startAuto();},4000);
+    typingTimer.current=setTimeout(()=>{setIsTypingInput(false);startAuto();},4000);
   };
 
-  const saveFeelingForCurrent=()=>{
+  const saveCurrent=()=>{
     const val=draft.trim();
     if(!val){setInputShake(true);playWrong();setTimeout(()=>setInputShake(false),500);return;}
-    const newFeelings=[...feelings];newFeelings[galIndex]=val;setFeelings(newFeelings);
-    const newSaved=[...saved];newSaved[galIndex]=true;setSaved(newSaved);
+    const nf=[...feelings];nf[galIndex]=val;setFeelings(nf);
+    const ns=[...saved];ns[galIndex]=true;setSaved(ns);
     ownerLog.add("photo_feeling",`Photo ${galIndex+1} "${PHOTOS[galIndex].label}": "${val}"`);
     playPop();
     setTimeout(()=>{
-      const nextUnsaved=newSaved.findIndex((s,i)=>!s);
-      if(nextUnsaved!==-1 && nextUnsaved!==galIndex){
-        setIsAnimating(true);setGalIndex(nextUnsaved);setTimeout(()=>setIsAnimating(false),400);
-      }
+      const nextUnsaved=ns.findIndex((s,i)=>!s);
+      if(nextUnsaved!==-1&&nextUnsaved!==galIndex){setIsAnimating(true);setGalIndex(nextUnsaved);setTimeout(()=>setIsAnimating(false),400);}
       startAuto();
     },600);
   };
@@ -1152,106 +900,174 @@ const GalleryScreen = ({onNext}) => {
 
   const handleNext=()=>{
     const val=draft.trim();
-    if(val && !saved[galIndex]){
-      const newFeelings=[...feelings];newFeelings[galIndex]=val;
-      const newSaved=[...saved];newSaved[galIndex]=true;
+    if(val&&!saved[galIndex]){
+      const nf=[...feelings];nf[galIndex]=val;
+      const ns=[...saved];ns[galIndex]=true;
       ownerLog.add("photo_feeling",`Photo ${galIndex+1} "${PHOTOS[galIndex].label}": "${val}"`);
-      setFeelings(newFeelings);setSaved(newSaved);
+      setFeelings(nf);setSaved(ns);
     }
     playPop();onNext();
   };
 
   return (
-    <Screen style={{gap:0,padding:"4px 14px 6px",justifyContent:"flex-start",display:"flex",flexDirection:"column",alignItems:"center",overflowY:"auto"}}>
-      <h2 style={{fontFamily:"'Great Vibes',cursive",color:"#d1006f",fontSize:"clamp(14px,3.5vw,20px)",margin:"0 0 4px",textShadow:"0 0 8px rgba(255,100,160,.4)",flexShrink:0}}>{title}</h2>
+    /* Full-screen column, fixed, no scroll — everything must fit */
+    <div style={{
+      position:"fixed",inset:0,
+      display:"flex",flexDirection:"column",alignItems:"center",
+      padding:"5px 12px 8px",
+      animation:"screenFadeIn .6s ease forwards",
+    }}>
 
-      {/* ── Photo frame: height capped so nav dots + input + button always stay on-screen ── */}
+      {/* Title */}
+      <h2 style={{
+        fontFamily:"'Great Vibes',cursive",color:"#d1006f",
+        fontSize:"clamp(13px,3.2vw,20px)",
+        margin:"0 0 5px",flexShrink:0,lineHeight:1.1,
+        textShadow:"0 0 8px rgba(255,100,160,.4)",
+      }}>{title}</h2>
+
+      {/* ══ PORTRAIT PHOTO CARD STACK ══
+          Fixed portrait rectangle: width = min(190px,48vw), aspect-ratio 3:4
+          objectFit:cover fills it cleanly — faces stay centred top
+      */}
       <div
-        style={{position:"relative",width:"min(400px,88vw)",height:"min(390px,50vh)",margin:"0 auto 4px",perspective:"900px",cursor:"pointer",flexShrink:0}}
+        style={{
+          position:"relative",
+          width:"min(190px,48vw)",
+          aspectRatio:"3/4",
+          flexShrink:0,
+          margin:"0 auto 5px",
+          perspective:"700px",
+        }}
         onTouchStart={e=>{touchStart.current=e.touches[0].clientX;}}
         onTouchEnd={e=>{const dx=e.changedTouches[0].clientX-touchStart.current;if(Math.abs(dx)>40){dx<0?next():prev();}}}
       >
         {PHOTOS.map((photo,i)=>(
           <div key={i} style={{
-            position:"absolute",inset:0,background:"#fff",borderRadius:"8px",padding:"8px 8px 36px",
-            boxShadow:"0 8px 28px rgba(180,60,120,.18)",
-            transition:"transform .45s cubic-bezier(.34,1.5,.64,1),opacity .35s ease",
-            willChange:"transform,opacity",...cardStyle(i),
+            position:"absolute",inset:0,
+            background:"#fff",borderRadius:"10px",
+            padding:"5px 5px 24px",   /* polaroid: thin sides, bigger bottom for label */
+            boxShadow:"0 6px 22px rgba(180,60,120,.18)",
+            transition:"transform .42s cubic-bezier(.34,1.5,.64,1),opacity .32s ease",
+            willChange:"transform,opacity",
+            ...cardStyle(i),
           }}
-            onClick={()=>{ if(i===galIndex){} else next(); }}
+            onClick={()=>{ if(i!==galIndex) next(); }}
           >
             {saved[i]&&(
-              <div style={{position:"absolute",top:"6px",right:"6px",width:"24px",height:"24px",borderRadius:"50%",background:"linear-gradient(135deg,#4caf50,#2e7d32)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:20,fontSize:"13px",boxShadow:"0 2px 6px rgba(0,0,0,.2)"}}>✓</div>
+              <div style={{position:"absolute",top:"4px",right:"4px",width:"18px",height:"18px",borderRadius:"50%",background:"linear-gradient(135deg,#4caf50,#2e7d32)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:20,fontSize:"10px",boxShadow:"0 2px 5px rgba(0,0,0,.2)"}}>✓</div>
             )}
-            <div style={{width:"100%",height:"calc(100% - 36px)",borderRadius:"4px",position:"relative",background:"#fff8fc",border:"1px solid #f9d0e8",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
-              <img src={photo.src} alt={photo.label}
-                style={{maxWidth:"100%",maxHeight:"100%",width:"auto",height:"auto",objectFit:"contain",display:"block",transition:"filter 1.5s",filter:i===galIndex?"saturate(1) brightness(1)":"saturate(.1) brightness(1.4)"}}
+            {/* photo fills portrait frame, objectPosition keeps subjects visible */}
+            <div style={{width:"100%",height:"calc(100% - 24px)",borderRadius:"6px",overflow:"hidden",background:"#fff8fc",position:"relative"}}>
+              <img
+                src={photo.src} alt={photo.label}
+                style={{
+                  width:"100%",height:"100%",
+                  objectFit:"cover",
+                  objectPosition:"center 15%",
+                  display:"block",
+                  transition:"filter 1.2s",
+                  filter:i===galIndex?"saturate(1) brightness(1)":"saturate(.12) brightness(1.4)",
+                }}
                 onError={e=>{e.target.style.display="none";}}
-                onDoubleClick={(ev)=>{ev.stopPropagation();setLightbox(photo.src);}}
+                onDoubleClick={ev=>{ev.stopPropagation();setLightbox(photo.src);}}
               />
-              <div style={{position:"absolute",inset:0,background:"rgba(255,240,248,.6)",opacity:i===galIndex?0:1,transition:"opacity 1.2s",pointerEvents:"none"}}/>
+              <div style={{position:"absolute",inset:0,background:"rgba(255,240,248,.55)",opacity:i===galIndex?0:1,transition:"opacity 1s",pointerEvents:"none"}}/>
             </div>
-            <div style={{textAlign:"center",fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,2.8vw,16px)",fontWeight:700,color:"#b05070",lineHeight:1,position:"absolute",bottom:"6px",left:0,right:0}}>
+            {/* polaroid caption */}
+            <div style={{position:"absolute",bottom:"4px",left:0,right:0,textAlign:"center",fontFamily:"'Caveat',cursive",fontSize:"clamp(9px,1.9vw,12px)",fontWeight:700,color:"#b05070",lineHeight:1,padding:"0 3px"}}>
               {i===galIndex ? caption : photo.label}
             </div>
           </div>
         ))}
       </div>
 
-      <div style={{display:"flex",alignItems:"center",gap:"8px",marginBottom:"4px",flexShrink:0}}>
-        <button onClick={prev} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"32px",height:"32px",borderRadius:"50%",color:"#fff",fontSize:"18px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 4px 14px rgba(220,70,140,.3)",lineHeight:1}}>‹</button>
-        <div style={{display:"flex",gap:"4px",alignItems:"center"}}>
+      {/* Nav dots */}
+      <div style={{display:"flex",alignItems:"center",gap:"5px",marginBottom:"4px",flexShrink:0}}>
+        <button onClick={prev} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"26px",height:"26px",borderRadius:"50%",color:"#fff",fontSize:"15px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 3px 10px rgba(220,70,140,.3)",lineHeight:1}}>‹</button>
+        <div style={{display:"flex",gap:"2px",alignItems:"center",maxWidth:"52vw",overflow:"hidden"}}>
           {PHOTOS.map((_,i)=>(
-            <div key={i} onClick={()=>{if(!isAnimating){setIsAnimating(true);setGalIndex(i);startAuto();setTimeout(()=>setIsAnimating(false),400);}}}
-              style={{width:i===galIndex?"18px":"7px",height:"7px",borderRadius:"4px",background:saved[i]?"#4caf50":i===galIndex?"#e040a0":"#f4a0c8",transition:"all .3s cubic-bezier(.34,1.5,.64,1)",cursor:"pointer",flexShrink:0}}
+            <div key={i}
+              onClick={()=>{if(!isAnimating){setIsAnimating(true);setGalIndex(i);startAuto();setTimeout(()=>setIsAnimating(false),400);}}}
+              style={{width:i===galIndex?"13px":"4px",height:"4px",borderRadius:"3px",background:saved[i]?"#4caf50":i===galIndex?"#e040a0":"#f4a0c8",transition:"all .3s cubic-bezier(.34,1.5,.64,1)",cursor:"pointer",flexShrink:0}}
             />
           ))}
         </div>
-        <button onClick={next} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"32px",height:"32px",borderRadius:"50%",color:"#fff",fontSize:"18px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 4px 14px rgba(220,70,140,.3)",lineHeight:1}}>›</button>
+        <button onClick={next} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"26px",height:"26px",borderRadius:"50%",color:"#fff",fontSize:"15px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 3px 10px rgba(220,70,140,.3)",lineHeight:1}}>›</button>
       </div>
 
-      <div style={{width:"min(360px,90vw)",flexShrink:0,display:"flex",flexDirection:"column",gap:"4px"}}>
-        <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(12px,3vw,15px)",color:"#c07090",margin:0,textAlign:"center",lineHeight:1.3}}>
-          {saved[galIndex]
-            ? <span style={{color:"#4caf50",fontWeight:700}}></span>
-            : `em ayyina cheppali ante cheppochuu vinnevalu okalu vunnaru evariki kanapadav le😒💖`
-          }
-        </p>
-        <div style={{display:"flex",gap:"6px",alignItems:"center"}}>
-          <input
-            ref={inputRef}
-            key={galIndex}
-            value={draft}
-            onChange={e=>handleDraftChange(e.target.value)}
-            onFocus={()=>{setIsTyping(true);stopAuto();}}
-            onBlur={()=>{clearTimeout(typingTimer.current);typingTimer.current=setTimeout(()=>{setIsTyping(false);startAuto();},3000);}}
-            onKeyDown={e=>{ if(e.key==="Enter"){e.preventDefault();saveFeelingForCurrent();} }}
-            placeholder={saved[galIndex]?"💕":"🙈"}
-            maxLength={140}
-            autoComplete="off"
-            style={{flex:1,border:`2px solid ${inputShake?"#e040a0":saved[galIndex]?"#4caf50":"#f4a0c8"}`,borderRadius:"14px",padding:"9px 12px",fontFamily:"'Caveat',cursive",fontSize:"clamp(14px,3.5vw,18px)",fontWeight:700,color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",boxSizing:"border-box",transition:"border-color .25s",animation:inputShake?"shakeInput .4s ease":"none"}}
-          />
-          <button onClick={saveFeelingForCurrent}
-            style={{flexShrink:0,width:"38px",height:"38px",borderRadius:"50%",border:"none",background:draft.trim()?"linear-gradient(135deg,#f080b8,#e040a0)":"#f4d0e4",cursor:draft.trim()?"pointer":"default",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"18px",boxShadow:draft.trim()?"0 4px 14px rgba(220,70,140,.3)":"none",transition:"all .2s"}}
-          >
-            {saved[galIndex]?"💾":"💖"}
-          </button>
-        </div>
-        <p style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#d0a0b8",margin:0,textAlign:"center",opacity:.8}}>
-          {savedCount} / {PHOTOS.length}
-          {savedCount===PHOTOS.length?" ":" · double tap chey pic pedhadhi avvudhi"}
-        </p>
+      {/* Status hint */}
+      <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(10px,2.2vw,12px)",color:saved[galIndex]?"#4caf50":"#c07090",margin:"0 0 3px",textAlign:"center",lineHeight:1.2,flexShrink:0,fontWeight:saved[galIndex]?700:400}}>
+        {saved[galIndex]?"✓ saved 💖":"cheppali ante cheppochuu 😒💖"}
+      </p>
+
+      {/* Input + send button */}
+      <div style={{display:"flex",gap:"5px",alignItems:"center",width:"min(320px,88vw)",flexShrink:0,marginBottom:"3px"}}>
+        <input
+          key={galIndex}
+          value={draft}
+          onChange={e=>handleDraftChange(e.target.value)}
+          onFocus={()=>{setIsTypingInput(true);stopAuto();}}
+          onBlur={()=>{clearTimeout(typingTimer.current);typingTimer.current=setTimeout(()=>{setIsTypingInput(false);startAuto();},3000);}}
+          onKeyDown={e=>{if(e.key==="Enter"){e.preventDefault();saveCurrent();}}}
+          placeholder={saved[galIndex]?"💕 update...":"🙈 ee photo ki em ayyindho cheppu"}
+          maxLength={140} autoComplete="off"
+          style={{flex:1,border:`2px solid ${inputShake?"#e040a0":saved[galIndex]?"#4caf50":"#f4a0c8"}`,borderRadius:"14px",padding:"7px 11px",fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,16px)",fontWeight:700,color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",boxSizing:"border-box",transition:"border-color .25s",animation:inputShake?"shakeInput .4s ease":"none"}}
+        />
+        <button onClick={saveCurrent}
+          style={{flexShrink:0,width:"32px",height:"32px",borderRadius:"50%",border:"none",background:draft.trim()?"linear-gradient(135deg,#f080b8,#e040a0)":"#f4d0e4",cursor:draft.trim()?"pointer":"default",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"15px",boxShadow:draft.trim()?"0 3px 10px rgba(220,70,140,.3)":"none",transition:"all .2s"}}
+        >{saved[galIndex]?"💾":"💖"}</button>
       </div>
-      <Btn onClick={handleNext} style={{flexShrink:0,marginTop:"4px",opacity:canProceed?1:.5,cursor:canProceed?"pointer":"default"}}>
-        {canProceed?"✉️ chudali ani vunte chudoochuuu alage chadhivaka hug kuda ivochuuu em anukomu🙈":""}
-      </Btn>
+
+      {/* Progress counter */}
+      <p style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#d0a0b8",margin:"0 0 5px",textAlign:"center",flexShrink:0,opacity:.9}}>
+        {savedCount} / {PHOTOS.length} {canProceed?"🎉 anni chesav!":"· double tap → fullscreen"}
+      </p>
+
+      {/* ══ PROCEED BUTTON — always visible, always has text ══
+          Bright pink = all photos saved (ready to go)
+          Soft pink   = still saving (shows count, still tappable)
+      */}
+      <button
+        onClick={handleNext}
+        style={{
+          flexShrink:0,
+          width:"min(320px,88vw)",
+          padding:"10px 18px",
+          borderRadius:"30px",
+          border:"none",
+          cursor:"pointer",
+          fontFamily:"'Caveat',cursive",
+          fontSize:"clamp(12px,2.6vw,15px)",
+          fontWeight:700,
+          color:"white",
+          lineHeight:1.3,
+          textAlign:"center",
+          transition:"all .25s",
+          background: canProceed
+            ? "linear-gradient(135deg,#f080b8,#e040a0)"
+            : "linear-gradient(135deg,#f9c0d8,#f4a8c4)",
+          boxShadow: canProceed
+            ? "0 4px 18px rgba(220,70,140,.42)"
+            : "0 2px 10px rgba(220,70,140,.15)",
+        }}
+        onMouseEnter={e=>{if(canProceed)e.currentTarget.style.transform="scale(1.04)";}}
+        onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";}}
+      >
+        {canProceed
+          ? "✉️ Next → chadhivaka hug ivochuuu 🙈💖"
+          : `💗 Save ${PHOTOS.length - savedCount} more to continue · ${savedCount}/${PHOTOS.length}`
+        }
+      </button>
+
+      {/* Lightbox */}
       {lightbox&&(
         <div onClick={()=>setLightbox(null)} style={{position:"fixed",inset:0,background:"rgba(0,0,0,.9)",zIndex:9500,display:"flex",alignItems:"center",justifyContent:"center",padding:"20px",cursor:"zoom-out"}}>
-          <img src={lightbox} style={{maxWidth:"95vw",maxHeight:"92vh",objectFit:"contain",borderRadius:"8px",boxShadow:"0 0 60px rgba(255,120,180,.3)"}} onClick={e=>e.stopPropagation()} alt="fullscreen"/>
+          <img src={lightbox} style={{maxWidth:"95vw",maxHeight:"92vh",objectFit:"contain",borderRadius:"8px"}} onClick={e=>e.stopPropagation()} alt="fullscreen"/>
           <div onClick={()=>setLightbox(null)} style={{position:"absolute",top:"16px",right:"20px",color:"white",fontSize:"32px",cursor:"pointer",background:"rgba(255,255,255,.15)",width:"40px",height:"40px",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}}>✕</div>
         </div>
       )}
-    </Screen>
+    </div>
   );
 };
 
@@ -1260,13 +1076,12 @@ const GalleryScreen = ({onNext}) => {
 ════════════════════════════════════════ */
 const LetterScreen = ({onNext}) => {
   const [sealBroken,setSealBroken]=useState(false);
-  const [letterTitle,setLetterTitle]=useState(""); const [letterTyped,setLetterTyped]=useState("");
-  const [showEnd,setShowEnd]=useState(false); const [showNextBtn,setShowNextBtn]=useState(false);
+  const [letterTitle,setLetterTitle]=useState("");const [letterTyped,setLetterTyped]=useState("");
+  const [showEnd,setShowEnd]=useState(false);const [showNextBtn,setShowNextBtn]=useState(false);
   const [scrollPct,setScrollPct]=useState(0);
   const [bowTaps,setBowTaps]=useState(0);
-  const [bowEaster,setBowEaster]=useState(false); const [bowText,setBowText]=useState(""); const [bowBtn,setBowBtn]=useState(false);
-  const pressTimer=useRef(null); const type=useTyping(); const boxRef=useRef(null);
-
+  const [bowEaster,setBowEaster]=useState(false);const [bowText,setBowText]=useState("");const [bowBtn,setBowBtn]=useState(false);
+  const pressTimer=useRef(null);const type=useTyping();const boxRef=useRef(null);
   const startBreak=()=>{pressTimer.current=setTimeout(doBreak,LONG_PRESS);};
   const cancelBreak=()=>clearTimeout(pressTimer.current);
   const doBreak=()=>{
@@ -1274,19 +1089,17 @@ const LetterScreen = ({onNext}) => {
     setTimeout(()=>{type(setLetterTitle,"Edho cheppa ante cheppali ante em ravatlee koni manchivi koni neeku nachanivi 💌",{charDelay:50},()=>startLetterType());},700);
   };
   const startLetterType=()=>{
-    setLetterTyped(""); setShowEnd(false);
-    if(boxRef.current) boxRef.current.scrollTop=0;
-    let i=0, acc="";
+    setLetterTyped("");setShowEnd(false);
+    if(boxRef.current)boxRef.current.scrollTop=0;
+    let i=0,acc="";
     const iv=setInterval(()=>{
       for(let c=0;c<4&&i<LETTER_TEXT.length;c++){acc+=LETTER_TEXT[i++];}
       setLetterTyped(acc);
-      if(i>=LETTER_TEXT.length){
-        clearInterval(iv);setShowEnd(true);setTimeout(()=>setShowNextBtn(true),600);
-      }
+      if(i>=LETTER_TEXT.length){clearInterval(iv);setShowEnd(true);setTimeout(()=>setShowNextBtn(true),600);}
     },30);
   };
   const onScroll=()=>{
-    if(!boxRef.current) return;
+    if(!boxRef.current)return;
     const{scrollTop,scrollHeight,clientHeight}=boxRef.current;
     setScrollPct(scrollHeight>clientHeight?scrollTop/(scrollHeight-clientHeight)*100:100);
   };
@@ -1295,7 +1108,6 @@ const LetterScreen = ({onNext}) => {
     if(n>=5){setBowTaps(0);setBowEaster(true);setBowText("");setBowBtn(false);playPop();
       type(setBowText,"Oka secret- Idhi kanipettev ante emo max kani pettev ane anukuntunna I wanna say you as mine 🫂💖",{charDelay:38},()=>setTimeout(()=>setBowBtn(true),400));}
   };
-
   return (
     <Screen style={{justifyContent:sealBroken?"flex-start":"center",paddingTop:"12px",paddingBottom:"12px"}}>
       {!sealBroken&&(
@@ -1316,12 +1128,8 @@ const LetterScreen = ({onNext}) => {
             <div style={{position:"absolute",left:0,top:0,bottom:0,width:"4px",borderRadius:"4px",background:"#f9d0e4",zIndex:2,flexShrink:0}}>
               <div style={{width:"100%",height:`${scrollPct}%`,background:"linear-gradient(180deg,#f080b8,#e040a0)",borderRadius:"4px",transition:"height .1s"}}/>
             </div>
-            <div ref={boxRef} onScroll={onScroll}
-              className="letter-scroll"
+            <div ref={boxRef} onScroll={onScroll} className="letter-scroll"
               style={{background:"#fff",borderRadius:"16px",padding:"clamp(16px,4vw,28px) clamp(18px,5vw,36px)",width:"100%",flex:1,minHeight:0,overflowY:"auto",overflowX:"hidden",boxShadow:"0 4px 24px rgba(200,70,130,.15)",fontFamily:"'Caveat',cursive",fontStyle:"italic",fontSize:"clamp(17px,3.2vw,22px)",color:"#d1006f",lineHeight:2,textAlign:"center",border:"2px solid #f9d0e4",position:"relative",marginLeft:"8px"}}>
-              <div style={{position:"sticky",top:0,height:0,overflow:"visible",pointerEvents:"none",zIndex:1}}>
-                <div style={{height:"100vh",background:"linear-gradient(105deg,transparent 40%,rgba(255,200,230,.15) 50%,transparent 60%)",backgroundSize:"200% 100%",animation:"shimmer 3s linear infinite",marginTop:"-2px"}}/>
-              </div>
               <p style={{margin:0,whiteSpace:"pre-wrap",position:"relative",zIndex:2}}>{letterTyped}</p>
               {showEnd&&<div style={{fontSize:"22px",margin:"6px 0",position:"relative",zIndex:2}}>💖</div>}
             </div>
@@ -1350,25 +1158,23 @@ const CreditsScreen = ({onRestart}) => {
   const [feelingSaved,setFeelingsSaved]=useState(false);
   const [feelingShake,setFeelingShake]=useState(false);
   const lines=[
-    {text:"edho try cheysa nachithe ok ledha em cheyyalenu",            size:"clamp(28px,6vw,52px)", font:"'Great Vibes',cursive",   color:"#d1006f"},
-    {text:"for the one and only my",    size:"clamp(16px,3vw,24px)", font:"'Caveat',cursive",         color:"#c070a0"},
-    {text:"kukkapilla 🐾",           size:"clamp(24px,5vw,42px)", font:"'Dancing Script',cursive", color:"#e040a0"},
-    {text:"Happy 21st Birthday 🫂",  size:"clamp(18px,4vw,32px)", font:"'Pacifico',cursive",       color:"#f080b8"},
-    {text:"- from you owner garuuu", size:"clamp(14px,2.8vw,20px)",font:"'Caveat',cursive",         color:"#b05070"},
+    {text:"edho try cheysa nachithe ok ledha em cheyyalenu",size:"clamp(28px,6vw,52px)",font:"'Great Vibes',cursive",color:"#d1006f"},
+    {text:"for the one and only my",size:"clamp(16px,3vw,24px)",font:"'Caveat',cursive",color:"#c070a0"},
+    {text:"kukkapilla 🐾",size:"clamp(24px,5vw,42px)",font:"'Dancing Script',cursive",color:"#e040a0"},
+    {text:"Happy 21st Birthday 🫂",size:"clamp(18px,4vw,32px)",font:"'Pacifico',cursive",color:"#f080b8"},
+    {text:"- from you owner garuuu",size:"clamp(14px,2.8vw,20px)",font:"'Caveat',cursive",color:"#b05070"},
   ];
   useEffect(()=>{
     const timers=lines.map((_,i)=>setTimeout(()=>setPhase(p=>Math.max(p,i+1)),600+i*1100));
     const btnTimer=setTimeout(()=>setPhase(lines.length+1),600+lines.length*1100+800);
     return()=>{timers.forEach(clearTimeout);clearTimeout(btnTimer);};
   },[]);
-
   const saveFeeling=()=>{
     const val=feelingVal.trim();
     if(!val){setFeelingShake(true);playWrong();setTimeout(()=>setFeelingShake(false),500);return;}
     ownerLog.add("credits_feeling",`"${val}"`);
     playPop();setFeelingsSaved(true);
   };
-
   return (
     <Screen style={{background:"radial-gradient(ellipse at 50% 40%,#fff0f8,#ffd0ec 60%,#ffb8e0 100%)",overflowY:"auto",justifyContent:"flex-start",paddingTop:"clamp(20px,5vh,40px)",paddingBottom:"24px"}}>
       <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"18px",width:"100%",maxWidth:"440px",margin:"0 auto"}}>
@@ -1378,21 +1184,16 @@ const CreditsScreen = ({onRestart}) => {
           </div>
         ))}
         <div style={{opacity:phase>lines.length?1:0,transform:phase>lines.length?"translateY(0)":"translateY(30px)",transition:"opacity 1s ease .3s,transform 1s ease .3s",width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:"10px",marginTop:"8px",padding:"0 8px"}}>
-          {!feelingSaved ? (
-            <>
-              <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(14px,3.5vw,18px)",color:"#b05070",margin:0,textAlign:"center",lineHeight:1.4}}>
-                em ayyina vunte cheppu i mean motham chadhivaka nee abhiprayam 💖<br/>
-                <span style={{fontSize:"clamp(12px,2.8vw,14px)",opacity:.7}}>manditory em kaadhu but cheppali anipisthe cheppu endhuku ante idhi evaru chudaru kabati</span>
-              </p>
-              <textarea
-                value={feelingVal} onChange={e=>setFeelingVal(e.target.value)}
-                placeholder=""
-                maxLength={300} rows={3}
-                style={{width:"100%",border:`2px solid ${feelingShake?"#e040a0":"#f4a0c8"}`,borderRadius:"16px",padding:"12px 14px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,19px)",fontWeight:700,color:"#d8368e",background:"rgba(255,255,255,.85)",outline:"none",resize:"none",boxSizing:"border-box",lineHeight:1.5,animation:feelingShake?"shakeInput .4s ease":"none",transition:"border-color .25s",boxShadow:"0 4px 20px rgba(220,80,140,.15)"}}
-              />
-              <Btn onClick={saveFeeling} style={{width:"100%",justifyContent:"center"}}>💖</Btn>
-            </>
-          ) : (
+          {!feelingSaved ? (<>
+            <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(14px,3.5vw,18px)",color:"#b05070",margin:0,textAlign:"center",lineHeight:1.4}}>
+              em ayyina vunte cheppu i mean motham chadhivaka nee abhiprayam 💖<br/>
+              <span style={{fontSize:"clamp(12px,2.8vw,14px)",opacity:.7}}>manditory em kaadhu but cheppali anipisthe cheppu endhuku ante idhi evaru chudaru kabati</span>
+            </p>
+            <textarea value={feelingVal} onChange={e=>setFeelingVal(e.target.value)} placeholder="" maxLength={300} rows={3}
+              style={{width:"100%",border:`2px solid ${feelingShake?"#e040a0":"#f4a0c8"}`,borderRadius:"16px",padding:"12px 14px",fontFamily:"'Caveat',cursive",fontSize:"clamp(15px,3.5vw,19px)",fontWeight:700,color:"#d8368e",background:"rgba(255,255,255,.85)",outline:"none",resize:"none",boxSizing:"border-box",lineHeight:1.5,animation:feelingShake?"shakeInput .4s ease":"none",transition:"border-color .25s",boxShadow:"0 4px 20px rgba(220,80,140,.15)"}}
+            />
+            <Btn onClick={saveFeeling} style={{width:"100%",justifyContent:"center"}}>💖</Btn>
+          </>) : (
             <div style={{background:"rgba(255,255,255,.7)",backdropFilter:"blur(8px)",borderRadius:"18px",padding:"16px 20px",textAlign:"center",border:"2px solid #f4a0c8",boxShadow:"0 4px 20px rgba(220,80,140,.15)"}}>
               <div style={{fontSize:"28px",marginBottom:"6px"}}>💖</div>
               <p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(14px,3.5vw,18px)",color:"#d8368e",margin:"0 0 4px"}}>{feelingVal}</p>
@@ -1412,71 +1213,38 @@ const CreditsScreen = ({onRestart}) => {
    OWNER PANEL
 ════════════════════════════════════════ */
 const OwnerPanel = ({onClose}) => {
-  const [log, setLog] = useState(ownerLog.get());
-  const [activeTab, setActiveTab] = useState("story");
-  useEffect(()=>{
-    const iv = setInterval(()=>setLog(ownerLog.get()), 2000);
-    return ()=>clearInterval(iv);
-  },[]);
-
-  const toSentence = (entry) => {
-    const v = entry.value;
-    switch(entry.type) {
-      case "name_correct":     return { icon:"✅", color:"#2e7d32", bg:"#e8f5e9", sentence:`She got the name right! Typed ${v}` };
-      case "name_wrong":       return { icon:"❌", color:"#c62828", bg:"#ffebee", sentence:`Wrong name attempt — she typed ${v}` };
-      case "hint_opened":      return { icon:"💡", color:"#e65100", bg:"#fff3e0", sentence:"She clicked the hint button 😏" };
-      case "hint_reply":       return { icon:"💬", color:"#ad1457", bg:"#fce4ec", sentence:`After seeing the hint: ${v}` };
-      case "ante_isthe_reply": return { icon:"💕", color:"#880e4f", bg:"#fce4ec", sentence:`Ante isthe reply: ${v}` };
-      case "message_reaction": return { icon:"💌", color:"#6a1b9a", bg:"#f3e5f5", sentence:`Birthday message reaction: ${v}` };
-      case "birthday_reaction":return { icon:"🎂", color:"#bf360c", bg:"#fbe9e7", sentence:`Happy Birthday screen feeling: ${v}` };
-      case "credits_feeling":  return { icon:"💖", color:"#880e4f", bg:"#fce4ec", sentence:`Final feeling at the end: ${v}` };
-      case "easter_egg":       return { icon:"🐾", color:"#4527a0", bg:"#ede7f6", sentence:`Found a secret! ${v}` };
-      case "slide_time":       return { icon:"⏱️", color:"#0277bd", bg:"#e1f5fe", sentence:v };
-      case "photo_feeling":    return { icon:"📸", color:"#880e4f", bg:"#fce4ec", sentence:v };
-      case "bow_easter":       return { icon:"💗", color:"#c2185b", bg:"#fce4ec", sentence:"Tapped the bow 5 times!" };
-      default:                 return { icon:"🔹", color:"#78909c", bg:"#f5f5f5", sentence:v };
+  const [log,setLog]=useState(ownerLog.get());
+  const [activeTab,setActiveTab]=useState("story");
+  useEffect(()=>{const iv=setInterval(()=>setLog(ownerLog.get()),2000);return()=>clearInterval(iv);},[]);
+  const toSentence=(entry)=>{
+    const v=entry.value;
+    switch(entry.type){
+      case "name_correct":      return{icon:"✅",color:"#2e7d32",bg:"#e8f5e9",sentence:`She got the name right! Typed ${v}`};
+      case "name_wrong":        return{icon:"❌",color:"#c62828",bg:"#ffebee",sentence:`Wrong name attempt — she typed ${v}`};
+      case "hint_opened":       return{icon:"💡",color:"#e65100",bg:"#fff3e0",sentence:"She clicked the hint button 😏"};
+      case "hint_reply":        return{icon:"💬",color:"#ad1457",bg:"#fce4ec",sentence:`After seeing the hint: ${v}`};
+      case "ante_isthe_reply":  return{icon:"💕",color:"#880e4f",bg:"#fce4ec",sentence:`Ante isthe reply: ${v}`};
+      case "message_reaction":  return{icon:"💌",color:"#6a1b9a",bg:"#f3e5f5",sentence:`Birthday message reaction: ${v}`};
+      case "birthday_reaction": return{icon:"🎂",color:"#bf360c",bg:"#fbe9e7",sentence:`Happy Birthday screen feeling: ${v}`};
+      case "credits_feeling":   return{icon:"💖",color:"#880e4f",bg:"#fce4ec",sentence:`Final feeling at the end: ${v}`};
+      case "easter_egg":        return{icon:"🐾",color:"#4527a0",bg:"#ede7f6",sentence:`Found a secret! ${v}`};
+      case "slide_time":        return{icon:"⏱️",color:"#0277bd",bg:"#e1f5fe",sentence:v};
+      case "photo_feeling":     return{icon:"📸",color:"#880e4f",bg:"#fce4ec",sentence:v};
+      case "bow_easter":        return{icon:"💗",color:"#c2185b",bg:"#fce4ec",sentence:"Tapped the bow 5 times!"};
+      default:                  return{icon:"🔹",color:"#78909c",bg:"#f5f5f5",sentence:v};
     }
   };
-
-  const SHOWN_TYPES = new Set([
-    "name_correct","name_wrong","hint_opened","hint_reply","ante_isthe_reply",
-    "message_reaction","birthday_reaction","credits_feeling","easter_egg",
-    "slide_time","photo_feeling","bow_easter",
-  ]);
-
-  const filtered     = log.filter(e=>SHOWN_TYPES.has(e.type));
-  const feelingsOnly = log.filter(e=>["hint_reply","ante_isthe_reply","message_reaction","birthday_reaction","credits_feeling","photo_feeling"].includes(e.type));
-  const timelineOnly = log.filter(e=>e.type==="slide_time");
-  const nameAttempts = log.filter(e=>e.type==="name_wrong").length;
-  const gotItRight   = log.some(e=>e.type==="name_correct");
-  const photosDone   = log.filter(e=>e.type==="photo_feeling").length;
-  const secretsFound = log.filter(e=>e.type==="easter_egg").length;
-
-  const TAB = (id, label, active) => (
-    <button onClick={()=>setActiveTab(id)} style={{flex:1,padding:"9px 4px",border:"none",borderRadius:"20px",fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,2.8vw,16px)",fontWeight:700,cursor:"pointer",transition:"all .25s",background:active?"linear-gradient(135deg,#f080b8,#e040a0)":"transparent",color:active?"#fff":"#c070a0",boxShadow:active?"0 4px 14px rgba(220,70,140,.3)":"none"}}>{label}</button>
-  );
-
-  const STAT_CARD = ({icon,label,value,color,bg}) => (
-    <div style={{background:bg||"#fff5fa",borderRadius:"16px",padding:"10px 8px",flex:"1",textAlign:"center",border:`2px solid ${color}33`,display:"flex",flexDirection:"column",alignItems:"center",gap:"3px"}}>
-      <div style={{fontSize:"18px",lineHeight:1}}>{icon}</div>
-      <div style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:"clamp(16px,4vw,22px)",color:color,lineHeight:1.1}}>{value}</div>
-      <div style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(10px,2vw,12px)",color:"#c090a0",fontWeight:700,lineHeight:1}}>{label}</div>
-    </div>
-  );
-
-  const LOG_CARD = ({entry}) => {
-    const {icon,color,bg,sentence} = toSentence(entry);
-    return (
-      <div style={{background:bg,borderRadius:"16px",padding:"10px 14px",display:"flex",gap:"10px",alignItems:"flex-start",border:`1.5px solid ${color}28`,animation:"screenFadeIn .4s ease"}}>
-        <span style={{fontSize:"18px",flexShrink:0,marginTop:"2px",lineHeight:1}}>{icon}</span>
-        <div style={{flex:1,minWidth:0}}>
-          <div style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(14px,3vw,17px)",color:color,wordBreak:"break-word",lineHeight:1.4}}>{sentence}</div>
-        </div>
-        <span style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#c0a0b0",flexShrink:0,marginTop:"3px",whiteSpace:"nowrap"}}>{entry.time}</span>
-      </div>
-    );
-  };
-
+  const SHOWN=new Set(["name_correct","name_wrong","hint_opened","hint_reply","ante_isthe_reply","message_reaction","birthday_reaction","credits_feeling","easter_egg","slide_time","photo_feeling","bow_easter"]);
+  const filtered=log.filter(e=>SHOWN.has(e.type));
+  const feelingsOnly=log.filter(e=>["hint_reply","ante_isthe_reply","message_reaction","birthday_reaction","credits_feeling","photo_feeling"].includes(e.type));
+  const timelineOnly=log.filter(e=>e.type==="slide_time");
+  const nameAttempts=log.filter(e=>e.type==="name_wrong").length;
+  const gotItRight=log.some(e=>e.type==="name_correct");
+  const photosDone=log.filter(e=>e.type==="photo_feeling").length;
+  const secretsFound=log.filter(e=>e.type==="easter_egg").length;
+  const TAB=(id,label,active)=>(<button onClick={()=>setActiveTab(id)} style={{flex:1,padding:"9px 4px",border:"none",borderRadius:"20px",fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,2.8vw,16px)",fontWeight:700,cursor:"pointer",transition:"all .25s",background:active?"linear-gradient(135deg,#f080b8,#e040a0)":"transparent",color:active?"#fff":"#c070a0",boxShadow:active?"0 4px 14px rgba(220,70,140,.3)":"none"}}>{label}</button>);
+  const STAT=({icon,label,value,color,bg})=>(<div style={{background:bg||"#fff5fa",borderRadius:"16px",padding:"10px 8px",flex:"1",textAlign:"center",border:`2px solid ${color}33`,display:"flex",flexDirection:"column",alignItems:"center",gap:"3px"}}><div style={{fontSize:"18px",lineHeight:1}}>{icon}</div><div style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:"clamp(16px,4vw,22px)",color:color,lineHeight:1.1}}>{value}</div><div style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(10px,2vw,12px)",color:"#c090a0",fontWeight:700,lineHeight:1}}>{label}</div></div>);
+  const CARD=({entry})=>{const{icon,color,bg,sentence}=toSentence(entry);return(<div style={{background:bg,borderRadius:"16px",padding:"10px 14px",display:"flex",gap:"10px",alignItems:"flex-start",border:`1.5px solid ${color}28`,animation:"screenFadeIn .4s ease"}}><span style={{fontSize:"18px",flexShrink:0,marginTop:"2px",lineHeight:1}}>{icon}</span><div style={{flex:1,minWidth:0}}><div style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(14px,3vw,17px)",color:color,wordBreak:"break-word",lineHeight:1.4}}>{sentence}</div></div><span style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#c0a0b0",flexShrink:0,marginTop:"3px",whiteSpace:"nowrap"}}>{entry.time}</span></div>);};
   return (
     <div style={{position:"fixed",inset:0,background:"rgba(255,200,230,0.35)",backdropFilter:"blur(12px)",zIndex:99999,display:"flex",alignItems:"center",justifyContent:"center",padding:"14px"}}>
       <div style={{background:"linear-gradient(160deg,#fff5fb,#ffe8f4)",border:"2.5px solid #f4a0c8",borderRadius:"28px",padding:"20px",maxWidth:"500px",width:"96vw",maxHeight:"90vh",display:"flex",flexDirection:"column",gap:"12px",boxShadow:"0 12px 56px rgba(220,70,140,.22)"}}>
@@ -1492,56 +1260,41 @@ const OwnerPanel = ({onClose}) => {
         </div>
         <div style={{height:"2px",borderRadius:"2px",background:"linear-gradient(90deg,#f4a0c8,#f080b8,#f4a0c8)",flexShrink:0}}/>
         <div style={{display:"flex",gap:"8px",flexShrink:0}}>
-          <STAT_CARD icon="✍️" label="Name tries"   value={nameAttempts}                color="#c62828" bg="#ffebee"/>
-          <STAT_CARD icon="✅" label="Got it right" value={gotItRight?"Yes!":"Not yet"} color={gotItRight?"#2e7d32":"#c62828"} bg={gotItRight?"#e8f5e9":"#ffebee"}/>
-          <STAT_CARD icon="📸" label="Photos done"  value={`${photosDone}/${PHOTOS.length}`} color="#ad1457" bg="#fce4ec"/>
-          <STAT_CARD icon="🐾" label="Secrets"      value={secretsFound}                color="#4527a0" bg="#ede7f6"/>
+          <STAT icon="✍️" label="Name tries"  value={nameAttempts}                color="#c62828" bg="#ffebee"/>
+          <STAT icon="✅" label="Got it right" value={gotItRight?"Yes!":"Not yet"} color={gotItRight?"#2e7d32":"#c62828"} bg={gotItRight?"#e8f5e9":"#ffebee"}/>
+          <STAT icon="📸" label="Photos done" value={`${photosDone}/${PHOTOS.length}`} color="#ad1457" bg="#fce4ec"/>
+          <STAT icon="🐾" label="Secrets"     value={secretsFound}                color="#4527a0" bg="#ede7f6"/>
         </div>
         <div style={{display:"flex",gap:"4px",background:"rgba(244,160,200,0.15)",borderRadius:"24px",padding:"4px",flexShrink:0}}>
-          {TAB("story",    "📖 Story",     activeTab==="story")}
-          {TAB("feelings", "💬 Her words", activeTab==="feelings")}
-          {TAB("timeline", "⏱ Time",       activeTab==="timeline")}
+          {TAB("story","📖 Story",activeTab==="story")}
+          {TAB("feelings","💬 Her words",activeTab==="feelings")}
+          {TAB("timeline","⏱ Time",activeTab==="timeline")}
         </div>
-        {activeTab==="story" && (
+        {activeTab==="story"&&(
           <div style={{overflowY:"auto",flex:1,display:"flex",flexDirection:"column",gap:"8px",paddingRight:"2px"}}>
             {filtered.length===0
-              ? <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"12px",padding:"32px 16px"}}><div style={{fontSize:"48px",animation:"floatY 2s ease-in-out infinite"}}>💗</div><p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"18px",color:"#c070a0",textAlign:"center",margin:0}}>Nothing yet!<br/>She hasn't started 💖</p></div>
-              : [...filtered].reverse().map((entry,i)=><LOG_CARD key={i} entry={entry}/>)
+              ?<div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"12px",padding:"32px 16px"}}><div style={{fontSize:"48px",animation:"floatY 2s ease-in-out infinite"}}>💗</div><p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"18px",color:"#c070a0",textAlign:"center",margin:0}}>Nothing yet!<br/>She hasn't started 💖</p></div>
+              :[...filtered].reverse().map((entry,i)=><CARD key={i} entry={entry}/>)
             }
           </div>
         )}
-        {activeTab==="feelings" && (
+        {activeTab==="feelings"&&(
           <div style={{overflowY:"auto",flex:1,display:"flex",flexDirection:"column",gap:"8px",paddingRight:"2px"}}>
             {feelingsOnly.length===0
-              ? <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"12px",padding:"32px 16px"}}><div style={{fontSize:"48px",animation:"floatY 2s ease-in-out infinite"}}>💬</div><p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"18px",color:"#c070a0",textAlign:"center",margin:0}}>She hasn't typed anything yet 😊</p></div>
-              : feelingsOnly.map((entry,i)=>{
-                  const {icon,color,bg} = toSentence(entry);
+              ?<div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"12px",padding:"32px 16px"}}><div style={{fontSize:"48px",animation:"floatY 2s ease-in-out infinite"}}>💬</div><p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"18px",color:"#c070a0",textAlign:"center",margin:0}}>She hasn't typed anything yet 😊</p></div>
+              :feelingsOnly.map((entry,i)=>{
+                  const{icon,color,bg}=toSentence(entry);
                   const typeLabels={hint_reply:"Hint reply",ante_isthe_reply:"Ante isthe reply",message_reaction:"Birthday message",birthday_reaction:"Happy Birthday screen",credits_feeling:"Final feeling",photo_feeling:"Photo feeling"};
-                  return (
-                    <div key={i} style={{background:bg,borderRadius:"18px",padding:"12px 16px",border:`1.5px solid ${color}33`}}>
-                      <div style={{display:"flex",gap:"6px",alignItems:"center",marginBottom:"6px"}}>
-                        <span style={{fontSize:"15px",lineHeight:1}}>{icon}</span>
-                        <span style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(11px,2.5vw,13px)",color:color,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.05em"}}>{typeLabels[entry.type]||""}</span>
-                        <span style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#c0a0b0",marginLeft:"auto",whiteSpace:"nowrap"}}>{entry.time}</span>
-                      </div>
-                      <div style={{fontFamily:"'Dancing Script',cursive",fontWeight:700,fontSize:"clamp(16px,4vw,21px)",color:color,lineHeight:1.45,wordBreak:"break-word"}}>{entry.value}</div>
-                    </div>
-                  );
+                  return(<div key={i} style={{background:bg,borderRadius:"18px",padding:"12px 16px",border:`1.5px solid ${color}33`}}><div style={{display:"flex",gap:"6px",alignItems:"center",marginBottom:"6px"}}><span style={{fontSize:"15px",lineHeight:1}}>{icon}</span><span style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(11px,2.5vw,13px)",color:color,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.05em"}}>{typeLabels[entry.type]||""}</span><span style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#c0a0b0",marginLeft:"auto",whiteSpace:"nowrap"}}>{entry.time}</span></div><div style={{fontFamily:"'Dancing Script',cursive",fontWeight:700,fontSize:"clamp(16px,4vw,21px)",color:color,lineHeight:1.45,wordBreak:"break-word"}}>{entry.value}</div></div>);
                 })
             }
           </div>
         )}
-        {activeTab==="timeline" && (
+        {activeTab==="timeline"&&(
           <div style={{overflowY:"auto",flex:1,display:"flex",flexDirection:"column",gap:"8px",paddingRight:"2px"}}>
             {timelineOnly.length===0
-              ? <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"12px",padding:"32px 16px"}}><div style={{fontSize:"48px",animation:"floatY 2s ease-in-out infinite"}}>⏳</div><p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"18px",color:"#c070a0",textAlign:"center",margin:0}}>No timing data yet!</p></div>
-              : timelineOnly.map((entry,i)=>(
-                  <div key={i} style={{background:"#e1f5fe",borderRadius:"16px",padding:"10px 14px",display:"flex",gap:"10px",alignItems:"center",border:"1.5px solid #0277bd22"}}>
-                    <span style={{fontSize:"18px",lineHeight:1,flexShrink:0}}>⏱️</span>
-                    <span style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(14px,3vw,17px)",color:"#0277bd",flex:1,lineHeight:1.3}}>{entry.value}</span>
-                    <span style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#90caf9",flexShrink:0,whiteSpace:"nowrap"}}>{entry.time}</span>
-                  </div>
-                ))
+              ?<div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"12px",padding:"32px 16px"}}><div style={{fontSize:"48px",animation:"floatY 2s ease-in-out infinite"}}>⏳</div><p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"18px",color:"#c070a0",textAlign:"center",margin:0}}>No timing data yet!</p></div>
+              :timelineOnly.map((entry,i)=>(<div key={i} style={{background:"#e1f5fe",borderRadius:"16px",padding:"10px 14px",display:"flex",gap:"10px",alignItems:"center",border:"1.5px solid #0277bd22"}}><span style={{fontSize:"18px",lineHeight:1,flexShrink:0}}>⏱️</span><span style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(14px,3vw,17px)",color:"#0277bd",flex:1,lineHeight:1.3}}>{entry.value}</span><span style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#90caf9",flexShrink:0,whiteSpace:"nowrap"}}>{entry.time}</span></div>))
             }
           </div>
         )}
@@ -1564,7 +1317,7 @@ export default function BirthdaySurprise() {
 
   const triggerBurst=useCallback((emojis=["🎉","💖","✨","💗","🎊","⭐"],count=16)=>{
     const nb=Array.from({length:count},(_,i)=>({id:Date.now()+i,emoji:emojis[Math.floor(Math.random()*emojis.length)],x:(10+Math.random()*80)+"vw",y:(20+Math.random()*60)+"vh",size:(18+Math.random()*22)+"px",delay:(Math.random()*.4)+"s"}));
-    setBursts(nb); setTimeout(()=>setBursts([]),1400);
+    setBursts(nb);setTimeout(()=>setBursts([]),1400);
   },[]);
 
   const screenEnterTime=useRef(Date.now());
@@ -1572,27 +1325,23 @@ export default function BirthdaySurprise() {
 
   const go=useCallback((s)=>{
     const elapsed=Date.now()-screenEnterTime.current;
-    ownerLog.addScreenTime(screenNameRef.current, elapsed);
+    ownerLog.addScreenTime(screenNameRef.current,elapsed);
     screenEnterTime.current=Date.now();
     screenNameRef.current=s;
     setScreen(s);
-    ownerLog.add("screen_visit", s);
+    ownerLog.add("screen_visit",s);
   },[]);
 
   const startMusic=useCallback(()=>{
     if(audioRef.current){audioRef.current.play().catch(()=>{});setMusicOn(true);return;}
     const a=new Audio("photos/Urike_Urike.m4a");
-    a.loop=true; a.volume=0;
-    a.play().catch(()=>{});
-    audioRef.current=a; setMusicOn(true);
-    let v=0;
-    const fade=setInterval(()=>{v=Math.min(v+0.015,0.3);a.volume=v;if(v>=0.3)clearInterval(fade);},150);
+    a.loop=true;a.volume=0;a.play().catch(()=>{});
+    audioRef.current=a;setMusicOn(true);
+    let v=0;const fade=setInterval(()=>{v=Math.min(v+0.015,0.3);a.volume=v;if(v>=0.3)clearInterval(fade);},150);
   },[]);
 
   const handleMusicBtn=()=>{
-    const t=musicTapRef.current;
-    t.count++;
-    clearTimeout(t.timer);
+    const t=musicTapRef.current;t.count++;clearTimeout(t.timer);
     if(t.count>=5){t.count=0;setShowOwner(true);return;}
     t.timer=setTimeout(()=>{t.count=0;},2000);
     toggleMusic();
@@ -1606,7 +1355,7 @@ export default function BirthdaySurprise() {
 
   const restart=()=>{
     if(audioRef.current){audioRef.current.pause();audioRef.current.currentTime=0;}
-    setMusicOn(false); go("unlock");
+    setMusicOn(false);go("unlock");
   };
 
   return (
@@ -1640,15 +1389,14 @@ export default function BirthdaySurprise() {
         @keyframes sparkleTrail   {0%{transform:translate(-50%,-50%) scale(1);opacity:1;}100%{transform:translate(-50%,-50%) scale(0) translateY(-20px);opacity:0;}}
         @keyframes handSwipe      {0%,100%{transform:translateX(-10px);opacity:.5;}50%{transform:translateX(16px);opacity:1;}}
         @keyframes shimmer        {0%{background-position:200% center;}100%{background-position:-200% center;}}
-
         @keyframes stickerBob     {0%{transform:translateX(0) translateY(0) rotate(-3deg);}100%{transform:translateX(0) translateY(-14px) rotate(3deg);}}
         @keyframes clapHand       {0%{transform:rotate(-20deg) scale(1);}100%{transform:rotate(20deg) scale(1.2) translateY(-6px);}}
         @keyframes celebBounce    {0%{transform:translateY(0) scale(1);}100%{transform:translateY(-14px) scale(1.2);}}
 
-        .letter-scroll::-webkit-scrollbar { width: 6px; }
-        .letter-scroll::-webkit-scrollbar-track { background: #f9d0e4; border-radius: 4px; }
-        .letter-scroll::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#f080b8,#e040a0); border-radius: 4px; }
-        .letter-scroll { scrollbar-color: #f080b8 #f9d0e4; scrollbar-width: thin; }
+        .letter-scroll::-webkit-scrollbar{width:6px;}
+        .letter-scroll::-webkit-scrollbar-track{background:#f9d0e4;border-radius:4px;}
+        .letter-scroll::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#f080b8,#e040a0);border-radius:4px;}
+        .letter-scroll{scrollbar-color:#f080b8 #f9d0e4;scrollbar-width:thin;}
       `}</style>
 
       <Petals/>
@@ -1661,18 +1409,18 @@ export default function BirthdaySurprise() {
 
       {showOwner&&<OwnerPanel onClose={()=>setShowOwner(false)}/>}
 
-      {screen==="unlock"    && <UnlockScreen    onOpen={()=>go("anteIsthe")} onFirstTap={startMusic}/>}
-      {screen==="anteIsthe" && <AnteIshtheScreen onNext={()=>go("nameEntry")}/>}
-      {screen==="nameEntry" && <NameEntryScreen  onSuccess={()=>go("countdown")} triggerBurst={triggerBurst}/>}
-      {screen==="countdown" && <CountdownScreen  onDone={()=>go("loading")}/>}
-      {screen==="loading"   && <LoadingScreen    onDone={()=>go("message")}/>}
-      {screen==="message"   && <MessageScreen    onNext={()=>go("candles")}/>}
-      {screen==="candles"   && <CandleScreen     onDone={()=>go("cake")} triggerBurst={triggerBurst}/>}
-      {screen==="cake"      && <CakeScreen       onDone={()=>go("birthday")} triggerBurst={triggerBurst}/>}
-      {screen==="birthday"  && <BirthdayScreen   onNext={()=>go("gallery")}/>}
-      {screen==="gallery"   && <GalleryScreen    onNext={()=>go("letter")}/>}
-      {screen==="letter"    && <LetterScreen     onNext={()=>go("credits")}/>}
-      {screen==="credits"   && <CreditsScreen    onRestart={restart}/>}
+      {screen==="unlock"    &&<UnlockScreen    onOpen={()=>go("anteIsthe")} onFirstTap={startMusic}/>}
+      {screen==="anteIsthe" &&<AnteIshtheScreen onNext={()=>go("nameEntry")}/>}
+      {screen==="nameEntry" &&<NameEntryScreen  onSuccess={()=>go("countdown")} triggerBurst={triggerBurst}/>}
+      {screen==="countdown" &&<CountdownScreen  onDone={()=>go("loading")}/>}
+      {screen==="loading"   &&<LoadingScreen    onDone={()=>go("message")}/>}
+      {screen==="message"   &&<MessageScreen    onNext={()=>go("candles")}/>}
+      {screen==="candles"   &&<CandleScreen     onDone={()=>go("cake")} triggerBurst={triggerBurst}/>}
+      {screen==="cake"      &&<CakeScreen       onDone={()=>go("birthday")} triggerBurst={triggerBurst}/>}
+      {screen==="birthday"  &&<BirthdayScreen   onNext={()=>go("gallery")}/>}
+      {screen==="gallery"   &&<GalleryScreen    onNext={()=>go("letter")}/>}
+      {screen==="letter"    &&<LetterScreen     onNext={()=>go("credits")}/>}
+      {screen==="credits"   &&<CreditsScreen    onRestart={restart}/>}
     </>
   );
 }
