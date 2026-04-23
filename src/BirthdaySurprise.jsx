@@ -831,7 +831,12 @@ function launchConfetti(canvas) {
 }
 
 /* ════════════════════════════════════════
-   SCREEN 9: GALLERY  ← PORTRAIT FRAME + ALWAYS-VISIBLE BUTTON
+   SCREEN 9: GALLERY
+   CHANGES:
+   - 3-tap on photo → show that photo's secret msg
+   - Removed bottom proceed button
+   - Proceed button now inline next to the input row
+   - Input area moved slightly higher
 ════════════════════════════════════════ */
 const GalleryScreen = ({onNext}) => {
   const [title,setTitle]=useState("");
@@ -844,6 +849,11 @@ const GalleryScreen = ({onNext}) => {
   const [draft,setDraft]=useState("");
   const [inputShake,setInputShake]=useState(false);
   const [isTypingInput,setIsTypingInput]=useState(false);
+
+  // Secret message state — 3 taps on active photo
+  const [secretMsg,setSecretMsg]=useState(null); // {msg, label} or null
+  const photoTapRef=useRef({count:0,timer:null,lastIndex:-1});
+
   const typingTimer=useRef(null);
   const autoRef=useRef(null);
   const touchStart=useRef(0);
@@ -862,8 +872,27 @@ const GalleryScreen = ({onNext}) => {
 
   const startAuto=()=>{clearInterval(autoRef.current);autoRef.current=setInterval(()=>{if(!isTypingInput)next();},3500);};
   const stopAuto=()=>clearInterval(autoRef.current);
+
   const next=()=>{if(isAnimating)return;setIsAnimating(true);setGalIndex(p=>(p+1)%PHOTOS.length);startAuto();setTimeout(()=>setIsAnimating(false),400);};
   const prev=()=>{if(isAnimating)return;setIsAnimating(true);setGalIndex(p=>(p-1+PHOTOS.length)%PHOTOS.length);startAuto();setTimeout(()=>setIsAnimating(false),400);};
+
+  // 3-tap handler on the active photo
+  const handlePhotoTap=(i)=>{
+    if(i!==galIndex){next();return;}
+    const t=photoTapRef.current;
+    // reset count if tapping a different photo
+    if(t.lastIndex!==i){t.count=0;t.lastIndex=i;}
+    t.count++;
+    clearTimeout(t.timer);
+    t.timer=setTimeout(()=>{t.count=0;},1200);
+    playTone(600+t.count*80,"triangle",.07,.15);
+    if(t.count>=3){
+      t.count=0;
+      setSecretMsg({msg:PHOTOS[i].msg,label:PHOTOS[i].label});
+      playPop();
+      ownerLog.add("photo_secret",`Tapped photo ${i+1} 3× — saw secret`);
+    }
+  };
 
   const cardStyle=(i)=>{
     const total=PHOTOS.length,diff=((i-galIndex)%total+total)%total;
@@ -895,9 +924,6 @@ const GalleryScreen = ({onNext}) => {
     },600);
   };
 
-  const savedCount=saved.filter(Boolean).length;
-  const canProceed=savedCount===PHOTOS.length;
-
   const handleNext=()=>{
     const val=draft.trim();
     if(val&&!saved[galIndex]){
@@ -909,55 +935,61 @@ const GalleryScreen = ({onNext}) => {
     playPop();onNext();
   };
 
+  const savedCount=saved.filter(Boolean).length;
+  const canProceed=savedCount===PHOTOS.length;
+
   return (
-    /* Full-screen column, fixed, no scroll — everything must fit */
     <div style={{
       position:"fixed",inset:0,
       display:"flex",flexDirection:"column",alignItems:"center",
-      padding:"5px 12px 8px",
+      padding:"5px 12px 10px",
       animation:"screenFadeIn .6s ease forwards",
     }}>
-
       {/* Title */}
       <h2 style={{
         fontFamily:"'Great Vibes',cursive",color:"#d1006f",
         fontSize:"clamp(13px,3.2vw,20px)",
-        margin:"0 0 5px",flexShrink:0,lineHeight:1.1,
+        margin:"0 0 4px",flexShrink:0,lineHeight:1.1,
         textShadow:"0 0 8px rgba(255,100,160,.4)",
       }}>{title}</h2>
 
-      {/* ══ PORTRAIT PHOTO CARD STACK ══
-          Fixed portrait rectangle: width = min(190px,48vw), aspect-ratio 3:4
-          objectFit:cover fills it cleanly — faces stay centred top
-      */}
+      {/* Photo stack — portrait ratio */}
       <div
         style={{
           position:"relative",
           width:"min(190px,48vw)",
           aspectRatio:"3/4",
           flexShrink:0,
-          margin:"0 auto 5px",
+          margin:"0 auto 4px",
           perspective:"700px",
         }}
         onTouchStart={e=>{touchStart.current=e.touches[0].clientX;}}
         onTouchEnd={e=>{const dx=e.changedTouches[0].clientX-touchStart.current;if(Math.abs(dx)>40){dx<0?next():prev();}}}
       >
         {PHOTOS.map((photo,i)=>(
-          <div key={i} style={{
-            position:"absolute",inset:0,
-            background:"#fff",borderRadius:"10px",
-            padding:"5px 5px 24px",   /* polaroid: thin sides, bigger bottom for label */
-            boxShadow:"0 6px 22px rgba(180,60,120,.18)",
-            transition:"transform .42s cubic-bezier(.34,1.5,.64,1),opacity .32s ease",
-            willChange:"transform,opacity",
-            ...cardStyle(i),
-          }}
-            onClick={()=>{ if(i!==galIndex) next(); }}
+          <div key={i}
+            style={{
+              position:"absolute",inset:0,
+              background:"#fff",borderRadius:"10px",
+              padding:"5px 5px 24px",
+              boxShadow:"0 6px 22px rgba(180,60,120,.18)",
+              transition:"transform .42s cubic-bezier(.34,1.5,.64,1),opacity .32s ease",
+              willChange:"transform,opacity",
+              cursor:i===galIndex?"pointer":"default",
+              ...cardStyle(i),
+            }}
+            onClick={()=>handlePhotoTap(i)}
           >
+            {/* checkmark if saved */}
             {saved[i]&&(
               <div style={{position:"absolute",top:"4px",right:"4px",width:"18px",height:"18px",borderRadius:"50%",background:"linear-gradient(135deg,#4caf50,#2e7d32)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:20,fontSize:"10px",boxShadow:"0 2px 5px rgba(0,0,0,.2)"}}>✓</div>
             )}
-            {/* photo fills portrait frame, objectPosition keeps subjects visible */}
+            {/* tap hint for active photo */}
+            {i===galIndex&&(
+              <div style={{position:"absolute",top:"4px",left:"4px",zIndex:20,background:"rgba(255,255,255,0.75)",borderRadius:"8px",padding:"2px 5px",fontFamily:"'Caveat',cursive",fontSize:"9px",color:"#c060a0",lineHeight:1.2,pointerEvents:"none"}}>
+                3× tap 💗
+              </div>
+            )}
             <div style={{width:"100%",height:"calc(100% - 24px)",borderRadius:"6px",overflow:"hidden",background:"#fff8fc",position:"relative"}}>
               <img
                 src={photo.src} alt={photo.label}
@@ -970,11 +1002,9 @@ const GalleryScreen = ({onNext}) => {
                   filter:i===galIndex?"saturate(1) brightness(1)":"saturate(.12) brightness(1.4)",
                 }}
                 onError={e=>{e.target.style.display="none";}}
-                onDoubleClick={ev=>{ev.stopPropagation();setLightbox(photo.src);}}
               />
               <div style={{position:"absolute",inset:0,background:"rgba(255,240,248,.55)",opacity:i===galIndex?0:1,transition:"opacity 1s",pointerEvents:"none"}}/>
             </div>
-            {/* polaroid caption */}
             <div style={{position:"absolute",bottom:"4px",left:0,right:0,textAlign:"center",fontFamily:"'Caveat',cursive",fontSize:"clamp(9px,1.9vw,12px)",fontWeight:700,color:"#b05070",lineHeight:1,padding:"0 3px"}}>
               {i===galIndex ? caption : photo.label}
             </div>
@@ -982,8 +1012,8 @@ const GalleryScreen = ({onNext}) => {
         ))}
       </div>
 
-      {/* Nav dots */}
-      <div style={{display:"flex",alignItems:"center",gap:"5px",marginBottom:"4px",flexShrink:0}}>
+      {/* Nav dots row */}
+      <div style={{display:"flex",alignItems:"center",gap:"5px",marginBottom:"3px",flexShrink:0}}>
         <button onClick={prev} style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",width:"26px",height:"26px",borderRadius:"50%",color:"#fff",fontSize:"15px",fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,boxShadow:"0 3px 10px rgba(220,70,140,.3)",lineHeight:1}}>‹</button>
         <div style={{display:"flex",gap:"2px",alignItems:"center",maxWidth:"52vw",overflow:"hidden"}}>
           {PHOTOS.map((_,i)=>(
@@ -997,12 +1027,12 @@ const GalleryScreen = ({onNext}) => {
       </div>
 
       {/* Status hint */}
-      <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(10px,2.2vw,12px)",color:saved[galIndex]?"#4caf50":"#c07090",margin:"0 0 3px",textAlign:"center",lineHeight:1.2,flexShrink:0,fontWeight:saved[galIndex]?700:400}}>
-        {saved[galIndex]?"✓ saved 💖":"cheppali ante cheppochuu 😒💖"}
+      <p style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(10px,2.2vw,12px)",color:saved[galIndex]?"#4caf50":"#c07090",margin:"0 0 4px",textAlign:"center",lineHeight:1.2,flexShrink:0,fontWeight:saved[galIndex]?700:400}}>
+        {saved[galIndex]?"✓ saved 💖":"tap pic 3× for a secret 💗 · write below to save"}
       </p>
 
-      {/* Input + send button */}
-      <div style={{display:"flex",gap:"5px",alignItems:"center",width:"min(320px,88vw)",flexShrink:0,marginBottom:"3px"}}>
+      {/* ── INPUT ROW: [text input] [💖 save] [→ next] ── */}
+      <div style={{display:"flex",gap:"5px",alignItems:"center",width:"min(340px,90vw)",flexShrink:0,marginBottom:"4px"}}>
         <input
           key={galIndex}
           value={draft}
@@ -1010,57 +1040,76 @@ const GalleryScreen = ({onNext}) => {
           onFocus={()=>{setIsTypingInput(true);stopAuto();}}
           onBlur={()=>{clearTimeout(typingTimer.current);typingTimer.current=setTimeout(()=>{setIsTypingInput(false);startAuto();},3000);}}
           onKeyDown={e=>{if(e.key==="Enter"){e.preventDefault();saveCurrent();}}}
-          placeholder={saved[galIndex]?"💕 update...":"🙈 ee photo ki em ayyindho cheppu"}
+          placeholder={saved[galIndex]?"💕 update...":"🙈 ee photo ki em?"}
           maxLength={140} autoComplete="off"
-          style={{flex:1,border:`2px solid ${inputShake?"#e040a0":saved[galIndex]?"#4caf50":"#f4a0c8"}`,borderRadius:"14px",padding:"7px 11px",fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,16px)",fontWeight:700,color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",boxSizing:"border-box",transition:"border-color .25s",animation:inputShake?"shakeInput .4s ease":"none"}}
+          style={{
+            flex:1,
+            border:`2px solid ${inputShake?"#e040a0":saved[galIndex]?"#4caf50":"#f4a0c8"}`,
+            borderRadius:"14px",padding:"9px 11px",
+            fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,16px)",fontWeight:700,
+            color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",
+            boxSizing:"border-box",transition:"border-color .25s",
+            animation:inputShake?"shakeInput .4s ease":"none",
+          }}
         />
+        {/* Save button */}
         <button onClick={saveCurrent}
-          style={{flexShrink:0,width:"32px",height:"32px",borderRadius:"50%",border:"none",background:draft.trim()?"linear-gradient(135deg,#f080b8,#e040a0)":"#f4d0e4",cursor:draft.trim()?"pointer":"default",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"15px",boxShadow:draft.trim()?"0 3px 10px rgba(220,70,140,.3)":"none",transition:"all .2s"}}
+          style={{flexShrink:0,width:"34px",height:"34px",borderRadius:"50%",border:"none",
+            background:draft.trim()?"linear-gradient(135deg,#f080b8,#e040a0)":"#f4d0e4",
+            cursor:draft.trim()?"pointer":"default",display:"flex",alignItems:"center",justifyContent:"center",
+            fontSize:"16px",boxShadow:draft.trim()?"0 3px 10px rgba(220,70,140,.3)":"none",transition:"all .2s"}}
         >{saved[galIndex]?"💾":"💖"}</button>
+        {/* Next / proceed button — always visible, right next to save */}
+        <button onClick={handleNext}
+          style={{
+            flexShrink:0,
+            height:"34px",
+            padding:"0 12px",
+            borderRadius:"17px",
+            border:"none",
+            cursor:"pointer",
+            fontFamily:"'Caveat',cursive",
+            fontSize:"clamp(12px,2.8vw,15px)",
+            fontWeight:800,
+            color:"white",
+            whiteSpace:"nowrap",
+            display:"flex",alignItems:"center",gap:"4px",
+            background:canProceed
+              ?"linear-gradient(135deg,#f080b8,#e040a0)"
+              :"linear-gradient(135deg,#f9c0d8,#f4a8c4)",
+            boxShadow:canProceed
+              ?"0 4px 14px rgba(220,70,140,.4)"
+              :"0 2px 8px rgba(220,70,140,.15)",
+            transition:"all .25s",
+          }}
+        >
+          {canProceed ? "✉️ Next →" : `${savedCount}/${PHOTOS.length} →`}
+        </button>
       </div>
 
-      {/* Progress counter */}
-      <p style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#d0a0b8",margin:"0 0 5px",textAlign:"center",flexShrink:0,opacity:.9}}>
-        {savedCount} / {PHOTOS.length} {canProceed?"🎉 anni chesav!":"· double tap → fullscreen"}
+      {/* Progress info */}
+      <p style={{fontFamily:"'Caveat',cursive",fontSize:"10px",color:"#d0a0b8",margin:"0",textAlign:"center",flexShrink:0,opacity:.85}}>
+        {savedCount}/{PHOTOS.length} saved {canProceed?"🎉 anni chesav!":"· save all to unlock next"}
       </p>
 
-      {/* ══ PROCEED BUTTON — always visible, always has text ══
-          Bright pink = all photos saved (ready to go)
-          Soft pink   = still saving (shows count, still tappable)
-      */}
-      <button
-        onClick={handleNext}
-        style={{
-          flexShrink:0,
-          width:"min(90px,360vw)",
-          padding:"12px 20px",
-          borderRadius:"25px",
-          border:"none",
-          cursor:"pointer",
-          fontFamily:"'Caveat',cursive",
-          fontSize:"clamp(15px,4.6vw,18px)",
-          fontWeight:800,
-          color:"white",
-          lineHeight:1.35,
-          textAlign:"center",
-          transition:"transform .10s",
-          background: canProceed
-            ? "linear-gradient(135deg,#f080b8,#e040a0)"
-            : "linear-gradient(135deg,#f9c0d8,#f4a8c4)",
-          boxShadow: canProceed
-            ? "0 6px 22px rgba(220,70,140,.42)"
-            : "0 3px 12px rgba(220,70,140,.15)",
-        }}
-        onMouseEnter={e=>{if(canProceed)e.currentTarget.style.transform="scale(1.04)";}}
-        onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";}}
-      >
-        {canProceed
-          ? "✉️ Next → chadhivaka hug ivochuuu 🙈💖"
-          : `💗 ${PHOTOS.length - savedCount} more to continue · ${savedCount}/${PHOTOS.length}`
-        }
-      </button>
+      {/* Secret message modal — shown on 3-tap */}
+      {secretMsg&&(
+        <div onClick={()=>setSecretMsg(null)}
+          style={{position:"fixed",inset:0,background:"rgba(240,80,160,.22)",backdropFilter:"blur(10px)",zIndex:9100,display:"flex",alignItems:"center",justifyContent:"center",padding:"20px"}}>
+          <div onClick={e=>e.stopPropagation()}
+            style={{background:"white",borderRadius:"28px",padding:"28px 24px",maxWidth:"340px",width:"88vw",boxShadow:"0 10px 48px rgba(220,70,140,.35)",border:"2.5px solid #f9c0d8",display:"flex",flexDirection:"column",alignItems:"center",gap:"12px",animation:"popIn .4s cubic-bezier(.34,1.56,.64,1)"}}>
+            <div style={{fontSize:"36px",animation:"hbeat 1.2s ease-in-out infinite"}}>💗</div>
+            <div style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:"clamp(13px,3vw,16px)",color:"#d8368e",textAlign:"center",opacity:.8}}>{secretMsg.label}</div>
+            <p style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(15px,4vw,20px)",color:"#c060a0",textAlign:"center",lineHeight:1.6,margin:0}}>{secretMsg.msg}</p>
+            <button onClick={()=>setSecretMsg(null)}
+              style={{background:"linear-gradient(135deg,#f080b8,#e040a0)",border:"none",borderRadius:"20px",padding:"10px 24px",color:"white",fontFamily:"'Caveat',cursive",fontSize:"16px",fontWeight:700,cursor:"pointer",boxShadow:"0 4px 14px rgba(220,70,140,.35)"}}>
+              💖 Aww!
+            </button>
+          </div>
+        </div>
+      )}
 
-      {/* Lightbox */}
+      {/* Lightbox (double-click still works via photo element) */}
       {lightbox&&(
         <div onClick={()=>setLightbox(null)} style={{position:"fixed",inset:0,background:"rgba(0,0,0,.9)",zIndex:9500,display:"flex",alignItems:"center",justifyContent:"center",padding:"20px",cursor:"zoom-out"}}>
           <img src={lightbox} style={{maxWidth:"95vw",maxHeight:"92vh",objectFit:"contain",borderRadius:"8px"}} onClick={e=>e.stopPropagation()} alt="fullscreen"/>
@@ -1228,20 +1277,21 @@ const OwnerPanel = ({onClose}) => {
       case "birthday_reaction": return{icon:"🎂",color:"#bf360c",bg:"#fbe9e7",sentence:`Happy Birthday screen feeling: ${v}`};
       case "credits_feeling":   return{icon:"💖",color:"#880e4f",bg:"#fce4ec",sentence:`Final feeling at the end: ${v}`};
       case "easter_egg":        return{icon:"🐾",color:"#4527a0",bg:"#ede7f6",sentence:`Found a secret! ${v}`};
+      case "photo_secret":      return{icon:"💗",color:"#c2185b",bg:"#fce4ec",sentence:`Saw photo secret: ${v}`};
       case "slide_time":        return{icon:"⏱️",color:"#0277bd",bg:"#e1f5fe",sentence:v};
       case "photo_feeling":     return{icon:"📸",color:"#880e4f",bg:"#fce4ec",sentence:v};
       case "bow_easter":        return{icon:"💗",color:"#c2185b",bg:"#fce4ec",sentence:"Tapped the bow 5 times!"};
       default:                  return{icon:"🔹",color:"#78909c",bg:"#f5f5f5",sentence:v};
     }
   };
-  const SHOWN=new Set(["name_correct","name_wrong","hint_opened","hint_reply","ante_isthe_reply","message_reaction","birthday_reaction","credits_feeling","easter_egg","slide_time","photo_feeling","bow_easter"]);
+  const SHOWN=new Set(["name_correct","name_wrong","hint_opened","hint_reply","ante_isthe_reply","message_reaction","birthday_reaction","credits_feeling","easter_egg","slide_time","photo_feeling","photo_secret","bow_easter"]);
   const filtered=log.filter(e=>SHOWN.has(e.type));
   const feelingsOnly=log.filter(e=>["hint_reply","ante_isthe_reply","message_reaction","birthday_reaction","credits_feeling","photo_feeling"].includes(e.type));
   const timelineOnly=log.filter(e=>e.type==="slide_time");
   const nameAttempts=log.filter(e=>e.type==="name_wrong").length;
   const gotItRight=log.some(e=>e.type==="name_correct");
   const photosDone=log.filter(e=>e.type==="photo_feeling").length;
-  const secretsFound=log.filter(e=>e.type==="easter_egg").length;
+  const secretsFound=log.filter(e=>e.type==="easter_egg"||e.type==="photo_secret").length;
   const TAB=(id,label,active)=>(<button onClick={()=>setActiveTab(id)} style={{flex:1,padding:"9px 4px",border:"none",borderRadius:"20px",fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,2.8vw,16px)",fontWeight:700,cursor:"pointer",transition:"all .25s",background:active?"linear-gradient(135deg,#f080b8,#e040a0)":"transparent",color:active?"#fff":"#c070a0",boxShadow:active?"0 4px 14px rgba(220,70,140,.3)":"none"}}>{label}</button>);
   const STAT=({icon,label,value,color,bg})=>(<div style={{background:bg||"#fff5fa",borderRadius:"16px",padding:"10px 8px",flex:"1",textAlign:"center",border:`2px solid ${color}33`,display:"flex",flexDirection:"column",alignItems:"center",gap:"3px"}}><div style={{fontSize:"18px",lineHeight:1}}>{icon}</div><div style={{fontFamily:"'Baloo 2',cursive",fontWeight:800,fontSize:"clamp(16px,4vw,22px)",color:color,lineHeight:1.1}}>{value}</div><div style={{fontFamily:"'Caveat',cursive",fontSize:"clamp(10px,2vw,12px)",color:"#c090a0",fontWeight:700,lineHeight:1}}>{label}</div></div>);
   const CARD=({entry})=>{const{icon,color,bg,sentence}=toSentence(entry);return(<div style={{background:bg,borderRadius:"16px",padding:"10px 14px",display:"flex",gap:"10px",alignItems:"flex-start",border:`1.5px solid ${color}28`,animation:"screenFadeIn .4s ease"}}><span style={{fontSize:"18px",flexShrink:0,marginTop:"2px",lineHeight:1}}>{icon}</span><div style={{flex:1,minWidth:0}}><div style={{fontFamily:"'Caveat',cursive",fontWeight:700,fontSize:"clamp(14px,3vw,17px)",color:color,wordBreak:"break-word",lineHeight:1.4}}>{sentence}</div></div><span style={{fontFamily:"'Caveat',cursive",fontSize:"11px",color:"#c0a0b0",flexShrink:0,marginTop:"3px",whiteSpace:"nowrap"}}>{entry.time}</span></div>);};
