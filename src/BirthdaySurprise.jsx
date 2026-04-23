@@ -71,9 +71,9 @@ const PHOTOS = [
 ];
 
 const ROTATIONS   = [2,-3,1.5,-2,3,-1,2.5,-3.5,0.5,-2.5];
-const EASTER_MSGS = ["For the one who make me feel special 😘","For the one i got excited 😒","For you ❤️"];
+const EASTER_MSGS = ["For the one who make me feel special 😘","For the one i got excited 😒","For you ❤️ For ----🫠"];
 
-const LETTER_TEXT = `Firstly many more happy returns of the day kukkapilla 🫂❤️‍🩹😘. You are the one who made me special. Eppudu okalage vunde nannu koncham ayyina alochainchela cheysav. Neetho vunnappudu vunde feeling inka evarithonuu raledhu. Neetho gadipina moments and memories are still in my heart. Emo mundhu parichayam ayyithe inka enjoy cheysevalamoo ledha normal ga vundevalamoo thelidhu but at our peak manam kalisina kotha lo I felt very happy and loved the way you treated me.
+const LETTER_TEXT = `Firstly i am very sorry and thankyou soo much.... and many more happy returns of the day kukkapilla 🫂❤️‍🩹😘. sorry ninnu ibbandhi pettinandhuku baadha pettinandhuku and thank you is purely for being with me and for being my happiness. You are the one who made me special. Eppudu okalage vunde nannu koncham ayyina alochainchela cheysav. Neetho vunnappudu vunde feeling inka evarithonuu raledhu. Neetho gadipina moments and memories are still in my heart. Emo mundhu parichayam ayyithe inka enjoy cheysevalamoo ledha normal ga vundevalamoo thelidhu but at our peak manam kalisina kotha lo I felt very happy and loved the way you treated me.
 
 Nuvvu naatho gadipina moments and mainly nee birthday roju nuvve call cheysi manchiga ready avvu manchi shirt veysukoo ani cheppi pilavadam — those moments I felt myself special 🫂🫂. Emo nee life lo naa character a role play cheysindhoo thelidhu but naa life lo pandhi pilla and kukkapilla chala pedha role play cheysay… entha pedha role ante emo maybe dhaniki minchi vere role vundadhu emo antha special ga.
 
@@ -83,12 +83,47 @@ Same ninnu first lo chusaintha ledhu kani but ninnu chusina prathisari, neetho m
 
 But I wish if time reversed… malli neetho Celesta 2k25 dhagara nunchi ela vunnamoo ala vundali ani vundhiii........
 
-Anyway, I will be always your __________ nuvve fill cheysesukooo… and I will be for you at every moment and anything. Emo inkem cheppaloo thelidhu but once again many more happy returns of the day to one and only one of me 🫂😘😘😘`;
+yeah konni konni cheppali but adhi cheppadam correctooo kaadhooo naaku thelidhu and emo but i wanna say one thing matalu chethalu okati kaadhu ante ninnu thappu annatle needhi thappu annatle yeah nuvvu anna prakaram nuvvu neeku veelainantha time ichav nenu kaadhu analenu but neen naaku adhi odhu ani cheppalenu kani matalakanna chethalalooo chupisthe bagunu..
+
+prathi saari naaku anipinchedhi okate mee thammulatho kurchuni time spent cheysinatuu naatho vundataniki neeku problem entaa ani yeah vaalu thammulu but vaalu gurthochina dhatloo kanisam 1% ayyina nen gurthuntanaaa if vunte endhuku ala.. but i can accept it evari istalu valavi evari priorities valavi nenu kaadhu ananu kaani nuvvu nee chat lo chupinchindhii endhuku naaku direct ga raaledhu.
+
+okkosari anipisthadhi maybe naaku nuvvu okadhanive ani concern chupisthunavaaa or ledhaa edho mataladali kabati mataladuthunavaaa or anything else. eppudu chustha okasari ayyina nuvvu matalade evaroo okarikantenaina nanu choose chesthava ledha ani 😅 yeah every time i realize that it's ok not a problem. maybe nenu naaku deserving kante ekkuva expect cheysi vundochu adhi naa mistake anukooo. but indhaka annav miss you anni and stickers and some thing yeah antha miss ayye dhanivi kanisam antha sepu mee thammulathoo mee frnds tho vunnav okkasari kuda nenu gurthuralee kanisam vaadu vunnadu adigadu ani.
+
+maybe addukunna kadha andhukenemo addukunna dhakkaledhu addakunda vundalisindhi naakenti ani realise avvalisindi. avunu le entha aadukunte antha cheap avvutharemoo nenu migatha vala laa vundalisindhi first anitiki over react ayya kadha i should deserve this. needhi thappu annatle but nuvvu pettina prathi message ki naaku chala different ga vundhi ela react avvalooo theliyatle ela feel avvaloo theliyatlee nenu kuda mee bros la adagakunda vundalisindhi ga so appudu gurthunte nuvve pilichedhanivi or something else will happen.
+
+yeah sometimes it hurts but it's ok endhukate i deserve that but if it happens chance dhorikedhi but adigi mari chii anipinchukunna ane chinna anthe but anyway evari priorities valavi evari istalu valavi.
+
+nen deserve ayyedhanikanna ekkuva expect cheysi nenu baadhapadi ninnu baadha petta sorry for that ante hurt cheysi sorry chepthe mood set avvudhi ani kaadhi but i hope it heals a little bit.
+
+just neeku direct ga confess cheyse chance raadhu kabati chepthunna and i case change vachina it hard to say but i dont wanna take that change adigi mari cheppinchukunna dhanikaanna sudden ga cheppina matalu thakuva ayyina they have lots of love.yeah entha chii ana some feeling still something speacial and some persons still fav.
+
+limits cross ayyanu and andharilaane cheysa anukovu anukuntuu okati chepthunaa -
+
+neetho time spend cheyyadaniki neetho mataladataniki nen chala ista padatha chala try chestha emo endhuku alanooo correct ga cheppalenu but cheptha dont misunderstand and sorry 
+
+neetho vundatam naaku chala istam incase if i got a chance ninnu naa hands lo ki theysukuni chusukovali ani vundhi...🫠
+
+yeah neeku idhi entha mandhi chepparoo thelidhu and i already evarina vunnaroo thelidhu every man has to express at a time maybe ee two tharuvatha nen gurthundoochu gurthundakapoovachu mana repo ila vundochu vundakapoachu anything can happen but i wanna confess it 
+i wanna be with you, i wanna spend every evening and every morning with you and wanna start my day with a special good mornings and end my day with good nights.
+
+ninnu manchiga dhagaraga pattukuni kurchuni kaburlu cheppali, neetho godava padali, ninnu manchiga pattukuni bujjaginchukovali, entha work cheysina last ki oka peaceful place lo rest theysukovali i think that is you for me. neetho ala sardhaga gadapali neeku velainantha dhagaragaa vundali ninnu naaku nachidhi nenu cheyyali appudappudu ala bujji kukkapilla ninu hug cheysukuni kaburlu cheppali cheppukuntupoothe chala vunnay but emo cheppa ga 
+
+antav kadha eppudu kodava paduthune vunta ani yeah padatha paduthunee vunte endhuku ante naaku neeku dhooram ga vundatam nachatleee, neetho chala time vundali ani vundhi neetho aadukovali ani vundhi, neetho vundali ani vundhii neeku naaku vunna distance naa vala kaavatlee asala emo i have to adjust thappadhu but its ture and it the reason for disturbances between us. eeroju ayyithe naaku naadhi ani feeling vasthadhoo ahh roju nenu chepthunna oka godava lekunda vunta nee medha promise.
+
+kaani ninnu chala miss avvutha emo ninnu entha mandhi entha miss avvutharoo thelidhu but nenu naa kukkapilla ni chala miss avvutha entha avvuthanoo cheppalenu ala ani cheppanu but i can say 100% i want my kukkapilla....😪😪 forever and ever. and i want to say mine🫠
+
+em anukokapothe oka chinna pedha helpoo referenceoo edho le time vasthe mamali gurthupettukuni chance istheeee😅😅.
+
+thappuga theysukovu anukuntuuna oka vela thappuga mataladi vunte sorry and hurt cheysi vunte sorry... but to be with you i can be anything likee neetho vundataniki nen ela vundataniki ayyina ready like friend, stranger, classmate,...
+
+
+Anyway, I will be always your __________ nuvve fill cheysesukooo… and I will be for you at every moment and anything. Emo inkem cheppaloo thelidhu but once again many more happy returns of the day to one and only one of me 🫂😘😘😘
+love you soo much...🫂🫂🫂 and owner will miss his kukkapilla🥹🥹 Love you________🫂🥹🫂🫂`;
 
 /* ─────────────────────────────────────
    AUDIO ENGINE
 ───────────────────────────────────── */
-let _audioCtx = null;
+let _audioCtx = null; 
 const getAudioCtx = () => {
   if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   return _audioCtx;
