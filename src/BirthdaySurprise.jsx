@@ -1032,31 +1032,31 @@ const GalleryScreen = ({onNext}) => {
         onClick={handleNext}
         style={{
           flexShrink:0,
-          width:"min(320px,88vw)",
-          padding:"10px 18px",
-          borderRadius:"30px",
+          width:"min(90px,360vw)",
+          padding:"12px 20px",
+          borderRadius:"25px",
           border:"none",
           cursor:"pointer",
           fontFamily:"'Caveat',cursive",
-          fontSize:"clamp(12px,2.6vw,15px)",
-          fontWeight:700,
+          fontSize:"clamp(15px,4.6vw,18px)",
+          fontWeight:800,
           color:"white",
-          lineHeight:1.3,
+          lineHeight:1.35,
           textAlign:"center",
-          transition:"all .25s",
+          transition:"transform .10s",
           background: canProceed
             ? "linear-gradient(135deg,#f080b8,#e040a0)"
             : "linear-gradient(135deg,#f9c0d8,#f4a8c4)",
           boxShadow: canProceed
-            ? "0 4px 18px rgba(220,70,140,.42)"
-            : "0 2px 10px rgba(220,70,140,.15)",
+            ? "0 6px 22px rgba(220,70,140,.42)"
+            : "0 3px 12px rgba(220,70,140,.15)",
         }}
         onMouseEnter={e=>{if(canProceed)e.currentTarget.style.transform="scale(1.04)";}}
         onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";}}
       >
         {canProceed
           ? "✉️ Next → chadhivaka hug ivochuuu 🙈💖"
-          : `💗 Save ${PHOTOS.length - savedCount} more to continue · ${savedCount}/${PHOTOS.length}`
+          : `💗 ${PHOTOS.length - savedCount} more to continue · ${savedCount}/${PHOTOS.length}`
         }
       </button>
 
