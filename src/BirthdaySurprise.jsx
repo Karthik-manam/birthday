@@ -57,14 +57,19 @@ const PHOTOS = [
   { src:"photos/photo4.jpg",  label:"💕 saree",                 msg:"actual ga saree kadathava ledha ani doubt but bale vunnav ahh saree lo🙈💕" },
   { src:"photos/photo5.jpg",  label:"💗 Authority",             msg:"idhi one of my favourite pic ee pic lo nuvvu chuppinchina authority ki padipoya actual ga 😒💗" },
   { src:"photos/photo6.jpg",  label:"💗 Special Pic",           msg:"This pic made me fall for you every time. 💗" },
-  { src:"photos/photo9.jpg",  label:"💗 My Kukkapilla",         msg:"naa kukkapilla nannu owner ga accepted cheysi pampina memory 💗" },
-  { src:"photos/photo10.jpg", label:"💗 Celestra 2k25",         msg:"ee pic value appudu theliyaledhu but malli ila neetho pic theysukovali ani vundhi 🫠💗" },
-  { src:"photos/photo11.jpg", label:"💗 forever mine",          msg:"ee pic ni eni sarlu chussina edho special feeling the way you looks at me🙈💗" },
-  { src:"photos/photo14.jpg", label:"💗 the day i fall",        msg:"nuvvu call cheysi manchi shirt veysukuni raa ledhaa paguludhi ah feel emoo💗" },
-  { src:"photos/photo19.jpg", label:"💗 something special",     msg:"ee pic ante naaku gurthochedhi ahh hand placement 🫠😅💗" },
-  { src:"photos/photo20.jpg", label:"💗 trails for this pic",   msg:"entha try cheysa okasari ayyina cooperate cheysava pandhi laga 😒" },
-  { src:"photos/photo21.jpg", label:"💗 Celestra 2k26",         msg:"pic crop cheysaka ala vundhoo ledha mana presence oo thelidh but it has been bagged into my favs💗" },
-  { src:"photos/photo23.jpg", label:"💗 forever mine",          msg:"ee pic ni eni sarlu chussina edho special feeling the way you looks at me🙈💗" },
+  { src:"photos/photo7.jpg",  label:"💗 My Kukkapilla",         msg:"naa kukkapilla nannu owner ga accepted cheysi pampina memory 💗" },
+  { src:"photos/photo8.jpg", label:"💗 Celestra 2k25",         msg:"ee pic value appudu theliyaledhu but malli ila neetho pic theysukovali ani vundhi 🫠💗" },
+  { src:"photos/photo9.jpg", label:"💗 forever mine",          msg:"ee pic ni eni sarlu chussina edho special feeling the way you looks at me🙈💗" },
+  { src:"photos/photo10.jpg", label:"💗 the day i fall",        msg:"nuvvu call cheysi manchi shirt veysukuni raa ledhaa paguludhi ah feel emoo💗" },
+  { src:"photos/photo11.jpg", label:"💗 something special",     msg:"ee pic ante naaku gurthochedhi ahh hand placement 🫠😅💗" },
+  { src:"photos/photo12.jpg", label:"💗 trails for this pic",   msg:"entha try cheysa okasari ayyina cooperate cheysava pandhi laga 😒" },
+  { src:"photos/photo13.jpg", label:"💗 Celestra 2k26",         msg:"pic crop cheysaka ala vundhoo ledha mana presence oo thelidh but it has been bagged into my favs💗" },
+  { src:"photos/photo14.jpg",  label:"💗 😅",           msg:"Buri Buggalu. 💗" },
+  { src:"photos/photo15.jpg",  label:"💗 Last Pic",           msg:"i have never expect that this will become my last pic. 💗" },
+  { src:"photos/photo16.jpg",  label:"💗 the art",           msg:"My kukkapilla with her kukkapilla 💗" },
+  { src:"photos/v1.mp4",  label:"💗 kukkapilla",           msg:"cute little kukkapilla 💗" },
+  { src:"photos/v2.mp4",  label:"💗 first video",           msg:"thelisoo thelikooo mana first outing and first time manam naa playlist vintu enjoy cheysina moment. 💗" },
+
 ];
 
 const ROTATIONS   = [2,-3,1.5,-2,3,-1,2.5,-3.5,0.5,-2.5];
@@ -101,6 +106,7 @@ neetho time spend cheyyadaniki neetho mataladataniki nen chala ista padatha chal
 neetho vundatam naaku chala istam incase if i got a chance ninnu naa hands lo ki theysukuni chusukovali ani vundhi...🫠
 
 yeah neeku idhi entha mandhi chepparoo thelidhu and i already evarina vunnaroo thelidhu every man has to express at a time maybe ee two tharuvatha nen gurthundoochu gurthundakapoovachu mana repo ila vundochu vundakapoachu anything can happen but i wanna confess it 
+
 i wanna be with you, i wanna spend every evening and every morning with you and wanna start my day with a special good mornings and end my day with good nights.
 
 ninnu manchiga dhagaraga pattukuni kurchuni kaburlu cheppali, neetho godava padali, ninnu manchiga pattukuni bujjaginchukovali, entha work cheysina last ki oka peaceful place lo rest theysukovali i think that is you for me. neetho ala sardhaga gadapali neeku velainantha dhagaragaa vundali ninnu naaku nachidhi nenu cheyyali appudappudu ala bujji kukkapilla ninu hug cheysukuni kaburlu cheppali cheppukuntupoothe chala vunnay but emo cheppa ga 
@@ -111,10 +117,17 @@ kaani ninnu chala miss avvutha emo ninnu entha mandhi entha miss avvutharoo thel
 
 em anukokapothe oka chinna pedha helpoo referenceoo edho le time vasthe mamali gurthupettukuni chance istheeee😅😅.
 
-thappuga theysukovu anukuntuuna oka vela thappuga mataladi vunte sorry and hurt cheysi vunte sorry... but to be with you i can be anything likee neetho vundataniki nen ela vundataniki ayyina ready like friend, stranger, classmate,...
+thappuga theysukovu anukuntuuna oka vela thappuga mataladi vunte sorry and hurt cheysi vunte sorry... but to be with you i can be anything likee neetho vundataniki nen ela vundataniki ayyina ready like friend, classmate, clg mate...
+
+neetho kurchuni chala kaburlu cheppali ani vundhi..... and for every person kanisam sendoff lo ayyina koncham time dhorukundhi may be i am the one send off lo kanisam gurthukuraani person or gurthochina kalavani person. anything it's all about your comfort.
+
+Thankyou for being my therapy, my comfortzone, my Stress, my tension, my anxiety, my medicine, my anger, my stress bruster, my all in one and my everything...🫂
+
+mundhe chepthunna edho ayyipoyindhi neeku kalavali ani ledho or neeku vere em ayyina insecurity vundhooo i don't know don't try to explain me endhuku ante nuvvu entha explain cheysina chivariki naaku gurthochedhi endhuku??
 
 
 Anyway, I will be always your __________ nuvve fill cheysesukooo… and I will be for you at every moment and anything. Emo inkem cheppaloo thelidhu but once again many more happy returns of the day to one and only one of me 🫂😘😘😘
+
 love you soo much...🫂🫂🫂 and owner will miss his kukkapilla🥹🥹 Love you________🫂🥹🫂🫂`;
 
 /* ─────────────────────────────────────
@@ -1064,61 +1077,104 @@ const GalleryScreen = ({onNext}) => {
       </p>
 
       {/* ── INPUT ROW: [text input] [💖 save] [→ next] ── */}
-      <div style={{display:"flex",gap:"5px",alignItems:"center",width:"min(340px,90vw)",flexShrink:0,marginBottom:"4px"}}>
+      {/* ── INPUT + BUTTONS ── */}
+      <div style={{
+        display:"flex",
+        flexDirection:"column",
+        alignItems:"center",
+        gap:"6px",
+        width:"min(340px,90vw)",
+        flexShrink:0,
+        marginBottom:"4px",
+      }}>
         <input
           key={galIndex}
           value={draft}
           onChange={e=>handleDraftChange(e.target.value)}
           onFocus={()=>{setIsTypingInput(true);stopAuto();}}
-          onBlur={()=>{clearTimeout(typingTimer.current);typingTimer.current=setTimeout(()=>{setIsTypingInput(false);startAuto();},3000);}}
+          onBlur={()=>{
+            clearTimeout(typingTimer.current);
+            typingTimer.current=setTimeout(()=>{setIsTypingInput(false);startAuto();},3000);
+          }}
           onKeyDown={e=>{if(e.key==="Enter"){e.preventDefault();saveCurrent();}}}
           placeholder={saved[galIndex]?"💕 update...":"🙈 ee photo ki em?"}
-          maxLength={140} autoComplete="off"
+          maxLength={140}
+          autoComplete="off"
           style={{
-            flex:1,
+            width:"100%",
             border:`2px solid ${inputShake?"#e040a0":saved[galIndex]?"#4caf50":"#f4a0c8"}`,
-            borderRadius:"14px",padding:"9px 11px",
-            fontFamily:"'Caveat',cursive",fontSize:"clamp(13px,3vw,16px)",fontWeight:700,
-            color:"#d8368e",background:"#fff5fa",outline:"none",textAlign:"center",
-            boxSizing:"border-box",transition:"border-color .25s",
+            borderRadius:"14px",
+            padding:"9px 11px",
+            fontFamily:"'Caveat',cursive",
+            fontSize:"clamp(13px,3vw,16px)",
+            fontWeight:700,
+            color:"#d8368e",
+            background:"#fff5fa",
+            outline:"none",
+            textAlign:"center",
+            boxSizing:"border-box",
+            transition:"border-color .25s",
             animation:inputShake?"shakeInput .4s ease":"none",
           }}
         />
-        {/* Save button */}
-        <button onClick={saveCurrent}
-          style={{flexShrink:0,width:"34px",height:"34px",borderRadius:"50%",border:"none",
-            background:draft.trim()?"linear-gradient(135deg,#f080b8,#e040a0)":"#f4d0e4",
-            cursor:draft.trim()?"pointer":"default",display:"flex",alignItems:"center",justifyContent:"center",
-            fontSize:"16px",boxShadow:draft.trim()?"0 3px 10px rgba(220,70,140,.3)":"none",transition:"all .2s"}}
-        >{saved[galIndex]?"💾":"💖"}</button>
-        {/* Next / proceed button — always visible, right next to save */}
-        <button onClick={handleNext}
-          style={{
-            flexShrink:0,
-            height:"34px",
-            padding:"0 12px",
-            borderRadius:"17px",
-            border:"none",
-            cursor:"pointer",
-            fontFamily:"'Caveat',cursive",
-            fontSize:"clamp(12px,2.8vw,15px)",
-            fontWeight:800,
-            color:"white",
-            whiteSpace:"nowrap",
-            display:"flex",alignItems:"center",gap:"4px",
-            background:canProceed
-              ?"linear-gradient(135deg,#f080b8,#e040a0)"
-              :"linear-gradient(135deg,#f9c0d8,#f4a8c4)",
-            boxShadow:canProceed
-              ?"0 4px 14px rgba(220,70,140,.4)"
-              :"0 2px 8px rgba(220,70,140,.15)",
-            transition:"all .25s",
-          }}
-        >
-          {canProceed ? "✉️ Next →" : `${savedCount}/${PHOTOS.length} →`}
-        </button>
-      </div>
 
+        {/* Save + Next — side by side, equal flex */}
+        <div style={{display:"flex", gap:"8px", width:"100%"}}>
+          <button
+            onClick={saveCurrent}
+            style={{
+              flex:1,
+              height:"38px",
+              borderRadius:"19px",
+              border:"none",
+              background: draft.trim()
+                ? "linear-gradient(135deg,#f080b8,#e040a0)"
+                : "#f4d0e4",
+              cursor: draft.trim() ? "pointer" : "default",
+              display:"flex",
+              alignItems:"center",
+              justifyContent:"center",
+              fontFamily:"'Caveat',cursive",
+              fontSize:"clamp(13px,2.8vw,15px)",
+              fontWeight:800,
+              color: draft.trim() ? "white" : "#c090a0",
+              boxShadow: draft.trim() ? "0 3px 10px rgba(220,70,140,.3)" : "none",
+              transition:"all .2s",
+              whiteSpace:"nowrap",
+            }}
+          >
+            {saved[galIndex] ? "💾 update" : "💖 save"}
+          </button>
+
+          <button
+            onClick={handleNext}
+            style={{
+              flex:1,
+              height:"38px",
+              borderRadius:"19px",
+              border:"none",
+              cursor:"pointer",
+              fontFamily:"'Caveat',cursive",
+              fontSize:"clamp(13px,2.8vw,15px)",
+              fontWeight:800,
+              color:"white",
+              whiteSpace:"nowrap",
+              display:"flex",
+              alignItems:"center",
+              justifyContent:"center",
+              background: canProceed
+                ? "linear-gradient(135deg,#f080b8,#e040a0)"
+                : "linear-gradient(135deg,#c9a8e0,#9c5fd6)",
+              boxShadow: canProceed
+                ? "0 4px 14px rgba(220,70,140,.4)"
+                : "0 2px 8px rgba(140,80,200,.25)",
+              transition:"all .25s",
+            }}
+          >
+            {canProceed ? "✉️ Next →" : `${savedCount}/${PHOTOS.length} →`}
+          </button>
+        </div>
+      </div>
       {/* Progress info */}
       <p style={{fontFamily:"'Caveat',cursive",fontSize:"10px",color:"#d0a0b8",margin:"0",textAlign:"center",flexShrink:0,opacity:.85}}>
         {savedCount}/{PHOTOS.length} saved {canProceed?"🎉 anni chesav!":"· save all to unlock next"}
