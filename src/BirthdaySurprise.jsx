@@ -67,8 +67,8 @@ const PHOTOS = [
   { src:"photos/photo14.jpg",  label:"💗 😅",           msg:"Buri Buggalu. 💗" },
   { src:"photos/photo15.jpg",  label:"💗 Last Pic",           msg:"i have never expect that this will become my last pic. 💗" },
   { src:"photos/photo16.jpg",  label:"💗 the art",           msg:"My kukkapilla with her kukkapilla 💗" },
-  { src:"photos/v1.mp4",  label:"💗 kukkapilla",           msg:"cute little kukkapilla 💗" },
-  { src:"photos/v2.mp4",  label:"💗 first video",           msg:"thelisoo thelikooo mana first outing and first time manam naa playlist vintu enjoy cheysina moment. 💗" },
+  { src:"photos/v1.mp4",  label:"💗 kukkapilla",           msg:"cute little kukkapilla 💗" ,type:"video"},
+  { src:"photos/v2.mp4",  label:"💗 first video",           msg:"thelisoo thelikooo mana first outing and first time manam naa playlist vintu enjoy cheysina moment. 💗",type:"video" },
 
 ];
 
@@ -888,6 +888,7 @@ const GalleryScreen = ({onNext}) => {
   const [galIndex,setGalIndex]=useState(0);
   const [isAnimating,setIsAnimating]=useState(false);
   const [lightbox,setLightbox]=useState(null);
+  const videoRefs=useRef({});
   const [caption,setCaption]=useState("");
   const [feelings,setFeelings]=useState(()=>Array(PHOTOS.length).fill(""));
   const [saved,setSaved]=useState(()=>Array(PHOTOS.length).fill(false));
@@ -918,9 +919,12 @@ const GalleryScreen = ({onNext}) => {
   const startAuto=()=>{clearInterval(autoRef.current);autoRef.current=setInterval(()=>{if(!isTypingInput)next();},3500);};
   const stopAuto=()=>clearInterval(autoRef.current);
 
-  const next=()=>{if(isAnimating)return;setIsAnimating(true);setGalIndex(p=>(p+1)%PHOTOS.length);startAuto();setTimeout(()=>setIsAnimating(false),400);};
-  const prev=()=>{if(isAnimating)return;setIsAnimating(true);setGalIndex(p=>(p-1+PHOTOS.length)%PHOTOS.length);startAuto();setTimeout(()=>setIsAnimating(false),400);};
-
+  const pauseCurrentVideo=()=>{
+    const v=videoRefs.current[galIndex];
+    if(v&&!v.paused)v.pause();
+  };
+  const next=()=>{if(isAnimating)return;pauseCurrentVideo();setIsAnimating(true);setGalIndex(p=>(p+1)%PHOTOS.length);startAuto();setTimeout(()=>setIsAnimating(false),400);};
+  const prev=()=>{if(isAnimating)return;pauseCurrentVideo();setIsAnimating(true);setGalIndex(p=>(p-1+PHOTOS.length)%PHOTOS.length);startAuto();setTimeout(()=>setIsAnimating(false),400);};
   // 3-tap handler on the active photo
   const handlePhotoTap=(i)=>{
     if(i!==galIndex){next();return;}
@@ -998,63 +1002,98 @@ const GalleryScreen = ({onNext}) => {
         textShadow:"0 0 8px rgba(255,100,160,.4)",
       }}>{title}</h2>
 
-      {/* Photo stack — portrait ratio */}
+{/* Photo/Video stack — auto ratio, bigger frame */}
       <div
         style={{
           position:"relative",
-          width:"min(190px,48vw)",
-          aspectRatio:"3/4",
+          width:"min(280px,72vw)",
+          height:"min(320px,50vw)",
           flexShrink:0,
           margin:"0 auto 4px",
           perspective:"700px",
         }}
         onTouchStart={e=>{touchStart.current=e.touches[0].clientX;}}
-        onTouchEnd={e=>{const dx=e.changedTouches[0].clientX-touchStart.current;if(Math.abs(dx)>40){dx<0?next():prev();}}}
+        onTouchEnd={e=>{
+          const dx=e.changedTouches[0].clientX-touchStart.current;
+          if(Math.abs(dx)>40){dx<0?next():prev();}
+        }}
       >
-        {PHOTOS.map((photo,i)=>(
-          <div key={i}
-            style={{
-              position:"absolute",inset:0,
-              background:"#fff",borderRadius:"10px",
-              padding:"5px 5px 24px",
-              boxShadow:"0 6px 22px rgba(180,60,120,.18)",
-              transition:"transform .42s cubic-bezier(.34,1.5,.64,1),opacity .32s ease",
-              willChange:"transform,opacity",
-              cursor:i===galIndex?"pointer":"default",
-              ...cardStyle(i),
-            }}
-            onClick={()=>handlePhotoTap(i)}
-          >
-            {/* checkmark if saved */}
-            {saved[i]&&(
-              <div style={{position:"absolute",top:"4px",right:"4px",width:"18px",height:"18px",borderRadius:"50%",background:"linear-gradient(135deg,#4caf50,#2e7d32)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:20,fontSize:"10px",boxShadow:"0 2px 5px rgba(0,0,0,.2)"}}>✓</div>
-            )}
-            {/* tap hint for active photo */}
-            {i===galIndex&&(
-              <div style={{position:"absolute",top:"4px",left:"4px",zIndex:20,background:"rgba(255,255,255,0.75)",borderRadius:"8px",padding:"2px 5px",fontFamily:"'Caveat',cursive",fontSize:"9px",color:"#c060a0",lineHeight:1.2,pointerEvents:"none"}}>
-                3× tap 💗
+        {PHOTOS.map((photo,i)=>{
+          const isVideo=photo.type==="video";
+          const isActive=i===galIndex;
+          return (
+            <div key={i}
+              style={{
+                position:"absolute",inset:0,
+                background:"#fff",borderRadius:"12px",
+                padding:"5px 5px 26px",
+                boxShadow:"0 6px 22px rgba(180,60,120,.18)",
+                transition:"transform .42s cubic-bezier(.34,1.5,.64,1),opacity .32s ease",
+                willChange:"transform,opacity",
+                cursor:isActive?"pointer":"default",
+                ...cardStyle(i),
+              }}
+              onClick={()=>handlePhotoTap(i)}
+            >
+              {/* checkmark */}
+              {saved[i]&&(
+                <div style={{position:"absolute",top:"5px",right:"5px",width:"20px",height:"20px",borderRadius:"50%",background:"linear-gradient(135deg,#4caf50,#2e7d32)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:20,fontSize:"11px",boxShadow:"0 2px 5px rgba(0,0,0,.2)"}}>✓</div>
+              )}
+              {/* tap hint */}
+              {isActive&&(
+                <div style={{position:"absolute",top:"5px",left:"5px",zIndex:20,background:"rgba(255,255,255,0.8)",borderRadius:"8px",padding:"2px 6px",fontFamily:"'Caveat',cursive",fontSize:"9px",color:"#c060a0",lineHeight:1.2,pointerEvents:"none"}}>
+                  {isVideo?"▶ video 💗":"3× tap 💗"}
+                </div>
+              )}
+
+              {/* Media area */}
+              <div style={{width:"100%",height:"calc(100% - 26px)",borderRadius:"8px",overflow:"hidden",background:"#fff8fc",position:"relative",display:"flex",alignItems:"center",justifyContent:"center"}}>
+                {isVideo ? (
+                  <video
+                    ref={el=>{videoRefs.current[i]=el;}}
+                    src={photo.src}
+                    controls={isActive}
+                    autoPlay={false}
+                    loop
+                    playsInline
+                    style={{
+                      width:"100%",
+                      height:"100%",
+                      objectFit:"contain",
+                      display:"block",
+                      background:"#000",
+                      filter:isActive?"none":"brightness(1.3) saturate(.1)",
+                      transition:"filter 1.2s",
+                    }}
+                    onError={e=>{e.target.style.display="none";}}
+                  />
+                ) : (
+                  <img
+                    src={photo.src}
+                    alt={photo.label}
+                    style={{
+                      width:"100%",
+                      height:"100%",
+                      objectFit:"contain",
+                      display:"block",
+                      background:"#fff8fc",
+                      transition:"filter 1.2s",
+                      filter:isActive?"saturate(1) brightness(1)":"saturate(.12) brightness(1.4)",
+                    }}
+                    onError={e=>{e.target.style.display="none";}}
+                  />
+                )}
+                {/* dim overlay for non-active */}
+                <div style={{position:"absolute",inset:0,background:"rgba(255,240,248,.55)",opacity:isActive?0:1,transition:"opacity 1s",pointerEvents:"none"}}/>
               </div>
-            )}
-            <div style={{width:"100%",height:"calc(100% - 24px)",borderRadius:"6px",overflow:"hidden",background:"#fff8fc",position:"relative"}}>
-              <img
-                src={photo.src} alt={photo.label}
-                style={{
-                  width:"100%",height:"100%",
-                  objectFit:"cover",
-                  objectPosition:"center 15%",
-                  display:"block",
-                  transition:"filter 1.2s",
-                  filter:i===galIndex?"saturate(1) brightness(1)":"saturate(.12) brightness(1.4)",
-                }}
-                onError={e=>{e.target.style.display="none";}}
-              />
-              <div style={{position:"absolute",inset:0,background:"rgba(255,240,248,.55)",opacity:i===galIndex?0:1,transition:"opacity 1s",pointerEvents:"none"}}/>
+
+              {/* Label */}
+              <div style={{position:"absolute",bottom:"5px",left:0,right:0,textAlign:"center",fontFamily:"'Caveat',cursive",fontSize:"clamp(9px,1.9vw,12px)",fontWeight:700,color:"#b05070",lineHeight:1,padding:"0 4px"}}>
+                {isActive ? caption : photo.label}
+              </div>
             </div>
-            <div style={{position:"absolute",bottom:"4px",left:0,right:0,textAlign:"center",fontFamily:"'Caveat',cursive",fontSize:"clamp(9px,1.9vw,12px)",fontWeight:700,color:"#b05070",lineHeight:1,padding:"0 3px"}}>
-              {i===galIndex ? caption : photo.label}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Nav dots row */}
