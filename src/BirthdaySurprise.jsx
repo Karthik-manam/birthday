@@ -48,7 +48,7 @@ const ownerLog = {
 const CORRECT_NAME  = "kukkapilla";
 const SWIPE_MIN     = 80;
 const LONG_PRESS    = 600;
-const BIRTHDAY_DATE = new Date("2026-04-18");
+const BIRTHDAY_DATE = new Date("2026-04-03");
 
 const PHOTOS = [
   { src:"photos/photo1.jpg",  label:"First photo 💖",           msg:"💖 First Photo andhariki special ay but mana first photo edho general ga jarigipoyindhi but first time oka ammai nanu photo adigindhi🥹🫂" },
@@ -57,13 +57,10 @@ const PHOTOS = [
   { src:"photos/photo4.jpg",  label:"💕 saree",                 msg:"actual ga saree kadathava ledha ani doubt but bale vunnav ahh saree lo🙈💕" },
   { src:"photos/photo5.jpg",  label:"💗 Authority",             msg:"idhi one of my favourite pic ee pic lo nuvvu chuppinchina authority ki padipoya actual ga 😒💗" },
   { src:"photos/photo6.jpg",  label:"💗 Special Pic",           msg:"This pic made me fall for you every time. 💗" },
-  { src:"photos/photo7.jpg",  label:"💗 Special Day",           msg:"Making memories together. 💗" },
-  { src:"photos/photo8.jpg",  label:"💗 Special Day",           msg:"Making memories together. 💗" },
   { src:"photos/photo9.jpg",  label:"💗 My Kukkapilla",         msg:"naa kukkapilla nannu owner ga accepted cheysi pampina memory 💗" },
   { src:"photos/photo10.jpg", label:"💗 Celestra 2k25",         msg:"ee pic value appudu theliyaledhu but malli ila neetho pic theysukovali ani vundhi 🫠💗" },
   { src:"photos/photo11.jpg", label:"💗 forever mine",          msg:"ee pic ni eni sarlu chussina edho special feeling the way you looks at me🙈💗" },
   { src:"photos/photo14.jpg", label:"💗 the day i fall",        msg:"nuvvu call cheysi manchi shirt veysukuni raa ledhaa paguludhi ah feel emoo💗" },
-  { src:"photos/photo18.jpg", label:"💗 Special Day",           msg:"Making memories together. 💗" },
   { src:"photos/photo19.jpg", label:"💗 something special",     msg:"ee pic ante naaku gurthochedhi ahh hand placement 🫠😅💗" },
   { src:"photos/photo20.jpg", label:"💗 trails for this pic",   msg:"entha try cheysa okasari ayyina cooperate cheysava pandhi laga 😒" },
   { src:"photos/photo21.jpg", label:"💗 Celestra 2k26",         msg:"pic crop cheysaka ala vundhoo ledha mana presence oo thelidh but it has been bagged into my favs💗" },
