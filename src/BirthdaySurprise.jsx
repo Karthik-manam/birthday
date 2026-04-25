@@ -3,22 +3,22 @@ import { useState, useEffect, useRef, useCallback } from "react";
 /* ─────────────────────────────────────
    EMAILJS CONFIG — replace these 3 values
 ───────────────────────────────────── */
-const EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";   // e.g. "service_abc123"
-const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";  // e.g. "template_xyz789"
-const EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";   // e.g. "abcDEF123xyz"
+const EMAILJS_SERVICE_ID  = "service_uz4tgai";
+const EMAILJS_TEMPLATE_ID = "template_t6o170g";
+const EMAILJS_PUBLIC_KEY  = "nyibKcsP9F2XEi1aX";
 
 const sendToOwner = (type, value) => {
   try {
     if (!window.emailjs) return;
     window.emailjs.send(
-      service_uz4tgai,
-      template_t6o170g,
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
       {
         log_type: type,
         log_value: value,
         log_time: new Date().toLocaleTimeString(),
       },
-      nyibKcsP9F2XEi1aX
+      EMAILJS_PUBLIC_KEY
     );
   } catch (e) {}
 };
