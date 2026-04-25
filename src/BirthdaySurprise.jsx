@@ -11,14 +11,14 @@ const sendToOwner = (type, value) => {
   try {
     if (!window.emailjs) return;
     window.emailjs.send(
-      EMAILJS_SERVICE_ID,
-      EMAILJS_TEMPLATE_ID,
+      service_uz4tgai,
+      template_t6o170g,
       {
         log_type: type,
         log_value: value,
         log_time: new Date().toLocaleTimeString(),
       },
-      EMAILJS_PUBLIC_KEY
+      nyibKcsP9F2XEi1aX
     );
   } catch (e) {}
 };
