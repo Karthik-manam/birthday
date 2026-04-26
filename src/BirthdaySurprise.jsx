@@ -4,19 +4,22 @@ import { useState, useEffect, useRef, useCallback } from "react";
    EMAILJS CONFIG — replace these 3 values
 ───────────────────────────────────── */
 const EMAILJS_SERVICE_ID  = "service_uz4tgai";
-const EMAILJS_TEMPLATE_ID = "template_t6o170g";
+const EMAILJS_TEMPLATE_ID = "template_3zk3l6g";
 const EMAILJS_PUBLIC_KEY  = "nyibKcsP9F2XEi1aX";
 
 const sendToOwner = (type, value) => {
   try {
     if (!window.emailjs) return;
+    
     window.emailjs.send(
       EMAILJS_SERVICE_ID,
       EMAILJS_TEMPLATE_ID,
       {
-        log_type: type,
-        log_value: value,
-        log_time: new Date().toLocaleTimeString(),
+        title: type,
+        name: type,
+        message: value,
+        time: new Date().toLocaleTimeString(),
+        email: "noreply@birthday.app",
       },
       EMAILJS_PUBLIC_KEY
     );
