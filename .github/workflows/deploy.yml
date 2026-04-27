@@ -30,14 +30,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Copy built files to root
-        run: |
-          rm -rf assets
-          cp -r dist/assets ./assets
-          cp dist/index.html ./index.html
-          rm -rf dist
-
-      - name: Commit and push
+      - name: Commit and push built files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
