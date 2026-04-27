@@ -22,8 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install rolldown Linux binding
-        run: npm install @rolldown/binding-linux-x64-gnu --save-dev
+      - name: Install native bindings (npm optional dep bug workaround)
+        run: npm install @rolldown/binding-linux-x64-gnu lightningcss-linux-x64-gnu --save-dev
 
       - name: Build
         run: npm run build
